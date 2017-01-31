@@ -2,12 +2,17 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.wso2telco.dep.common</groupId>
+    <artifactId>mediation-dep-common</artifactId>
+    <version>1.0.0</version>
+  </parent>
   <groupId>com.wso2telco.dep.common</groupId>
-  <artifactId>mediation-dep-common</artifactId>
+  <artifactId>com.wso2telco.dep.common</artifactId>
   <version>1.0.0</version>
   <packaging>pom</packaging>
-  <name>mediation-dep-common</name>
-  <description>mediation-dep-common</description>
+  <name>com.wso2telco.dep.common</name>
+  <description>com.wso2telco.dep.common</description>
   <build>
     <plugins>
       <plugin>
@@ -23,6 +28,6 @@
     </plugins>
   </build>
   <modules>
-  	<module>com.wso2telco.dep.common</module>
+  	<module>com.wso2telco.dep.common.synapse</module>
   </modules>
 </project>
