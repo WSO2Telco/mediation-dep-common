@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="mediation.common.responseServiceException.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <payloadFactory media-type="json">
+    <format>{
+  "requestError": {
+    "serviceException": {
+      "messageId": "$1",
+      "text": "Invalid input value for message part %1",
+      "variables": " $2 Value $3"
+    }
+  }
+}</format>
+    <args>
+      <arg evaluator="xml" expression="get-property('messageId')" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml"
+        expression="get-property('invalidVariableName')" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml"
+        expression="get-property('invalidVariableValue')" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </args>
+  </payloadFactory>
+  <respond/>
+</sequence>
