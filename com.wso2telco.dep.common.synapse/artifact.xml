@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="CelcomAuthCallSeq" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.common.main.property.Sequence.xml</file>
+    </artifact>
+    <artifact name="CelcomAuthCallSeq" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.common.main.request.Sequence.xml</file>
+    </artifact>
+    <artifact name="CelcomAuthCallSeq" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.common.responseServiceException.Sequence.xml</file>
+    </artifact>
+    <artifact name="CelcomAuthCallSeq" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.common.telePhoneValidator.Sequence.xml</file>
+    </artifact>
+</artifacts>
