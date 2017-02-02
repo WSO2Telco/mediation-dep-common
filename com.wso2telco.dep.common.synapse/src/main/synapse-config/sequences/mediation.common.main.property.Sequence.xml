@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="mediation.common.main.property.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-  <property expression="$trp:CONSUMER_KEY" name="CONSUMER_KEY"
-    scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
-  <property expression="$trp:USER_ID" name="USER_ID" scope="default"
-    type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
-  <property expression="$trp:CONTEXT" name="CONTEXT" scope="default"
-    type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
-  <property expression="$trp:API_VERSION" name="API_VERSION"
-    scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
-  <property expression="$trp:API_NAME" name="API_NAME" scope="default"
-    type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
-  <property expression="$trp:VERSION" name="VERSION" scope="default"
-    type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
-  <property expression="$trp:RESOURCE" name="RESOURCE" scope="default"
-    type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
-  <property expression="$trp:HTTP_METHOD" name="HTTP_METHOD"
-    scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
-  <property expression="$trp:HOST_NAME" name="HOST_NAME" scope="default"
-    type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
-  <property expression="$trp:API_PUBLISHER" name="API_PUBLISHER"
-    scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
-  <property expression="$trp:APPLICATION_NAME" name="APPLICATION_NAME"
-    scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
-  <property expression="$trp:APPLICATION_ID" name="APPLICATION_ID"
-    scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="$trp:CONSUMER_KEY" name="CONSUMER_KEY" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="$trp:USER_ID" name="USER_ID" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="$trp:CONTEXT" name="CONTEXT" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="$trp:API_VERSION" name="API_VERSION" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="$trp:API_NAME" name="API_NAME" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="$trp:VERSION" name="VERSION" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="$trp:RESOURCE" name="RESOURCE" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="$trp:HTTP_METHOD" name="HTTP_METHOD" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="$trp:HOST_NAME" name="HOST_NAME" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="$trp:API_PUBLISHER" name="API_PUBLISHER" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="$trp:APPLICATION_NAME" name="APPLICATION_NAME" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+    <property expression="$trp:APPLICATION_ID" name="APPLICATION_ID" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
 </sequence>
