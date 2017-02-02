@@ -1,5 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="mediation.common.main.request.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.main.request.Sequence.xml</file>
-    </artifact>
-</artifacts>
+<?xml version="1.0" encoding="UTF-8"?><artifacts/>
