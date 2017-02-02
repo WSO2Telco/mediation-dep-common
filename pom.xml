@@ -8,10 +8,6 @@
   <packaging>pom</packaging>
   <name>mediation-dep-common</name>
   <description>mediation-dep-common</description>
-  <modules>
-    <module>com.wso2telco.dep.common</module>
-    <module>com.wso2telco.dep.common.synapse</module>
-  </modules>
   <build>
     <plugins>
       <plugin>
