@@ -19,8 +19,8 @@ public class NotificationURLModifyMediator extends AbstractMediator {
 			String serviceProvider = mc.getProperty("serviceProvider")
 					.toString();
 
-			APIService walletService = new APIService();
-			id = walletService.storeServiceProviderNotifyURLService(apiName,
+			APIService apiService = new APIService();
+			id = apiService.storeServiceProviderNotifyURLService(apiName,
 					spNotifyURL, serviceProvider);
 			generatedNotifyURL = notificationURL + "/" + id;
 
