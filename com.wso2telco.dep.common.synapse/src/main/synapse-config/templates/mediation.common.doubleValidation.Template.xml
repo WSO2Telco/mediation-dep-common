@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<template name="mediation.common.doubleZeroValidation.Template" xmlns="http://ws.apache.org/ns/synapse">
+<template name="mediation.common.doubleValidation.Template" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="paramName"/>
     <parameter name="paramValue"/>
     <parameter name="validationType"/>
     <sequence onError="mediation.common.response.unexpectedError.Sequence">
         <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
         <switch source="$func:validationType">
-            <case regex="^GE$">
-                <filter regex="(\+)?[0-9]+(\.[0-9]+)?$" source="$func:paramValue">
+            <case regex="^GE_ZERO$">
+                <filter regex="^([0-9]+(\.[0-9]+)?)$" source="$func:paramValue">
                     <then/>
                     <else>
                         <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
@@ -17,15 +17,15 @@
                     </else>
                 </filter>
             </case>
-            <case regex="^GT$">
-                <filter regex="(-)?[0-9]+(\.[0-9]+)?$" source="$func:paramValue">
-                    <then>
+            <case regex="^GT_ZERO$">
+                <filter regex="^(([1-9][0-9]+|[1-9])+(\.[0-9]+)?)$" source="$func:paramValue">
+                    <then/>
+                    <else>
                         <property name="messageId" scope="default" type="STRING" value="SVC0007"/>
                         <property name="errorText" scope="default" type="STRING" value="Invalid charging information"/>
                         <property name="errorVariable" scope="default" type="STRING" value=""/>
                         <sequence key="mediation.common.response.ServiceException.Sequence"/>
-                    </then>
-                    <else/>
+                    </else>
                 </filter>
             </case>
             <default>
