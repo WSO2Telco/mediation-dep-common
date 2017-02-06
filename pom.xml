@@ -11,8 +11,8 @@
   <modules>
     <module>com.wso2telco.dep.common.synapse</module>
     <module>com.wso2telco.dep.common.mediation</module>
-    <module>com.wso2telco.dep.common.capp</module>
     <module>com.wso2telco.dep.common.registry.resources</module>
+    <module>com.wso2telco.dep.common.capp</module>
   </modules>
   <build>
     <plugins>
