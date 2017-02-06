@@ -17,7 +17,7 @@
       <arg evaluator="xml" expression="get-property('errorVariable')" xmlns:ns="http://org.apache.synapse/xsd"/>
     </args>
   </payloadFactory>
-  <property expression="$ctx:httpStatusCode" name="HTTP_SC"
-    scope="axis2" type="STRING"/>
+  <property expression="$ctx:httpStatusCode" name="HTTP_SC" scope="axis2" type="STRING"/>
+  <property name="messageType" value="application/json" scope="axis2" type="STRING" />
   <respond/>
 </sequence>
