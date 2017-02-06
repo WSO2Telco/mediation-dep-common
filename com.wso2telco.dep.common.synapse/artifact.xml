@@ -17,4 +17,7 @@
     <artifact name="mediation.common.doubleZeroValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/templates/mediation.common.doubleZeroValidation.Template.xml</file>
     </artifact>
+    <artifact name="mediation.common.urlValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/mediation.common.urlValidation.Template.xml</file>
+    </artifact>
 </artifacts>
