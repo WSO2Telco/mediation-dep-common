@@ -19,6 +19,8 @@ public class OperatorValidationMediator extends AbstractMediator {
 		synContext.setProperty("messageId", messageId);
 		synContext.setProperty("errorText", errorText);
 		synContext.setProperty("errorVariable", errorVariable);
+		synContext.setProperty("httpStatusCode", "400");
+		synContext.setProperty("OPERATOR_VALIDATED", "false");
 	}
 
 	public boolean mediate(MessageContext synContext) {
@@ -67,6 +69,8 @@ public class OperatorValidationMediator extends AbstractMediator {
 			setErrorInContext(synContext, "SVC0001", "A service error occurred. Error code is %1", 
 					"Requested service is not provisioned");
 		}
+		
+		synContext.setProperty("OPERATOR_VALIDATED", "true");
 
 		return true;
 	}
