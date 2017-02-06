@@ -7,11 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.wso2telco.core.dbutils.DbUtils;
 import com.wso2telco.core.dbutils.util.DataSourceNames;
 import com.wso2telco.dep.common.mediation.util.DatabaseTables;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -37,8 +35,7 @@ public class APIDAO {
 			}
 
 			StringBuilder insertQueryString = new StringBuilder("INSERT INTO ");
-			insertQueryString.append(DatabaseTables.NOTIFY_URL_ENTRY
-					.getTableName());
+			insertQueryString.append(DatabaseTables.NOTIFY_URL_ENTRY);
 			insertQueryString
 					.append(" (api_name, notifyurl, service_provider) ");
 			insertQueryString.append("VALUES (?, ?, ?)");
@@ -96,8 +93,7 @@ public class APIDAO {
 			StringBuilder queryString = new StringBuilder(
 					"SELECT id, category ");
 			queryString.append("FROM ");
-			queryString.append(DatabaseTables.VALID_PAYMENT_CATEGORIES
-					.getTableName());
+			queryString.append(DatabaseTables.VALID_PAYMENT_CATEGORIES);
 
 			ps = con.prepareStatement(queryString.toString());
 
