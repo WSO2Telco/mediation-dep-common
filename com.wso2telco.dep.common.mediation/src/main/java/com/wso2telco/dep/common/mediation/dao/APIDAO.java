@@ -35,7 +35,7 @@ public class APIDAO {
 			}
 
 			StringBuilder insertQueryString = new StringBuilder("INSERT INTO ");
-			insertQueryString.append(DatabaseTables.NOTIFY_URL_ENTRY);
+			insertQueryString.append(DatabaseTables.NOTIFICATION_URLS);
 			insertQueryString
 					.append(" (api_name, notifyurl, service_provider) ");
 			insertQueryString.append("VALUES (?, ?, ?)");
