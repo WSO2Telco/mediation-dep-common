@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="mediation.common.mccMncValidator.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log level="custom">
+        <property expression="get-property('mcc')" name="Validation for mcc"/>
+        <property expression="get-property('mnc')" name="Validation for mnc"/>
+    </log>
+    <filter regex="true" source="boolean(get-property('mcc'))">
+        <then>
+            <filter regex="^[0-9]+" source="get-property('mcc')">
+                <then>
+                    <filter regex="^[0-9]+" source="get-property('mnc')">
+                        <then/>
+                        <else>
+                            <log level="custom">
+                                <property name="ERROR" value="mnc validation"/>
+                            </log>
+                            <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+                            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+                            <property name="httpStatusCode" scope="axis2" type="STRING" value="400"/>
+                            <property expression="fn:concat('mnc Value ',get-property('mnc'))" name="errorVariable" scope="default" type="STRING"/>
+                            <sequence key="mediation.common.response.ServiceException.Sequence"/>
+                        </else>
+                    </filter>
+                </then>
+                <else>
+                    <log level="custom">
+                        <property name="ERROR" value="mcc validation"/>
+                    </log>
+                    <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
+                    <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
+                    <property name="httpStatusCode" scope="axis2" type="STRING" value="400"/>
+                    <property expression="fn:concat('mcc Value ',get-property('mcc'))" name="errorVariable" scope="default" type="STRING"/>
+                    <sequence key="mediation.common.response.ServiceException.Sequence"/>
+                </else>
+            </filter>
+        </then>
+        <else/>
+    </filter>
+</sequence>
