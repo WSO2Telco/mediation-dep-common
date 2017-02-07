@@ -29,4 +29,7 @@
     <artifact name="mediation.common.purchaseCategoryCodeValidate.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.purchaseCategoryCodeValidate.Sequence.xml</file>
     </artifact>
+    <artifact name="mediation.common.mccMncValidator.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.common.mccMncValidator.Sequence.xml</file>
+    </artifact>
 </artifacts>
