@@ -6,33 +6,16 @@
     </log>
     <filter regex="true" source="boolean(get-property('mcc'))">
         <then>
-            <filter regex="^[0-9]+" source="get-property('mcc')">
-                <then>
-                    <filter regex="^[0-9]+" source="get-property('mnc')">
-                        <then/>
-                        <else>
-                            <log level="custom">
-                                <property name="ERROR" value="mnc validation"/>
-                            </log>
-                            <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
-                            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
-                            <property name="httpStatusCode" scope="axis2" type="STRING" value="400"/>
-                            <property expression="fn:concat('mnc Value ',get-property('mnc'))" name="errorVariable" scope="default" type="STRING"/>
-                            <sequence key="mediation.common.response.ServiceException.Sequence"/>
-                        </else>
-                    </filter>
-                </then>
-                <else>
-                    <log level="custom">
-                        <property name="ERROR" value="mcc validation"/>
-                    </log>
-                    <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
-                    <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
-                    <property name="httpStatusCode" scope="axis2" type="STRING" value="400"/>
-                    <property expression="fn:concat('mcc Value ',get-property('mcc'))" name="errorVariable" scope="default" type="STRING"/>
-                    <sequence key="mediation.common.response.ServiceException.Sequence"/>
-                </else>
-            </filter>
+            <call-template target="mediation.common.integerValidation.Template">
+                <with-param name="paramName" value="mcc"/>
+                <with-param name="paramValue" value="{get-property('mcc')}"/>
+                <with-param name="validationType" value="GE_ZERO"/>
+            </call-template>
+            <call-template target="mediation.common.integerValidation.Template">
+                <with-param name="paramName" value="mnc"/>
+                <with-param name="paramValue" value="{get-property('mnc')}"/>
+                <with-param name="validationType" value="GE_ZERO"/>
+            </call-template>
         </then>
         <else/>
     </filter>
