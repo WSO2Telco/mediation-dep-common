@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.common.main.request.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse"/>
+<sequence name="mediation.common.main.request.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <sequence key="mediation.common.main.property.Sequence"/>
+  <filter regex="[0-9]+" source="get-property('APPLICATION_ID')" xmlns:ns="http://org.apache.synapse/xsd">
+    <then>
+      <class name="com.wso2telco.dep.common.mediation.OperatorValidationMediator"/>
+      <filter regex="false" source="get-property('OPERATOR_VALIDATED')">
+        <then>
+          <sequence key="mediation.common.response.ServiceException.Sequence"/>
+        </then>
+        <else/>
+      </filter>
+    </then>
+    <else>
+      <property name="messageId" scope="default" type="STRING" value="SVC0001"/>
+      <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+      <property name="errorText" scope="default" type="STRING" value="A service error occurred. Error code is %1"/>
+      <property name="errorVariable" scope="default" type="STRING" value="Requested service is not provisioned"/>
+      <sequence key="mediation.common.responseServiceException.Sequence"/>
+    </else>
+  </filter>
+</sequence>

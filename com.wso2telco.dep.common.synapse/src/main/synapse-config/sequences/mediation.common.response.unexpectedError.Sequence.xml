@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="mediation.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log category="ERROR" level="full">
+        <property name="ERROR" value="Unexpected error. Returning error response"/>
+    </log>
+    <property action="remove" name="TRANSPORT_HEADERS" scope="axis2"/>
+    <property name="httpStatusCode" scope="default" type="STRING" value="500"/>
+    <property name="exceptionType" scope="default" type="STRING" value="POLICY_EXCEPTION"/>
+    <property name="messageId" scope="default" type="STRING" value="POL0299"/>
+    <property name="errorText" scope="default" type="STRING" value="Unexpected Error "/>
+    <property name="errorVariable" scope="default" type="STRING" value=""/>
+    <sequence key="mediation.common.response.exceptions.Sequence"/>
+</sequence>
