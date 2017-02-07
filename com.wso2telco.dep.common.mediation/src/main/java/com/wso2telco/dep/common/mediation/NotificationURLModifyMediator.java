@@ -6,6 +6,15 @@ import com.wso2telco.dep.common.mediation.service.APIService;
 
 public class NotificationURLModifyMediator extends AbstractMediator {
 
+	private void setErrorInContext(MessageContext synContext, String messageId,
+			String errorText, String errorVariable, String httpStatusCode) {
+
+		synContext.setProperty("messageId", messageId);
+		synContext.setProperty("errorText", errorText);
+		synContext.setProperty("errorVariable", errorVariable);
+		synContext.setProperty("httpStatusCode", httpStatusCode);
+	}
+
 	public boolean mediate(MessageContext mc) {
 
 		try {
@@ -29,6 +38,12 @@ public class NotificationURLModifyMediator extends AbstractMediator {
 
 			log.error("error in NotificationURLModifyMediator mediate : "
 					+ e.getMessage());
+			setErrorInContext(
+					mc,
+					"SVC0001",
+					"A service error occurred. Error code is %1",
+					"An internal service error has occured. Please try again later.",
+					"500");
 			mc.setProperty("INTERNAL_ERROR", "true");
 		}
 
