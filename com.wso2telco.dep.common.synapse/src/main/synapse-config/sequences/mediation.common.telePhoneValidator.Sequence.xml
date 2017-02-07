@@ -24,7 +24,9 @@
               <property
                 expression="fn:concat('endUserId Value ',get-property('endUserId'))"
                 name="errorVariable" scope="default" type="STRING"/>
-              <sequence key="mediation.common.response.ServiceException.Sequence"/>
+              <property name="exceptionType" scope="default"
+                type="STRING" value="SERVICE_EXCEPTION"/>
+              <sequence key="mediation.common.response.exceptions.Sequence"/>
             </else>
           </filter>
         </else>
