@@ -40,6 +40,7 @@ public class OperatorValidationMediator extends AbstractMediator {
 		if (validoperators.isEmpty()) {
 			setErrorInContext(synContext, "SVC0001", "A service error occurred. Error code is %1", 
 					"Requested service is not provisioned");
+			log.error("Couldn't find valid operators for the application ID");
 			return true;
 		}
 		
@@ -68,6 +69,8 @@ public class OperatorValidationMediator extends AbstractMediator {
 		if (validoperatorsDup.isEmpty()) {
 			setErrorInContext(synContext, "SVC0001", "A service error occurred. Error code is %1", 
 					"Requested service is not provisioned");
+			log.error("Couldn't find active operators from the valid operator list for the application ID and the API");
+			return true;
 		}
 		
 		synContext.setProperty("OPERATOR_VALIDATED", "true");
