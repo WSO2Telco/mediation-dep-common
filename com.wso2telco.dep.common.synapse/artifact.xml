@@ -14,6 +14,15 @@
     <artifact name="mediation.common.response.unexpectedError.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.response.unexpectedError.Sequence.xml</file>
     </artifact>
+    <artifact name="mediation.common.doubleValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/mediation.common.doubleValidation.Template.xml</file>
+    </artifact>
+    <artifact name="mediation.common.urlValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/mediation.common.urlValidation.Template.xml</file>
+    </artifact>
+    <artifact name="mediation.common.integerValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/mediation.common.integerValidation.Template.xml</file>
+    </artifact>
     <artifact name="mediation.common.notificationURLModify.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.notificationURLModify.Sequence.xml</file>
     </artifact>
