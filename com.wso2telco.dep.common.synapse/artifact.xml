@@ -5,8 +5,8 @@
     <artifact name="mediation.common.main.request.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.main.request.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.response.ServiceException.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.response.ServiceException.Sequence.xml</file>
+    <artifact name="mediation.common.response.exceptions.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.common.response.exceptions.Sequence.xml</file>
     </artifact>
     <artifact name="mediation.common.telephoneValidation.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.telePhoneValidator.Sequence.xml</file>

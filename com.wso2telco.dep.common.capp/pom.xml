@@ -22,7 +22,7 @@
     <com.wso2telco.dep.common.template_._mediation.common.doubleGEZeroValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.doubleGEZeroValidation.Template>
     <com.wso2telco.dep.common.template_._mediation.common.urlValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.urlValidation.Template>
     <com.wso2telco.dep.common.template_._mediation.common.doubleGTZeroValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.doubleGTZeroValidation.Template>
-    <com.wso2telco.dep.common.sequence_._mediation.common.response.ServiceException.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.response.ServiceException.Sequence>
+    <com.wso2telco.dep.common.sequence_._mediation.common.response.exceptions.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.response.exceptions.Sequence>
     <com.wso2telco.dep.common.sequence_._mediation.common.response.unexpectedError.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.response.unexpectedError.Sequence>
     <com.wso2telco.dep.common.resource_._notificationURL>capp/EnterpriseServiceBus</com.wso2telco.dep.common.resource_._notificationURL>
     <com.wso2telco.dep.common.sequence_._mediation.common.main.property.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.main.property.Sequence>
@@ -30,7 +30,7 @@
   <dependencies>
     <dependency>
       <groupId>com.wso2telco.dep.common.sequence</groupId>
-      <artifactId>mediation.common.response.ServiceException.Sequence</artifactId>
+      <artifactId>mediation.common.response.exceptions.Sequence</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>

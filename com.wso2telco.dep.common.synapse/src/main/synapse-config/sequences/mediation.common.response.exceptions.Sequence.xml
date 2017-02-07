@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="mediation.common.response.exceptions.Sequence"
+	trace="disable" xmlns="http://ws.apache.org/ns/synapse" onError="mediation.common.response.unexpectedError.Sequence">
+	
+	<switch source="$ctx:exceptionType">
+		<case regex="^SERVICE_EXCEPTION$">
+			<property name="exceptionType" action="set" value="serviceException"/>
+		</case>
+		<case regex="^POLICY_EXCEPTION$">
+			<property name="exceptionType" action="set" value="policyException"/>
+		</case>
+		<default>
+			<log level="custom" category="ERROR">
+				<property name="ERROR" value="invalid exception type. Should be either policy or service exception"/>
+			</log>
+			<sequence key="mediation.common.response.unexpectedError.Sequence"/>
+		</default>
+	</switch>
+		
+	<payloadFactory media-type="json">
+		<format>
+{
+    "requestError": {
+        "$1": {
+            "messageId": "$2",
+            "text": "$3",
+            "variables": "$4"
+        }
+    }
+}
+		</format>
+		<args>
+			<arg evaluator="xml" expression="get-property('exceptionType')" xmlns:ns="http://org.apache.synapse/xsd" />
+			<arg evaluator="xml" expression="get-property('messageId')" xmlns:ns="http://org.apache.synapse/xsd" />
+			<arg evaluator="xml" expression="get-property('errorText')" xmlns:ns="http://org.apache.synapse/xsd" />
+			<arg evaluator="xml" expression="get-property('errorVariable')" xmlns:ns="http://org.apache.synapse/xsd" />
+		</args>
+	</payloadFactory>
+	
+	<property expression="$ctx:httpStatusCode" name="HTTP_SC" scope="axis2" type="STRING" />
+	<property name="messageType" scope="axis2" type="STRING" value="application/json" />
+	<respond />
+</sequence>
