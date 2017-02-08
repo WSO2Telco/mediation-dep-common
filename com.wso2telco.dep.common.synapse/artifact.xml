@@ -35,4 +35,10 @@
     <artifact name="mediation.common.msisdnValidator.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/templates/mediation.common.msisdnValidator.Template.xml</file>
     </artifact>
+    <artifact name="mediation.common.integerOffsetAndLimitValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/mediation.common.integerOffsetAndLimitValidation.Template.xml</file>
+    </artifact>
+    <artifact name="mediation.common.mandatoryParameterValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/mediation.common.mandatoryParameterValidation.Template.xml</file>
+    </artifact>
 </artifacts>

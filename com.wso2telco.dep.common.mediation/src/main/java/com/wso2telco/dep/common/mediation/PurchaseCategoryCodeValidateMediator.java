@@ -7,20 +7,22 @@ import com.wso2telco.dep.common.mediation.service.APIService;
 public class PurchaseCategoryCodeValidateMediator extends AbstractMediator {
 
 	private void setErrorInContext(MessageContext synContext, String messageId,
-			String errorText, String errorVariable, String httpStatusCode) {
+			String errorText, String errorVariable, String httpStatusCode,
+			String exceptionType) {
 
 		synContext.setProperty("messageId", messageId);
 		synContext.setProperty("errorText", errorText);
 		synContext.setProperty("errorVariable", errorVariable);
 		synContext.setProperty("httpStatusCode", httpStatusCode);
+		synContext.setProperty("exceptionType", exceptionType);
 	}
 
-	public boolean mediate(MessageContext mc) {
+	public boolean mediate(MessageContext synContext) {
 
 		try {
 
-			String purchaseCategoryCode = mc
-					.getProperty("purchaseCategoryCode").toString();
+			String purchaseCategoryCode = synContext.getProperty(
+					"purchaseCategoryCode").toString();
 
 			APIService apiService = new APIService();
 			boolean isvalid = apiService
@@ -28,24 +30,26 @@ public class PurchaseCategoryCodeValidateMediator extends AbstractMediator {
 
 			if (!isvalid) {
 
-				setErrorInContext(mc, "POL0001",
+				setErrorInContext(synContext, "POL0001",
 						"A policy error occurred. Error code is %1",
 						"Invalid purchaseCategoryCode : "
-								+ purchaseCategoryCode, "400");
-				mc.setProperty("PURCHASE_CATEGORY_VALIDATED", "false");
+								+ purchaseCategoryCode, "400",
+						"POLICY_EXCEPTION");
+				synContext.setProperty("PURCHASE_CATEGORY_VALIDATED", "false");
 			}
 		} catch (Exception e) {
 
 			log.error("error in PurchaseCategoryCodeValidateMediator mediate : "
 					+ e.getMessage());
 			setErrorInContext(
-					mc,
+					synContext,
 					"SVC0001",
 					"A service error occurred. Error code is %1",
 					"An internal service error has occured. Please try again later.",
-					"500");
-			mc.setProperty("INTERNAL_ERROR", "true");
+					"500", "SERVICE_EXCEPTION");
+			synContext.setProperty("INTERNAL_ERROR", "true");
 		}
+
 		return true;
 	}
 }

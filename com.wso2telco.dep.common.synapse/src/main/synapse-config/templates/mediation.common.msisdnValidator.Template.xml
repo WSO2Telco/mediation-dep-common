@@ -4,9 +4,6 @@
     <parameter name="paramValue"/>
     <parameter name="paramArray"/>
     <sequence>
-        <log level="full">
-            <property expression="$func:paramName" name="paramName"/>
-        </log>
         <filter regex="tel:\+[a-zA-Z0-9]+" source="$func:paramValue" xmlns:ns="http://org.apache.synapse/xsd">
             <then/>
             <else>
