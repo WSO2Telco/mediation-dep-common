@@ -26,6 +26,7 @@
     <com.wso2telco.dep.common.template_._mediation.common.doubleGTZeroValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.doubleGTZeroValidation.Template>
     <com.wso2telco.dep.common.sequence_._mediation.common.response.unexpectedError.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.response.unexpectedError.Sequence>
     <com.wso2telco.dep.common.resource_._notificationURL>capp/EnterpriseServiceBus</com.wso2telco.dep.common.resource_._notificationURL>
+    <com.wso2telco.dep.common.resource_._mediationConfig_xml>capp/EnterpriseServiceBus</com.wso2telco.dep.common.resource_._mediationConfig_xml>
     <com.wso2telco.dep.common.sequence_._mediation.common.main.property.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.main.property.Sequence>
     <com.wso2telco.dep.common.sequence_._mediation.common.mccMncValidator.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.mccMncValidator.Sequence>
     <com.wso2telco.dep.common.sequence_._mediation.common.response.exceptions.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.response.exceptions.Sequence>
@@ -63,12 +64,6 @@
       <type>xml</type>
     </dependency>
     <dependency>
-      <groupId>com.wso2telco.dep.common.resource</groupId>
-      <artifactId>notificationURL</artifactId>
-      <version>1.0.0</version>
-      <type>zip</type>
-    </dependency>
-    <dependency>
       <groupId>com.wso2telco.dep.common.template</groupId>
       <artifactId>mediation.common.doubleValidation.Template</artifactId>
       <version>1.0.0</version>
@@ -103,6 +98,18 @@
       <artifactId>mediation.common.mccMncValidator.Sequence</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.resource</groupId>
+      <artifactId>mediationConfig_xml</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.resource</groupId>
+      <artifactId>notificationURL</artifactId>
+      <version>1.0.0</version>
+      <type>zip</type>
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.common.sequence</groupId>

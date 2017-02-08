@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="notificationURL" groupId="com.wso2telco.dep.common.resource" version="1.0.0" type="registry/resource" serverRole="GovernanceRegistry">
+    <artifact name="notificationURL" groupId="com.wso2telco.dep.common.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
         <item>
             <file>notificationURL.xml</file>
-            <path>/_system/governance/repository/wso2telco/configurations</path>
+            <path>/_system/config/repository/wso2telco/configurations</path>
+            <mediaType>application/xml</mediaType>
+        </item>
+    </artifact>
+    <artifact name="mediationConfig_xml" groupId="com.wso2telco.dep.common.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseServiceBus">
+        <item>
+            <file>mediationConfig.xml</file>
+            <path>/_system/config/repository/wso2telco/configurations</path>
             <mediaType>application/xml</mediaType>
         </item>
     </artifact>
