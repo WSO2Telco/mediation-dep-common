@@ -74,6 +74,16 @@ public class OperatorValidationMediator extends AbstractMediator {
 		}
 		
 		synContext.setProperty("OPERATOR_VALIDATED", "true");
+		
+		String validOperatorList = "";
+		for(OperatorApplicationDTO operatorObject : validoperators) {
+			if(!"".equals(validOperatorList)) {
+				validOperatorList += ",";
+			}
+			validOperatorList += operatorObject.getOperatorname();
+		}
+		
+		synContext.setProperty("VALID_OPERATORS", validOperatorList);
 
 		return true;
 	}
