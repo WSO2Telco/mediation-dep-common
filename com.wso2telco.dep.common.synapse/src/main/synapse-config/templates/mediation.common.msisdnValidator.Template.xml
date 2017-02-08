@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template name="mediation.common.msisdnValidator.Template" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="paramName"/>
+    <parameter name="paramValue"/>
+    <parameter name="paramArray"/>
+    <sequence>
+        <filter regex="tel:\+[a-zA-Z0-9]+" source="$func:paramValue" xmlns:ns="http://org.apache.synapse/xsd">
+            <then/>
+            <else>
+                <filter regex="tel:[a-zA-Z0-9]+" source="$func:paramValue">
+                    <then/>
+                    <else>
+                        <filter regex="\+[a-zA-Z0-9]+" source="$func:paramValue">
+                            <then/>
+                            <else>
+                                <log category="ERROR" level="full">
+                                    <property name="ERROR" value="returning error response"/>
+                                </log>
+                                <property name="messageId" scope="default" type="STRING" value="SVC0004"/>
+                                <property expression="fn:concat($func:paramName, ' format invalid. %1')" name="errorText" scope="default" type="STRING"/>
+                                <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+                                <filter xpath="boolean($func:paramArray)">
+                                    <then>
+                                        <property expression="$func:paramArray" name="errorVariable" scope="default" type="STRING"/>
+                                    </then>
+                                    <else>
+                                        <property expression="$func:paramValue" name="errorVariable" scope="default" type="STRING"/>
+                                    </else>
+                                </filter>
+                                <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+                                <sequence key="mediation.common.response.exceptions.Sequence"/>
+                            </else>
+                        </filter>
+                    </else>
+                </filter>
+            </else>
+        </filter>
+    </sequence>
+</template>
