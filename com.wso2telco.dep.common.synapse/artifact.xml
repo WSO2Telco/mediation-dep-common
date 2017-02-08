@@ -8,9 +8,6 @@
     <artifact name="mediation.common.response.exceptions.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.response.exceptions.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.telephoneValidation.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.telePhoneValidator.Sequence.xml</file>
-    </artifact>
     <artifact name="mediation.common.response.unexpectedError.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.response.unexpectedError.Sequence.xml</file>
     </artifact>
@@ -31,5 +28,11 @@
     </artifact>
     <artifact name="mediation.common.mccMncValidator.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.mccMncValidator.Sequence.xml</file>
+    </artifact>
+    <artifact name="mediation.common.channelValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/mediation.common.channelValidation.Template.xml</file>
+    </artifact>
+    <artifact name="mediation.common.msisdnValidator.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/mediation.common.msisdnValidator.Template.xml</file>
     </artifact>
 </artifacts>
