@@ -6,6 +6,7 @@
       <class name="com.wso2telco.dep.common.mediation.OperatorValidationMediator"/>
       <filter regex="false" source="get-property('OPERATOR_VALIDATED')">
         <then>
+          <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
           <sequence key="mediation.common.response.ServiceException.Sequence"/>
         </then>
         <else/>
@@ -16,7 +17,8 @@
       <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
       <property name="errorText" scope="default" type="STRING" value="A service error occurred. Error code is %1"/>
       <property name="errorVariable" scope="default" type="STRING" value="Requested service is not provisioned"/>
-      <sequence key="mediation.common.responseServiceException.Sequence"/>
+      <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+      <sequence key="mediation.common.response.exceptions.Sequence"/>
     </else>
   </filter>
 </sequence>
