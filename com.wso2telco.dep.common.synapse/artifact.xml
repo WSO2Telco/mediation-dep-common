@@ -32,4 +32,7 @@
     <artifact name="mediation.common.mccMncValidator.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.mccMncValidator.Sequence.xml</file>
     </artifact>
+    <artifact name="mediation.common.integerOffsetAndLimitValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/mediation.common.integerOffsetAndLimitValidation.Template.xml</file>
+    </artifact>
 </artifacts>
