@@ -4,9 +4,9 @@
     <parameter name="paramValue"/>
     <parameter name="expectedValue"/>
     <sequence>
-        <filter regex="true" source="fn:normalize-space($func:paramValue)">
+        <filter regex="true" source="boolean(fn:normalize-space($func:paramValue))">
             <then>
-                <filter regex="true" source="fn:normalize-space($func:expectedValue)">
+                <filter regex="true" source="boolean(fn:normalize-space($func:expectedValue))">
                     <then>
                         <filter regex="$func:expectedValue" source="$func:paramValue">
                             <then/>
