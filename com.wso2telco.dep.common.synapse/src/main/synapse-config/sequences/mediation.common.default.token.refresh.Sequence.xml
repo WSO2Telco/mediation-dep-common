@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="mediation.common.default.token.refresh.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <header expression="get-property('TOKEN_URL')" name="To" scope="default"/>
+  <property expression="get-property('TOKEN_AUTH')" name="Authorization"
+    scope="transport" type="STRING"/>
+  <payloadFactory media-type="json">
+    <format>
+            {
+"grant_type":"refresh_token",
+"refresh_token":"$1"
+}
+            </format>
+    <args>
+      <arg evaluator="xml" expression="get-property('REFRESH_TOKEN')" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </args>
+  </payloadFactory>
+  <property name="messageType" scope="axis2" type="STRING" value="application/x-www-form-urlencoded"/>
+  <call blocking="true">
+    <endpoint>
+      <default trace="disable"/>
+    </endpoint>
+  </call>
+  <property expression="json-eval($.access_token)" name="ACCESS_TOKEN"
+    scope="default" type="STRING"/>
+  <property expression="json-eval($.refresh_token)" name="REFRESH_TOKEN"
+    scope="default" type="STRING"/>
+</sequence>

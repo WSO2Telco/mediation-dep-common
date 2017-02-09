@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="mediation.common.default.token.retriever.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <class name="com.wso2telco.dep.common.mediation.DefaultTokenRetrieverMediator"/>
+  <filter regex="false" source="get-property('INTERNAL_ERROR')">
+    <then>
+      <filter regex="true" source="get-property('TOKEN_EXPIRED')">
+        <then>
+          <sequence key="mediation.common.default.token.refresh.Sequence"/>
+        </then>
+        <else/>
+      </filter>
+    </then>
+    <else>
+      <sequence key="mediation.common.response.exceptions.Sequence"/>
+    </else>
+  </filter>
+</sequence>
