@@ -139,6 +139,7 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 			String apiEndpoint = validOperatorendpoint.getEndpoint()
 					+ resourcePath;
 			synContext.setProperty("API_ENDPOINT", apiEndpoint);
+			synContext.setProperty("OPERATOR_NAME", operator.toUpperCase());
 		} catch (Exception e) {
 
 			log.error("error in EndpointRetrieverMediator mediate : "
