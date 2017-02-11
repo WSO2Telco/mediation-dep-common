@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="mediation.common.select.token.Sequence.xml"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <property
+    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
+    name="mediationConfig" scope="default" type="OM"/>
+  <property expression="$ctx:mediationConfig//tokenPoolService/enable"
+    name="TOKEN_POOL_SERVICE_ENABLED" scope="default" type="STRING"/>
+  <filter regex="true" source="get-property('TOKEN_POOL_SERVICE_ENABLED')">
+    <then>
+      <property expression="$ctx:mediationConfig//tokenPoolService/url"
+        name="TOKEN_POOL_SERVICE_URL" scope="default" type="STRING"/>
+      <sequence key="mediation.common.token.pool.retriever.Sequence"/>
+    </then>
+    <else>
+      <sequence key="mediation.common.default.token.retriever.Sequence"/>
+    </else>
+  </filter>
+</sequence>

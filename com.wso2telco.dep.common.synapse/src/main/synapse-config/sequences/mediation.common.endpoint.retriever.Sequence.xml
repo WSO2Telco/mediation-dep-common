@@ -7,4 +7,16 @@
   <property expression="$ctx:mediationConfig//searchOperatorOnHeader"
     name="SEARCH_OPERATOR_ON_HEADER" scope="default" type="STRING"/>
   <class name="com.wso2telco.dep.common.mediation.EndpointRetrieverMediator"/>
+  <filter regex="true" source="get-property('ENDPOINT_ERROR')">
+    <then>
+      <sequence key="mediation.common.response.exceptions.Sequence"/>
+    </then>
+    <else/>
+  </filter>
+  <filter regex="true" source="get-property('INTERNAL_ERROR')">
+    <then>
+      <sequence key="mediation.common.response.exceptions.Sequence"/>
+    </then>
+    <else/>
+  </filter>
 </sequence>

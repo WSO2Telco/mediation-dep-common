@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="mediation.common.token.pool.service.Endpoint" xmlns="http://ws.apache.org/ns/synapse">
+  <http method="get" trace="disable" uri-template="{uri.var.TOKEN_POOL_ENDPOINT}"/>
+</endpoint>

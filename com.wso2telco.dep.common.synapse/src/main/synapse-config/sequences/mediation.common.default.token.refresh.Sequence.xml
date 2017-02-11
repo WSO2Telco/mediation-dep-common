@@ -6,23 +6,21 @@
     scope="transport" type="STRING"/>
   <payloadFactory media-type="json">
     <format>
-            {
-"grant_type":"refresh_token",
-"refresh_token":"$1"
-}
-            </format>
+			{
+			"grant_type":"refresh_token",
+			"refresh_token":"$1"
+			}
+		</format>
     <args>
       <arg evaluator="xml" expression="get-property('REFRESH_TOKEN')" xmlns:ns="http://org.apache.synapse/xsd"/>
     </args>
   </payloadFactory>
   <property name="messageType" scope="axis2" type="STRING" value="application/x-www-form-urlencoded"/>
-  <call blocking="true">
-    <endpoint>
-      <default trace="disable"/>
-    </endpoint>
-  </call>
+  <call blocking="true"/>
   <property expression="json-eval($.access_token)" name="ACCESS_TOKEN"
     scope="default" type="STRING"/>
   <property expression="json-eval($.refresh_token)" name="REFRESH_TOKEN"
+    scope="default" type="STRING"/>
+  <property expression="json-eval($.expires_in)" name="TOKEN_VALIDITY"
     scope="default" type="STRING"/>
 </sequence>
