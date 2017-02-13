@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="mediation.common.token.pool.retriever.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <property
+    expression="fn:concat($ctx:TOKEN_POOL_SERVICE_URL,'/',$ctx:OPERATOR_ID)"
+    name="uri.var.TOKEN_POOL_ENDPOINT" scope="default" type="STRING"/>
+  <call>
+    <endpoint key="mediation.common.token.pool.service.Endpoint"/>
+  </call>
+  <property name="ContentType" scope="axis2" type="STRING" value="text/plain"/>
+  <property expression="$body/m0:text" name="ACCESS_TOKEN"
+    scope="default" type="STRING"
+    xmlns:m0="http://ws.apache.org/commons/ns/payload" xmlns:ns="http://org.apache.synapse/xsd"/>
+</sequence>

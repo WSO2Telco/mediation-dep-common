@@ -50,4 +50,13 @@
     <artifact name="mediation.common.default.token.refresh.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.default.token.refresh.Sequence.xml</file>
     </artifact>
+    <artifact name="mediation.common.select.token.Sequence.xml" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.common.select.token.Sequence.xml.xml</file>
+    </artifact>
+    <artifact name="mediation.common.token.pool.retriever.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.common.token.pool.retriever.Sequence.xml</file>
+    </artifact>
+    <artifact name="mediation.common.token.pool.service.Endpoint" groupId="com.wso2telco.dep.common.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/mediation.common.token.pool.service.Endpoint.xml</file>
+    </artifact>
 </artifacts>

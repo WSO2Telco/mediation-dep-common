@@ -5,4 +5,8 @@
 	<retry_on_fail>true</retry_on_fail>
 	<retry_count>3</retry_count>
 	<numberOfThreads>5</numberOfThreads>
+	<tokenPoolService>
+		<enable>false</enable>
+		<utl>http://localhost:8181/tokenservice</utl>
+	</tokenPoolService>
 </mediationConfig>
