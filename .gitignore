@@ -16,7 +16,6 @@ hs_err_pid*
 target
 .classpath
 .settings
-.project
 *.iml
 *.iws
 *.releaseBackup
