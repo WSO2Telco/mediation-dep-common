@@ -98,7 +98,7 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 				String mcc = null;
 
 				// mcc not known in mediator
-				log.debug("unable to obtain operator from the header and check for mcc_number_range table"
+				log.debug("unable to obtain operator from the header and check for mcc_number_range table "
 						+ operator
 						+ " mcc :"
 						+ mcc

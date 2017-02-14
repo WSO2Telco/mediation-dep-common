@@ -41,7 +41,7 @@ public class DefaultTokenRetrieverMediator extends AbstractMediator {
 			for (OperatorApplicationDTO dto : validOperators) {
 
 				if (dto.getOperatorname() != null
-						&& dto.getOperatorname().contains(operatorName)) {
+						&& dto.getOperatorname().equalsIgnoreCase(operatorName)) {
 
 					operatorApplicationDTO = dto;
 					break;
