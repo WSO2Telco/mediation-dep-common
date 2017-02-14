@@ -21,8 +21,8 @@ public class PurchaseCategoryCodeValidateMediator extends AbstractMediator {
 
 		try {
 
-			String purchaseCategoryCode = synContext.getProperty(
-					"purchaseCategoryCode").toString();
+			String purchaseCategoryCode = (String) synContext
+					.getProperty("purchaseCategoryCode");
 
 			APIService apiService = new APIService();
 			boolean isvalid = apiService
