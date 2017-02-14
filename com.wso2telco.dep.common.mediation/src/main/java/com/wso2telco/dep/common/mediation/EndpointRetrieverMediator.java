@@ -3,6 +3,9 @@ package com.wso2telco.dep.common.mediation;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.wso2telco.core.mnc.resolver.ConfigLoader;
+import com.wso2telco.core.mnc.resolver.DataHolder;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 import com.wso2telco.core.mnc.resolver.MNCQueryClient;
@@ -40,21 +43,15 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 			String operator = null;
 			operatorEndpoints = new OparatorService().getOperatorEndpoints();
 			String apiName = (String) synContext.getProperty("API_NAME");
-			log.info("api name : " + apiName);
 			String requestMSISDN = (String) synContext.getProperty("MSISDN");
-			log.info("msisdn : " + requestMSISDN);
 			String countryCodes = (String) synContext
 					.getProperty("SEARCH_OPERATOR_ON_HEADER");
-			log.info("country code list : " + countryCodes);
 			String headerOperatorName = (String) synContext
 					.getProperty("OPERATOR");
-			log.info("operator name in header : " + headerOperatorName);
 			String validOperatorList = (String) synContext
 					.getProperty("VALID_OPERATORS");
-			log.info("valid operator list : " + validOperatorList);
 			String resourcePath = (String) synContext
 					.getProperty("RESOURCE_PATH");
-			log.info("resource path : " + resourcePath);
 
 			/**
 			 * MSISDN provided at JSon body convert into Phone number object.
@@ -107,6 +104,7 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 						+ mcc
 						+ "msisdn: "
 						+ msisdn.toString());
+				DataHolder.getInstance().setMobileCountryConfig(ConfigLoader.getInstance().getMobileCountryConfig());
 				operator = mncQueryclient.QueryNetwork(mcc, msisdn.toString());
 			}
 
@@ -145,12 +143,9 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 			String apiEndpoint = validOperatorendpoint.getEndpoint()
 					+ resourcePath;
 			synContext.setProperty("API_ENDPOINT", apiEndpoint);
-			log.info("api endpoint : " + apiEndpoint);
 			synContext.setProperty("OPERATOR_ID",
 					validOperatorendpoint.getOperatorid());
-			log.info("operator id : " + validOperatorendpoint.getOperatorid());
 			synContext.setProperty("OPERATOR_NAME", operator.toUpperCase());
-			log.info("operator name : " + operator.toUpperCase());
 		} catch (Exception e) {
 
 			log.error("error in EndpointRetrieverMediator mediate : "
