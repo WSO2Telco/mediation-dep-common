@@ -40,15 +40,21 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 			String operator = null;
 			operatorEndpoints = new OparatorService().getOperatorEndpoints();
 			String apiName = synContext.getProperty("API_NAME").toString();
+			log.info("api name : " + apiName);
 			String requestMSISDN = synContext.getProperty("MSISDN").toString();
+			log.info("api msisdn : " + requestMSISDN);
 			String countryCodes = synContext.getProperty(
 					"SEARCH_OPERATOR_ON_HEADER").toString();
+			log.info("country code list : " + countryCodes);
 			String headerOperatorName = synContext.getProperty("OPERATOR")
 					.toString();
+			log.info("operator name in header : " + headerOperatorName);
 			String validOperatorList = synContext
 					.getProperty("VALID_OPERATORS").toString();
+			log.info("valid operator list : " + validOperatorList);
 			String resourcePath = synContext.getProperty("RESOURCE_PATH")
 					.toString();
+			log.info("resource path : " + resourcePath);
 
 			/**
 			 * MSISDN provided at JSon body convert into Phone number object.
@@ -139,9 +145,12 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 			String apiEndpoint = validOperatorendpoint.getEndpoint()
 					+ resourcePath;
 			synContext.setProperty("API_ENDPOINT", apiEndpoint);
+			log.info("api endpoint : " + apiEndpoint);
 			synContext.setProperty("OPERATOR_ID",
 					validOperatorendpoint.getOperatorid());
+			log.info("operator id : " + validOperatorendpoint.getOperatorid());
 			synContext.setProperty("OPERATOR_NAME", operator.toUpperCase());
+			log.info("operator name : " + operator.toUpperCase());
 		} catch (Exception e) {
 
 			log.error("error in EndpointRetrieverMediator mediate : "
