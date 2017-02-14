@@ -7,6 +7,6 @@
 	<numberOfThreads>5</numberOfThreads>
 	<tokenPoolService>
 		<enable>false</enable>
-		<utl>http://localhost:8181/tokenservice</utl>
+		<url>http://localhost:8181/tokenservice</url>
 	</tokenPoolService>
 </mediationConfig>
