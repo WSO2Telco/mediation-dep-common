@@ -22,14 +22,14 @@ public class DefaultTokenUpdaterMediator extends AbstractMediator {
 
 		try {
 
-			int operatorId = Integer.parseInt(synContext.getProperty(
-					"OPERATOR_ID").toString());
-			String accessToken = synContext.getProperty("ACCESS_TOKEN")
-					.toString();
-			String refreshToken = synContext.getProperty("REFRESH_TOKEN")
-					.toString();
-			long tokenValidity = Long.parseLong(synContext.getProperty(
-					"TOKEN_VALIDITY").toString());
+			int operatorId = Integer.parseInt((String) synContext
+					.getProperty("OPERATOR_ID"));
+			String accessToken = (String) synContext
+					.getProperty("ACCESS_TOKEN");
+			String refreshToken = (String) synContext
+					.getProperty("REFRESH_TOKEN");
+			long tokenValidity = Long.parseLong((String) synContext
+					.getProperty("TOKEN_VALIDITY"));
 			long tokentime = new Date().getTime();
 
 			OparatorService operatorService = new OparatorService();

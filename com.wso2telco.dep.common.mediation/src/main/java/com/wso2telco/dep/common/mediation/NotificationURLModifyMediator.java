@@ -23,12 +23,11 @@ public class NotificationURLModifyMediator extends AbstractMediator {
 
 			Integer id = 0;
 			String generatedNotifyURL = null;
-			String apiName = synContext.getProperty("API_NAME").toString();
-			String spNotifyURL = synContext.getProperty("notifyURL").toString();
-			String notificationURL = synContext.getProperty("NOTIFICATION_URL")
-					.toString();
-			String serviceProvider = synContext.getProperty("USER_ID")
-					.toString();
+			String apiName = (String) synContext.getProperty("API_NAME");
+			String spNotifyURL = (String) synContext.getProperty("notifyURL");
+			String notificationURL = (String) synContext
+					.getProperty("NOTIFICATION_URL");
+			String serviceProvider = (String) synContext.getProperty("USER_ID");
 
 			APIService apiService = new APIService();
 			id = apiService.storeServiceProviderNotifyURLService(apiName,

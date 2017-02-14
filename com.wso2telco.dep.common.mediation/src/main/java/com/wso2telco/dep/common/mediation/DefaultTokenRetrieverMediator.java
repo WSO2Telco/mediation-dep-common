@@ -26,11 +26,11 @@ public class DefaultTokenRetrieverMediator extends AbstractMediator {
 
 		try {
 
-			String applicationId = synContext.getProperty("APPLICATION_ID")
-					.toString();
-			String operatorName = synContext.getProperty("OPERATOR_NAME")
-					.toString();
-			String requestId = synContext.getProperty("REQUEST_ID").toString();
+			String applicationId = (String) synContext
+					.getProperty("APPLICATION_ID");
+			String operatorName = (String) synContext
+					.getProperty("OPERATOR_NAME");
+			String requestId = (String) synContext.getProperty("REQUEST_ID");
 			OparatorService operatorService = new OparatorService();
 			OperatorApplicationDTO operatorApplicationDTO = null;
 			String token = null;

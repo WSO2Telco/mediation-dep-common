@@ -39,21 +39,21 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 
 			String operator = null;
 			operatorEndpoints = new OparatorService().getOperatorEndpoints();
-			String apiName = synContext.getProperty("API_NAME").toString();
+			String apiName = (String) synContext.getProperty("API_NAME");
 			log.info("api name : " + apiName);
-			String requestMSISDN = synContext.getProperty("MSISDN").toString();
-			log.info("api msisdn : " + requestMSISDN);
-			String countryCodes = synContext.getProperty(
-					"SEARCH_OPERATOR_ON_HEADER").toString();
+			String requestMSISDN = (String) synContext.getProperty("MSISDN");
+			log.info("msisdn : " + requestMSISDN);
+			String countryCodes = (String) synContext
+					.getProperty("SEARCH_OPERATOR_ON_HEADER");
 			log.info("country code list : " + countryCodes);
-			String headerOperatorName = synContext.getProperty("OPERATOR")
-					.toString();
+			String headerOperatorName = (String) synContext
+					.getProperty("OPERATOR");
 			log.info("operator name in header : " + headerOperatorName);
-			String validOperatorList = synContext
-					.getProperty("VALID_OPERATORS").toString();
+			String validOperatorList = (String) synContext
+					.getProperty("VALID_OPERATORS");
 			log.info("valid operator list : " + validOperatorList);
-			String resourcePath = synContext.getProperty("RESOURCE_PATH")
-					.toString();
+			String resourcePath = (String) synContext
+					.getProperty("RESOURCE_PATH");
 			log.info("resource path : " + resourcePath);
 
 			/**
