@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<template name="mediation.common.mandatoryParameterValidation.Template" xmlns="http://ws.apache.org/ns/synapse">
+<template name="mediation.common.mandatoryParameterValueValidation.Template" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="paramName"/>
     <parameter name="paramValue"/>
     <parameter name="expectedValue"/>
     <sequence>
-        <filter regex="true" source="boolean($func:paramValue)">
+        <filter regex="true" source="boolean(fn:normalize-space($func:paramValue))">
             <then>
-                <filter regex="true" source="boolean($func:expectedValue)">
+                <filter regex="true" source="boolean(fn:normalize-space($func:expectedValue))">
                     <then>
                         <filter regex="$func:expectedValue" source="$func:paramValue">
                             <then/>
@@ -23,14 +23,7 @@
                     <else/>
                 </filter>
             </then>
-            <else>
-                <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
-                <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
-                <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
-                <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
-                <property expression="fn:concat('Missing mandatory parameter: ', $func:paramName)" name="errorVariable" scope="default" type="STRING"/>
-                <sequence key="mediation.common.response.exceptions.Sequence"/>
-            </else>
+            <else/>
         </filter>
     </sequence>
 </template>

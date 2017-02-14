@@ -17,6 +17,7 @@
     <com.wso2telco.dep.common.endpoint_._mediation.common.token.pool.service.Endpoint>capp/EnterpriseServiceBus</com.wso2telco.dep.common.endpoint_._mediation.common.token.pool.service.Endpoint>
     <com.wso2telco.dep.common.template_._mediation.common.msisdnValidator.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.msisdnValidator.Template>
     <com.wso2telco.dep.common.resource_._notificationURL>capp/EnterpriseServiceBus</com.wso2telco.dep.common.resource_._notificationURL>
+    <com.wso2telco.dep.common.template_._mediation.common.integerOffsetAndLimitValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.integerOffsetAndLimitValidation.Template>
     <com.wso2telco.dep.common.sequence_._mediation.common.mccMncValidator.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.mccMncValidator.Sequence>
     <com.wso2telco.dep.common.template_._mediation.common.urlValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.urlValidation.Template>
     <com.wso2telco.dep.common.template_._mediation.common.integerValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.integerValidation.Template>
@@ -27,14 +28,15 @@
     <com.wso2telco.dep.common.sequence_._mediation.common.notificationURLModify.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.notificationURLModify.Sequence>
     <com.wso2telco.dep.common.template_._mediation.common.doubleGTZeroValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.doubleGTZeroValidation.Template>
     <com.wso2telco.dep.common.sequence_._mediation.common.token.pool.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.token.pool.retriever.Sequence>
-    <com.wso2telco.dep.common.sequence_._mediation.common.select.token.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.select.token.Sequence>
     <com.wso2telco.dep.common.resource_._mediationConfig_xml>capp/EnterpriseServiceBus</com.wso2telco.dep.common.resource_._mediationConfig_xml>
-    <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,lib/registry/handlers=jar,service/rule=aar,lib/registry/filter=jar,synapse/message-store=xml,event/stream=json,service/meta=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,synapse/api=xml,wso2/gadget=dar,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
+    <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,service/rule=aar,synapse/message-store=xml,event/stream=json,service/meta=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,wso2/gadget=dar,synapse/api=xml,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
     <com.wso2telco.dep.common.sequence_._mediation.common.purchaseCategoryCodeValidate.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.purchaseCategoryCodeValidate.Sequence>
+    <com.wso2telco.dep.common.template_._mediation.common.mandatoryParameterValueValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.mandatoryParameterValueValidation.Template>
     <com.wso2telco.dep.common.sequence_._mediation.common.main.request.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.main.request.Sequence>
     <com.wso2telco.dep.common.sequence_._mediation.common.default.token.refresh.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.default.token.refresh.Sequence>
     <com.wso2telco.dep.common.sequence_._mediation.common.response.unexpectedError.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.response.unexpectedError.Sequence>
     <com.wso2telco.dep.common.sequence_._mediation.common.default.token.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.default.token.retriever.Sequence>
+    <com.wso2telco.dep.common.sequence_._mediation.common.select.token.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.select.token.Sequence>
     <com.wso2telco.dep.common.template_._mediation.common.channelValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.channelValidation.Template>
     <com.wso2telco.dep.common.template_._mediation.common.doubleGEZeroValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.doubleGEZeroValidation.Template>
   </properties>
@@ -156,6 +158,18 @@
     <dependency>
       <groupId>com.wso2telco.dep.common.sequence</groupId>
       <artifactId>mediation.common.token.pool.retriever.Sequence</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.template</groupId>
+      <artifactId>mediation.common.mandatoryParameterValueValidation.Template</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.template</groupId>
+      <artifactId>mediation.common.integerOffsetAndLimitValidation.Template</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
