@@ -72,6 +72,7 @@ public class DefaultTokenRetrieverMediator extends AbstractMediator {
 						+ " request id : " + requestId);
 				synContext.setProperty("ACCESS_TOKEN", token);
 				synContext.setProperty("TOKEN_EXPIRED", "false");
+				synContext.setProperty("INTERNAL_ERROR", "false");
 			} else {
 
 				log.info("regenerating the token of " + operatorName
@@ -85,6 +86,7 @@ public class DefaultTokenRetrieverMediator extends AbstractMediator {
 						operatorApplicationDTO.getTokenauth());
 
 				synContext.setProperty("TOKEN_EXPIRED", "true");
+				synContext.setProperty("INTERNAL_ERROR", "false");
 			}
 		} catch (Exception e) {
 
