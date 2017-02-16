@@ -51,7 +51,7 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 			String validOperatorList = (String) synContext
 					.getProperty("VALID_OPERATORS");
 			String resourcePath = (String) synContext
-					.getProperty("RESOURCE_PATH");
+					.getProperty("RESOURCE");
 
 			/**
 			 * MSISDN provided at JSon body convert into Phone number object.
