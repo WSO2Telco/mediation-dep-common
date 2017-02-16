@@ -50,8 +50,7 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 					.getProperty("OPERATOR");
 			String validOperatorList = (String) synContext
 					.getProperty("VALID_OPERATORS");
-			String resourcePath = (String) synContext
-					.getProperty("RESOURCE");
+			String resourcePath = (String) synContext.getProperty("RESOURCE");
 
 			/**
 			 * MSISDN provided at JSon body convert into Phone number object.
@@ -104,7 +103,8 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 						+ mcc
 						+ "msisdn: "
 						+ msisdn.toString());
-				DataHolder.getInstance().setMobileCountryConfig(ConfigLoader.getInstance().getMobileCountryConfig());
+				DataHolder.getInstance().setMobileCountryConfig(
+						ConfigLoader.getInstance().getMobileCountryConfig());
 				operator = mncQueryclient.QueryNetwork(mcc, msisdn.toString());
 			}
 
@@ -142,6 +142,8 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 
 			String apiEndpoint = validOperatorendpoint.getEndpoint()
 					+ resourcePath;
+			synContext.setProperty("OPERATOR_ENDPOINT",
+					validOperatorendpoint.getEndpoint());
 			synContext.setProperty("API_ENDPOINT", apiEndpoint);
 			synContext.setProperty("OPERATOR_ID",
 					validOperatorendpoint.getOperatorid());
