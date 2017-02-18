@@ -26,4 +26,6 @@
     scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
   <property expression="$trp:operator" name="OPERATOR" scope="default"
     type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <property expression="$trp:REQUEST_ID" name="REQUEST_ID"
+    scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
 </sequence>
