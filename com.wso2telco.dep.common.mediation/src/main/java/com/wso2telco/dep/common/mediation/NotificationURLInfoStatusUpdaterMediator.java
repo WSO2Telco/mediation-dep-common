@@ -2,9 +2,10 @@ package com.wso2telco.dep.common.mediation;
 
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
+
 import com.wso2telco.dep.common.mediation.service.APIService;
 
-public class PurchaseCategoryCodeValidateMediator extends AbstractMediator {
+public class NotificationURLInfoStatusUpdaterMediator extends AbstractMediator {
 
 	private void setErrorInContext(MessageContext synContext, String messageId,
 			String errorText, String errorVariable, String httpStatusCode,
@@ -21,27 +22,15 @@ public class PurchaseCategoryCodeValidateMediator extends AbstractMediator {
 
 		try {
 
-			String purchaseCategoryCode = (String) synContext
-					.getProperty("purchaseCategoryCode");
+			String notifyurldid = (String) synContext
+					.getProperty("NOTIFY_URL_ID");
 
 			APIService apiService = new APIService();
-			boolean isvalid = apiService
-					.validatePurchaseCategoryCode(purchaseCategoryCode);
-
-			if (!isvalid) {
-
-				log.error("purchase category code : " + purchaseCategoryCode
-						+ " is invalid");
-				setErrorInContext(synContext, "POL0001",
-						"A policy error occurred. Error code is %1",
-						"Invalid purchaseCategoryCode : "
-								+ purchaseCategoryCode, "400",
-						"POLICY_EXCEPTION");
-				synContext.setProperty("PURCHASE_CATEGORY_VALIDATED", "false");
-			}
+			apiService.updateNotificationURLInformationStatus(Integer
+					.parseInt(notifyurldid));
 		} catch (Exception e) {
 
-			log.error("error in PurchaseCategoryCodeValidateMediator mediate : "
+			log.error("error in NotificationURLInfoStatusUpdaterMediator mediate : "
 					+ e.getMessage());
 			setErrorInContext(
 					synContext,

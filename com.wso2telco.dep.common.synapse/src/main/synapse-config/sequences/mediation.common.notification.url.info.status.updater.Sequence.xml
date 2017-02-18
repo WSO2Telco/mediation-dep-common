@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence
+  name="mediation.common.notification.url.info.status.updater.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <class name="com.wso2telco.dep.common.mediation.NotificationURLInfoStatusUpdaterMediator"/>
+  <filter regex="true" source="get-property('INTERNAL_ERROR')">
+    <then>
+      <sequence key="mediation.common.response.exceptions.Sequence"/>
+    </then>
+    <else/>
+  </filter>
+</sequence>

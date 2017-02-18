@@ -62,4 +62,10 @@
     <artifact name="mediation.common.call.endpoint.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.call.endpoint.Sequence.xml</file>
     </artifact>
+    <artifact name="mediation.common.notification.url.info.status.updater.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.common.notification.url.info.status.updater.Sequence.xml</file>
+    </artifact>
+    <artifact name="mediation.common.notification.url.retriever.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.common.notification.url.retriever.Sequence.xml</file>
+    </artifact>
 </artifacts>
