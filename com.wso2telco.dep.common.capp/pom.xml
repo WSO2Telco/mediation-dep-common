@@ -25,7 +25,7 @@
     <com.wso2telco.dep.common.sequence_._mediation.common.endpoint.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.endpoint.retriever.Sequence>
     <com.wso2telco.dep.common.sequence_._mediation.common.main.property.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.main.property.Sequence>
     <com.wso2telco.dep.common.template_._mediation.common.doubleValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.doubleValidation.Template>
-    <com.wso2telco.dep.common.sequence_._mediation.common.notificationURLModify.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.notificationURLModify.Sequence>
+    <com.wso2telco.dep.common.sequence_._mediation.common.notification.url.modify.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.notification.url.modify.Sequence>
     <com.wso2telco.dep.common.template_._mediation.common.doubleGTZeroValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.doubleGTZeroValidation.Template>
     <com.wso2telco.dep.common.sequence_._mediation.common.token.pool.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.token.pool.retriever.Sequence>
     <com.wso2telco.dep.common.sequence_._mediation.common.notification.url.info.status.updater.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.notification.url.info.status.updater.Sequence>
@@ -88,7 +88,7 @@
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.common.sequence</groupId>
-      <artifactId>mediation.common.notificationURLModify.Sequence</artifactId>
+      <artifactId>mediation.common.notification.url.modify.Sequence</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
