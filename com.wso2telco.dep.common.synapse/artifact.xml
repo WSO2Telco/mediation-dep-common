@@ -23,8 +23,8 @@
     <artifact name="mediation.common.notification.url.modify.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.notification.url.modify.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.purchaseCategoryCodeValidate.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.purchaseCategoryCodeValidate.Sequence.xml</file>
+    <artifact name="mediation.common.purchase.category.code.validate.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.common.purchase.category.code.validate.Sequence.xml</file>
     </artifact>
     <artifact name="mediation.common.mccMncValidator.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.mccMncValidator.Sequence.xml</file>
@@ -67,5 +67,8 @@
     </artifact>
     <artifact name="mediation.common.notification.url.retriever.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/mediation.common.notification.url.retriever.Sequence.xml</file>
+    </artifact>
+    <artifact name="mediation.common.call.notification.endpoint.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/mediation.common.call.notification.endpoint.Sequence.xml</file>
     </artifact>
 </artifacts>
