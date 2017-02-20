@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="mediation.common.call.notification.endpoint.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
   <header expression="get-property('NOTIFY_INFO_URL')" name="To" scope="default"/>
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
   <call blocking="true">
