@@ -211,7 +211,7 @@ public class APIDAO {
 
 			ps = con.prepareStatement(queryString.toString());
 
-			ps.setInt(1, 0);
+			ps.setInt(1, 1);
 			ps.setInt(2, notifyurldid);
 
 			log.debug("sql query in updateNotificationURLInformationStatus : "
