@@ -7,7 +7,7 @@
       <filter regex="false" source="get-property('OPERATOR_VALIDATED')">
         <then>
           <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
-          <sequence key="mediation.common.response.ServiceException.Sequence"/>
+          <sequence key="mediation.common.response.exceptions.Sequence"/>
         </then>
         <else/>
       </filter>
