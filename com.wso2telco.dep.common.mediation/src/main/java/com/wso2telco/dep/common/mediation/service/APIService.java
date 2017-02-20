@@ -14,14 +14,15 @@ public class APIService {
 	}
 
 	public Integer storeServiceProviderNotifyURLService(String apiName,
-			String notifyURL, String serviceProvider) throws Exception {
+			String notifyURL, String serviceProvider, String clientCorrelator)
+			throws Exception {
 
 		Integer newId = 0;
 
 		try {
 
 			newId = apiDAO.insertServiceProviderNotifyURL(apiName, notifyURL,
-					serviceProvider);
+					serviceProvider, clientCorrelator);
 		} catch (Exception e) {
 
 			throw e;

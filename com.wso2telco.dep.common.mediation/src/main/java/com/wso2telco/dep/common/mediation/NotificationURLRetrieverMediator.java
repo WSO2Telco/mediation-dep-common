@@ -42,6 +42,8 @@ public class NotificationURLRetrieverMediator extends AbstractMediator {
 						notificationURLInformation.get("serviceprovider"));
 				synContext.setProperty("NOTIFY_INFO_STATUS",
 						notificationURLInformation.get("notifystatus"));
+				synContext.setProperty("NOTIFY_INFO_CLIENT_CORRELATOR",
+						notificationURLInformation.get("clientCorrelator"));
 				synContext.setProperty("EMPTY_NOTIFY_URL_INFO", "false");
 			} else {
 

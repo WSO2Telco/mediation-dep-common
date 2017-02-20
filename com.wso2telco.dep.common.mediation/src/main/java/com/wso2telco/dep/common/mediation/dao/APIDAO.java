@@ -22,8 +22,8 @@ public class APIDAO {
 	private final Log log = LogFactory.getLog(APIDAO.class);
 
 	public Integer insertServiceProviderNotifyURL(String apiName,
-			String notifyURL, String serviceProvider) throws SQLException,
-			Exception {
+			String notifyURL, String serviceProvider, String clientCorrelator)
+			throws SQLException, Exception {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -40,8 +40,9 @@ public class APIDAO {
 
 			StringBuilder insertQueryString = new StringBuilder("INSERT INTO ");
 			insertQueryString.append(DatabaseTables.NOTIFICATION_URLS);
-			insertQueryString.append(" (apiname, notifyurl, serviceprovider) ");
-			insertQueryString.append("VALUES (?, ?, ?)");
+			insertQueryString
+					.append(" (apiname, notifyurl, serviceprovider, clientCorrelator) ");
+			insertQueryString.append("VALUES (?, ?, ?, ?)");
 
 			ps = con.prepareStatement(insertQueryString.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -49,6 +50,7 @@ public class APIDAO {
 			ps.setString(1, apiName);
 			ps.setString(2, notifyURL);
 			ps.setString(3, serviceProvider);
+			ps.setString(4, clientCorrelator);
 
 			log.debug("sql query in insertServiceProviderNotifyURL : " + ps);
 
@@ -144,7 +146,7 @@ public class APIDAO {
 			}
 
 			StringBuilder queryString = new StringBuilder(
-					"SELECT apiname, notifyurl, serviceprovider, notifystatus ");
+					"SELECT apiname, notifyurl, serviceprovider, notifystatus, clientCorrelator ");
 			queryString.append("FROM ");
 			queryString.append(DatabaseTables.NOTIFICATION_URLS);
 			queryString.append(" WHERE notifyurldid = ?");
@@ -167,6 +169,8 @@ public class APIDAO {
 						rs.getString("serviceprovider"));
 				notificationURLInformation.put("notifystatus",
 						String.valueOf(rs.getInt("notifystatus")));
+				notificationURLInformation.put("clientCorrelator",
+						String.valueOf(rs.getInt("clientCorrelator")));
 			}
 		} catch (SQLException e) {
 
