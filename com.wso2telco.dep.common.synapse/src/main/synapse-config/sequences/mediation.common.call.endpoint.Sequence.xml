@@ -5,7 +5,7 @@
     expression="fn:concat('Bearer ',get-property('ACCESS_TOKEN'))"
     name="Authorization" scope="transport" type="STRING"/>
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
-  <call blocking="true">
+  <call>
     <endpoint>
       <default trace="disable"/>
     </endpoint>
