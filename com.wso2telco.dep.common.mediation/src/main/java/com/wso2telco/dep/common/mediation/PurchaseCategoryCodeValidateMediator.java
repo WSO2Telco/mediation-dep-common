@@ -30,6 +30,8 @@ public class PurchaseCategoryCodeValidateMediator extends AbstractMediator {
 
 			if (!isvalid) {
 
+				log.error("purchase category code : " + purchaseCategoryCode
+						+ " is invalid");
 				setErrorInContext(synContext, "POL0001",
 						"A policy error occurred. Error code is %1",
 						"Invalid purchaseCategoryCode : "

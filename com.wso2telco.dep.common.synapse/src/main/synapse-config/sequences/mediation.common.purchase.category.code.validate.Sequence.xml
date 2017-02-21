@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.common.purchaseCategoryCodeValidate.Sequence"
+<sequence
+  name="mediation.common.purchase.category.code.validate.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <class name="com.wso2telco.dep.common.mediation.PurchaseCategoryCodeValidateMediator"/>
 </sequence>

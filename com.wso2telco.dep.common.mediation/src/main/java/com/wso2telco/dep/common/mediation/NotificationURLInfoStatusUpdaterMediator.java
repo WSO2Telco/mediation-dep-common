@@ -2,9 +2,10 @@ package com.wso2telco.dep.common.mediation;
 
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
+
 import com.wso2telco.dep.common.mediation.service.APIService;
 
-public class NotificationURLModifyMediator extends AbstractMediator {
+public class NotificationURLInfoStatusUpdaterMediator extends AbstractMediator {
 
 	private void setErrorInContext(MessageContext synContext, String messageId,
 			String errorText, String errorVariable, String httpStatusCode,
@@ -21,25 +22,15 @@ public class NotificationURLModifyMediator extends AbstractMediator {
 
 		try {
 
-			Integer id = 0;
-			String generatedNotifyURL = null;
-			String apiName = (String) synContext.getProperty("API_NAME");
-			String spNotifyURL = (String) synContext.getProperty("notifyURL");
-			String clientCorrelator = (String) synContext.getProperty("clientCorrelator");
-			String notificationURL = (String) synContext
-					.getProperty("NOTIFICATION_URL");
-			String serviceProvider = (String) synContext.getProperty("USER_ID");
+			String notifyurldid = (String) synContext
+					.getProperty("NOTIFY_URL_ID");
 
 			APIService apiService = new APIService();
-			id = apiService.storeServiceProviderNotifyURLService(apiName,
-					spNotifyURL, serviceProvider, clientCorrelator);
-			generatedNotifyURL = notificationURL + "/" + id;
-
-			synContext.setProperty("generatedNotifyURL", generatedNotifyURL);
-			synContext.setProperty("notifyURLTableId", id);
+			apiService.updateNotificationURLInformationStatus(Integer
+					.parseInt(notifyurldid));
 		} catch (Exception e) {
 
-			log.error("error in NotificationURLModifyMediator mediate : "
+			log.error("error in NotificationURLInfoStatusUpdaterMediator mediate : "
 					+ e.getMessage());
 			setErrorInContext(
 					synContext,
