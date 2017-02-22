@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template name="mediation.common.clientCorrelator.generator.Template" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="clientCorrelator"/>
+    <sequence>
+        <filter xpath="not(boolean(fn:normalize-space($func:clientCorrelator)))">
+            <then>
+                <property expression="get-property('REQUEST_ID')" name="uniqueClientCorrelator" scope="default" type="STRING"/>
+            </then>
+            <else>
+                <property expression="fn:concat($func:clientCorrelator , ':' , get-property('REQUEST_ID'))" name="uniqueClientCorrelator" scope="default" type="STRING"/>
+            </else>
+        </filter>
+    </sequence>
+</template>

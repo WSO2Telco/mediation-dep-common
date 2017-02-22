@@ -39,6 +39,7 @@
     <com.wso2telco.dep.common.sequence_._mediation.common.purchase.category.code.validate.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.purchase.category.code.validate.Sequence>
     <com.wso2telco.dep.common.sequence_._mediation.common.response.unexpectedError.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.response.unexpectedError.Sequence>
     <com.wso2telco.dep.common.sequence_._mediation.common.default.token.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.default.token.retriever.Sequence>
+    <com.wso2telco.dep.common.template_._mediation.common.clientCorrelator.generator.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.clientCorrelator.generator.Template>
     <com.wso2telco.dep.common.sequence_._mediation.common.select.token.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.select.token.Sequence>
     <com.wso2telco.dep.common.template_._mediation.common.channelValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.channelValidation.Template>
     <com.wso2telco.dep.common.sequence_._mediation.common.call.endpoint.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._mediation.common.call.endpoint.Sequence>
@@ -198,6 +199,12 @@
     <dependency>
       <groupId>com.wso2telco.dep.common.sequence</groupId>
       <artifactId>mediation.common.call.notification.endpoint.Sequence</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.template</groupId>
+      <artifactId>mediation.common.clientCorrelator.generator.Template</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
