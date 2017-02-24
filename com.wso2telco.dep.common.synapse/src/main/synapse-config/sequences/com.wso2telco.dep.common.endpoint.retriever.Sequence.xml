@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.common.endpoint.retriever.Sequence"
+<sequence name="com.wso2telco.dep.common.endpoint.retriever.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <property
     expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
@@ -9,13 +9,13 @@
   <class name="com.wso2telco.dep.common.mediation.EndpointRetrieverMediator"/>
   <filter regex="true" source="get-property('ENDPOINT_ERROR')">
     <then>
-      <sequence key="mediation.common.response.exceptions.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
     </then>
     <else/>
   </filter>
   <filter regex="true" source="get-property('INTERNAL_ERROR')">
     <then>
-      <sequence key="mediation.common.response.exceptions.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
     </then>
     <else/>
   </filter>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.common.call.endpoint.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+<sequence name="com.wso2telco.dep.common.call.endpoint.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <header expression="get-property('API_ENDPOINT')" name="To" scope="default"/>
   <property
     expression="fn:concat('Bearer ',get-property('ACCESS_TOKEN'))"
@@ -51,12 +51,12 @@
                 type="STRING" value="POLICY_EXCEPTION"/>
             </then>
             <else>
-              <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+              <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
             </else>
           </filter>
         </else>
       </filter>
-      <sequence key="mediation.common.response.exceptions.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
     </else>
   </filter>
 </sequence>

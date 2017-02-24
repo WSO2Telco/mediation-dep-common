@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+<sequence name="com.wso2telco.dep.common.response.unexpectedError.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
     <log category="ERROR" level="full">
         <property name="ERROR" value="Unexpected error. Returning error response"/>
     </log>
@@ -9,5 +9,5 @@
     <property name="messageId" scope="default" type="STRING" value="POL0299"/>
     <property name="errorText" scope="default" type="STRING" value="Unexpected Error "/>
     <property name="errorVariable" scope="default" type="STRING" value=""/>
-    <sequence key="mediation.common.response.exceptions.Sequence"/>
+    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
 </sequence>

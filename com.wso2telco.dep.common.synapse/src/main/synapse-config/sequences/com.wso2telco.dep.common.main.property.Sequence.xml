@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.common.main.property.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+<sequence name="com.wso2telco.dep.common.main.property.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <property expression="$trp:CONSUMER_KEY" name="CONSUMER_KEY"
     scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
   <property expression="$trp:USER_ID" name="USER_ID" scope="default"

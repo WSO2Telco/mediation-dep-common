@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.common.main.request.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-  <sequence key="mediation.common.main.property.Sequence"/>
+<sequence name="com.wso2telco.dep.common.main.request.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <sequence key="com.wso2telco.dep.common.main.property.Sequence"/>
   <filter regex="[0-9]+" source="get-property('APPLICATION_ID')" xmlns:ns="http://org.apache.synapse/xsd">
     <then>
       <class name="com.wso2telco.dep.common.mediation.OperatorValidationMediator"/>
       <filter regex="false" source="get-property('OPERATOR_VALIDATED')">
         <then>
           <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
-          <sequence key="mediation.common.response.exceptions.Sequence"/>
+          <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
         </then>
         <else/>
       </filter>
@@ -18,7 +18,7 @@
       <property name="errorText" scope="default" type="STRING" value="A service error occurred. Error code is %1"/>
       <property name="errorVariable" scope="default" type="STRING" value="Requested service is not provisioned"/>
       <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
-      <sequence key="mediation.common.response.exceptions.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
     </else>
   </filter>
 </sequence>

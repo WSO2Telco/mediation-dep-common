@@ -1,77 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?><artifacts>
-    <artifact name="mediation.common.main.property.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.main.property.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.main.property.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.main.property.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.main.request.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.main.request.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.main.request.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.main.request.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.response.exceptions.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.response.exceptions.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.response.exceptions.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.response.exceptions.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.response.unexpectedError.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.response.unexpectedError.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.response.unexpectedError.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.response.unexpectedError.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.doubleValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/templates/mediation.common.doubleValidation.Template.xml</file>
+    <artifact name="com.wso2telco.dep.common.doubleValidation.Template" groupId="com.wso2telco.dep.common.template" version="2.0.0-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/com.wso2telco.dep.common.doubleValidation.Template.xml</file>
     </artifact>
-    <artifact name="mediation.common.urlValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/templates/mediation.common.urlValidation.Template.xml</file>
+    <artifact name="com.wso2telco.dep.common.urlValidation.Template" groupId="com.wso2telco.dep.common.template" version="2.0.0-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/com.wso2telco.dep.common.urlValidation.Template.xml</file>
     </artifact>
-    <artifact name="mediation.common.integerValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/templates/mediation.common.integerValidation.Template.xml</file>
+    <artifact name="com.wso2telco.dep.common.integerValidation.Template" groupId="com.wso2telco.dep.common.template" version="2.0.0-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/com.wso2telco.dep.common.integerValidation.Template.xml</file>
     </artifact>
-    <artifact name="mediation.common.notification.url.modify.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.notification.url.modify.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.notification.url.modify.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.notification.url.modify.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.purchase.category.code.validate.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.purchase.category.code.validate.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.purchase.category.code.validate.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.purchase.category.code.validate.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.mccMncValidator.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.mccMncValidator.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.mccMncValidator.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.mccMncValidator.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.channelValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/templates/mediation.common.channelValidation.Template.xml</file>
+    <artifact name="com.wso2telco.dep.common.channelValidation.Template" groupId="com.wso2telco.dep.common.template" version="2.0.0-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/com.wso2telco.dep.common.channelValidation.Template.xml</file>
     </artifact>
-    <artifact name="mediation.common.msisdnValidator.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/templates/mediation.common.msisdnValidator.Template.xml</file>
+    <artifact name="com.wso2telco.dep.common.msisdnValidator.Template" groupId="com.wso2telco.dep.common.template" version="2.0.0-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/com.wso2telco.dep.common.msisdnValidator.Template.xml</file>
     </artifact>
-    <artifact name="mediation.common.integerOffsetAndLimitValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/templates/mediation.common.integerOffsetAndLimitValidation.Template.xml</file>
+    <artifact name="com.wso2telco.dep.common.integerOffsetAndLimitValidation.Template" groupId="com.wso2telco.dep.common.template" version="2.0.0-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/com.wso2telco.dep.common.integerOffsetAndLimitValidation.Template.xml</file>
     </artifact>
-    <artifact name="mediation.common.mandatoryParameterValueValidation.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/templates/mediation.common.mandatoryParameterValueValidation.Template.xml</file>
+    <artifact name="com.wso2telco.dep.common.mandatoryParameterValueValidation.Template" groupId="com.wso2telco.dep.common.template" version="2.0.0-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/com.wso2telco.dep.common.mandatoryParameterValueValidation.Template.xml</file>
     </artifact>
-    <artifact name="mediation.common.endpoint.retriever.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.endpoint.retriever.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.endpoint.retriever.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.endpoint.retriever.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.default.token.retriever.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.default.token.retriever.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.default.token.retriever.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.default.token.retriever.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.default.token.refresh.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.default.token.refresh.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.default.token.refresh.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.default.token.refresh.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.select.token.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.select.token.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.select.token.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.select.token.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.token.pool.retriever.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.token.pool.retriever.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.token.pool.retriever.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.token.pool.retriever.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.token.pool.service.Endpoint" groupId="com.wso2telco.dep.common.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/endpoints/mediation.common.token.pool.service.Endpoint.xml</file>
+    <artifact name="com.wso2telco.dep.common.token.pool.service.Endpoint" groupId="com.wso2telco.dep.common.endpoint" version="2.0.0-SNAPSHOT" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/com.wso2telco.dep.common.token.pool.service.Endpoint.xml</file>
     </artifact>
-    <artifact name="mediation.common.call.endpoint.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.call.endpoint.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.call.endpoint.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.call.endpoint.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.notification.url.info.status.updater.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.notification.url.info.status.updater.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.notification.url.info.status.updater.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.notification.url.info.status.updater.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.notification.url.retriever.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.notification.url.retriever.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.notification.url.retriever.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.notification.url.retriever.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.call.notification.endpoint.Sequence" groupId="com.wso2telco.dep.common.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/sequences/mediation.common.call.notification.endpoint.Sequence.xml</file>
+    <artifact name="com.wso2telco.dep.common.call.notification.endpoint.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.call.notification.endpoint.Sequence.xml</file>
     </artifact>
-    <artifact name="mediation.common.clientCorrelator.generator.Template" groupId="com.wso2telco.dep.common.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/templates/mediation.common.clientCorrelator.generator.Template.xml</file>
+    <artifact name="com.wso2telco.dep.common.clientCorrelator.generator.Template" groupId="com.wso2telco.dep.common.template" version="2.0.0-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/com.wso2telco.dep.common.clientCorrelator.generator.Template.xml</file>
     </artifact>
 </artifacts>

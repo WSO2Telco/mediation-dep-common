@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<template name="mediation.common.msisdnValidator.Template" xmlns="http://ws.apache.org/ns/synapse">
+<template name="com.wso2telco.dep.common.msisdnValidator.Template" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="paramName"/>
     <parameter name="paramValue"/>
     <parameter name="paramArray"/>
@@ -28,7 +28,7 @@
                                     </else>
                                 </filter>
                                 <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
-                                <sequence key="mediation.common.response.exceptions.Sequence"/>
+                                <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
                             </else>
                         </filter>
                     </else>
