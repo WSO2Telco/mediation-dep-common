@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.common.response.exceptions.Sequence"
-  onError="mediation.common.response.unexpectedError.Sequence"
+<sequence name="com.wso2telco.dep.common.response.exceptions.Sequence"
+  onError="com.wso2telco.dep.common.response.unexpectedError.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <switch source="$ctx:exceptionType">
     <case regex="^SERVICE_EXCEPTION$">
@@ -13,7 +13,7 @@
       <log category="ERROR" level="custom">
         <property name="ERROR" value="invalid exception type. Should be either policy or service exception"/>
       </log>
-      <sequence key="mediation.common.response.unexpectedError.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
     </default>
   </switch>
   <payloadFactory media-type="json">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.common.mccMncValidator.Sequence"
+<sequence name="com.wso2telco.dep.common.mccMncValidator.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <log level="custom">
     <property expression="get-property('mcc')" name="Validation for mcc"/>
@@ -7,12 +7,12 @@
   </log>
   <filter regex="true" source="boolean(get-property('mcc'))">
     <then>
-      <call-template target="mediation.common.integerValidation.Template">
+      <call-template target="com.wso2telco.dep.common.integerValidation.Template">
         <with-param name="paramName" value="mcc"/>
         <with-param name="paramValue" value="{get-property('mcc')}"/>
         <with-param name="validationType" value="GE_ZERO"/>
       </call-template>
-      <call-template target="mediation.common.integerValidation.Template">
+      <call-template target="com.wso2telco.dep.common.integerValidation.Template">
         <with-param name="paramName" value="mnc"/>
         <with-param name="paramValue" value="{get-property('mnc')}"/>
         <with-param name="validationType" value="GE_ZERO"/>

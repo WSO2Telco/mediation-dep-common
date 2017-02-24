@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequence name="mediation.common.notification.url.retriever.Sequence"
+<sequence name="com.wso2telco.dep.common.notification.url.retriever.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <class name="com.wso2telco.dep.common.mediation.NotificationURLRetrieverMediator"/>
   <filter regex="true" source="get-property('INTERNAL_ERROR')">
     <then>
-      <sequence key="mediation.common.response.exceptions.Sequence"/>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
     </then>
     <else>
       <filter regex="true" source="get-property('EMPTY_NOTIFY_URL_INFO')">
         <then>
-          <sequence key="mediation.common.response.exceptions.Sequence"/>
+          <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
         </then>
         <else/>
       </filter>
