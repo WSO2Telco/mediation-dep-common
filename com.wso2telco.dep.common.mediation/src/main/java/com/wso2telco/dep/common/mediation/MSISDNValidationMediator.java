@@ -76,7 +76,7 @@ public class MSISDNValidationMediator extends AbstractMediator{
 		return true;
 	}
 	
-	public synchronized void setError(MessageContext synContext, ServiceError error, String value) {
+	public void setError(MessageContext synContext, ServiceError error, String value) {
 		synContext.setProperty("messageId", error.getMessageId());
 		synContext.setProperty("errorText", error.getErrorText());
 		synContext.setProperty("errorVariable", error.getErrorVariable()+value);
