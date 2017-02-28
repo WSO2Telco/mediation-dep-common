@@ -4,34 +4,32 @@
     <parameter name="paramValue"/>
     <parameter name="paramArray"/>
     <sequence>
-        <filter regex="tel:\+[a-zA-Z0-9]+" source="$func:paramValue" xmlns:ns="http://org.apache.synapse/xsd">
-            <then/>
+        <property
+            expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
+            name="MEDIATION_CONFIG" scope="default" type="OM"/>
+        <property expression="$ctx:MEDIATION_CONFIG//msisdn_regex"
+            name="MSISDN_REGEX" scope="default" type="STRING"/>
+
+        <property expression="$func:paramValue" name="MSISDN_VALUE"
+                  scope="default" type="STRING"/>
+
+        <property expression="$func:paramName"
+            name="MSISDN_PARAM_NAME" scope="default" type="STRING"/>
+
+        <property expression="$func:paramArray"
+            name="MSISDN_PARAM_ARRAY" scope="default" type="STRING"/>
+
+        <class name="com.wso2telco.dep.common.mediation.MSISDNValidationMediator"/>
+        <filter regex="true" source="get-property('INTERNAL_ERROR')">
+            <then>
+                <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+            </then>
             <else>
-                <filter regex="tel:[a-zA-Z0-9]+" source="$func:paramValue">
-                    <then/>
-                    <else>
-                        <filter regex="\+[a-zA-Z0-9]+" source="$func:paramValue">
-                            <then/>
-                            <else>
-                                <log category="ERROR" level="full">
-                                    <property name="ERROR" value="returning error response"/>
-                                </log>
-                                <property name="messageId" scope="default" type="STRING" value="SVC0004"/>
-                                <property expression="fn:concat($func:paramName, ' format invalid. %1')" name="errorText" scope="default" type="STRING"/>
-                                <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
-                                <filter xpath="boolean($func:paramArray)">
-                                    <then>
-                                        <property expression="$func:paramArray" name="errorVariable" scope="default" type="STRING"/>
-                                    </then>
-                                    <else>
-                                        <property expression="$func:paramValue" name="errorVariable" scope="default" type="STRING"/>
-                                    </else>
-                                </filter>
-                                <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
-                                <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-                            </else>
-                        </filter>
-                    </else>
+                <filter regex="false" source="get-property('MSISDN_VALID')">
+                    <then>
+                        <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+                    </then>
+                    <else/>
                 </filter>
             </else>
         </filter>
