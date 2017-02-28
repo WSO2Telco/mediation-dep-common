@@ -6,18 +6,18 @@
     <sequence>
         <property
             expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
-            name="mediationConfig" scope="default" type="OM"/>
-        <property expression="$ctx:mediationConfig//msisdn_regex"
-            name="msisdn_regex" scope="default" type="STRING"/>
+            name="MEDIATION_CONFIG" scope="default" type="OM"/>
+        <property expression="$ctx:MEDIATION_CONFIG//msisdn_regex"
+            name="MSISDN_REGEX" scope="default" type="STRING"/>
 
-        <property expression="$func:paramValue" name="msisdn_value"
+        <property expression="$func:paramValue" name="MSISDN_VALUE"
                   scope="default" type="STRING"/>
 
         <property expression="$func:paramName"
-            name="msisdn_paramName" scope="default" type="STRING"/>
+            name="MSISDN_PARAM_NAME" scope="default" type="STRING"/>
 
         <property expression="$func:paramArray"
-            name="msisdn_paramArray" scope="default" type="STRING"/>
+            name="MSISDN_PARAM_ARRAY" scope="default" type="STRING"/>
 
         <class name="com.wso2telco.dep.common.mediation.MSISDNValidationMediator"/>
         <filter regex="true" source="get-property('INTERNAL_ERROR')">
