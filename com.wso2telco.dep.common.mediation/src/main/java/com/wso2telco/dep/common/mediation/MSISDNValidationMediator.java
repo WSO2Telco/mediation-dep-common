@@ -16,8 +16,6 @@
  ******************************************************************************/
 
 package com.wso2telco.dep.common.mediation;
-
-import com.wso2telco.dep.common.mediation.util.ContextModifier;
 import com.wso2telco.dep.common.mediation.util.ServiceError;
 import org.apache.commons.logging.LogFactory;
 import org.apache.synapse.MessageContext;
