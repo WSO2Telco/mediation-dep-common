@@ -235,7 +235,7 @@ public class APIDAO {
 	}
 	
 	public String getAttributeValueForCode(String tableName, String operatorName, String attributeGroupCode,
-			String attributeCode) throws SQLException, Exception {
+			String attributeCode) throws Exception {
 
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -274,9 +274,6 @@ public class APIDAO {
 				attributeValue = resultSet.getString("attributeValue");
 			}
 
-		} catch (SQLException ex) {
-			log.error("database operation error in getAttributeValueForCode :", ex);
-			throw ex;
 		} catch (Exception ex) {
 			log.error("database operation error in getAttributeValueForCode :", ex);
 			throw ex;

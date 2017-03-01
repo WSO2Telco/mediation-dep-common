@@ -109,7 +109,7 @@ public class APIService {
 			attributeValue = apiDAO.getAttributeValueForCode(tableName, operatorName, attributeGroupCode,
 					attributeCode);
 		} catch (Exception ex) {
-			log.error("Error while retrieving attribute value");
+			log.error("Error while retrieving attribute value", ex);
 			throw ex;
 		}
 
