@@ -14,6 +14,7 @@
 
 	    <script language="js">
 	    	<![CDATA[
+	    		var isValidMsisdn = false;
 	    	    var paramValue = mc.getProperty("paramValue");
 				var regExp = new RegExp(mc.getProperty("msisdnRegex"));
 				
@@ -22,9 +23,8 @@
 	  		]]>  
 	    </script>   
             
-        <filter regex="^true$" source="$ctx:isValidMsisdn" xmlns:ns="http://org.apache.synapse/xsd">
-            <then/>
-            <else>
+        <filter regex="^false$" source="$ctx:isValidMsisdn" xmlns:ns="http://org.apache.synapse/xsd">
+            <then>
 	            <log category="ERROR" level="full">
 	                <property name="ERROR" value="returning error response"/>
 	            </log>
@@ -41,7 +41,8 @@
 	            </filter>
 	            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
 	            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-            </else>
+            </then>
+            <else/>
         </filter>
     </sequence>
 </template>
