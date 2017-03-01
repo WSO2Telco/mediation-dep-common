@@ -3,11 +3,17 @@ package com.wso2telco.dep.common.mediation.service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.wso2telco.dep.common.mediation.dao.APIDAO;
 
 public class APIService {
 
 	APIDAO apiDAO;
+	
+	private final Log log = LogFactory.getLog(APIService.class);
 
 	{
 		apiDAO = new APIDAO();
@@ -93,5 +99,20 @@ public class APIService {
 
 			throw e;
 		}
+	}
+	
+	public String getAttributeValueForCode(String tableName, String operatorName, String attributeGroupCode,
+			String attributeCode) throws Exception {
+		String attributeValue = null;
+
+		try {
+			attributeValue = apiDAO.getAttributeValueForCode(tableName, operatorName, attributeGroupCode,
+					attributeCode);
+		} catch (Exception ex) {
+			log.error("Error while retrieving attribute value", ex);
+			throw ex;
+		}
+
+		return attributeValue;
 	}
 }
