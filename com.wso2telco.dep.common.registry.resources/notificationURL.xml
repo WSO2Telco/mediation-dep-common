@@ -1,4 +1,5 @@
 <notificationURL>
 	<wallet>https://10.10.12.13:8280/wallet/v1/walletnotification</wallet>
 	<credit>https://10.10.12.13:8280/credit/v1/creditnotification</credit>
+	<provisioning>https://localhost:8280/provisioning/v1/provisioningnotification</provisioning>
 </notificationURL>

@@ -3,37 +3,46 @@
     <parameter name="paramName"/>
     <parameter name="paramValue"/>
     <parameter name="paramArray"/>
-    <sequence>
-        <filter regex="tel:\+[a-zA-Z0-9]+" source="$func:paramValue" xmlns:ns="http://org.apache.synapse/xsd">
-            <then/>
-            <else>
-                <filter regex="tel:[a-zA-Z0-9]+" source="$func:paramValue">
-                    <then/>
-                    <else>
-                        <filter regex="\+[a-zA-Z0-9]+" source="$func:paramValue">
-                            <then/>
-                            <else>
-                                <log category="ERROR" level="full">
-                                    <property name="ERROR" value="returning error response"/>
-                                </log>
-                                <property name="messageId" scope="default" type="STRING" value="SVC0004"/>
-                                <property expression="fn:concat($func:paramName, ' format invalid. %1')" name="errorText" scope="default" type="STRING"/>
-                                <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
-                                <filter xpath="boolean($func:paramArray)">
-                                    <then>
-                                        <property expression="$func:paramArray" name="errorVariable" scope="default" type="STRING"/>
-                                    </then>
-                                    <else>
-                                        <property expression="$func:paramValue" name="errorVariable" scope="default" type="STRING"/>
-                                    </else>
-                                </filter>
-                                <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
-                                <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-                            </else>
-                        </filter>
-                    </else>
-                </filter>
-            </else>
+    <!-- In case of validating an array use a for each mediator in your sequence and call this template with each of the msisdn array element.
+    Specify paramArray just to create the message body of the error response -->
+    <sequence>    
+	    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" 
+	    name="mediationConfig" scope="default" type="OM"/>
+	    <property expression="$ctx:mediationConfig//msisdn_regex" name="msisdnRegex" scope="default" type="STRING"/> 
+        
+        <property name="paramValue" expression="$func:paramValue" scope="default" type="STRING"/>
+
+	    <script language="js">
+	    	<![CDATA[
+	    		var isValidMsisdn = false;
+	    	    var paramValue = mc.getProperty("paramValue");
+				var regExp = new RegExp(mc.getProperty("msisdnRegex"));
+				
+				var isValidMsisdn = regExp.test(paramValue);
+				mc.setProperty("isValidMsisdn", isValidMsisdn);							
+	  		]]>  
+	    </script>   
+            
+        <filter regex="^false$" source="$ctx:isValidMsisdn" xmlns:ns="http://org.apache.synapse/xsd">
+            <then>
+	            <log category="ERROR" level="full">
+	                <property name="ERROR" value="returning error response"/>
+	            </log>
+	           <property name="messageId" scope="default" type="STRING" value="SVC0004"/>
+	           <property expression="fn:concat($func:paramName, ' format invalid. %1')" name="errorText" scope="default" type="STRING"/>
+	           <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+	            <filter xpath="boolean($func:paramArray)">
+	                <then>
+	                    <property expression="$func:paramArray" name="errorVariable" scope="default" type="STRING"/>
+	                </then>
+	                <else>
+	                    <property expression="$func:paramValue" name="errorVariable" scope="default" type="STRING"/>
+	                </else>
+	            </filter>
+	            <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+	            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+            </then>
+            <else/>
         </filter>
     </sequence>
 </template>

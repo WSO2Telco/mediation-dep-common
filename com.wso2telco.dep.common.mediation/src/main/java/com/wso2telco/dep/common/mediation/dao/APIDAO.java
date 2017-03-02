@@ -233,4 +233,54 @@ public class APIDAO {
 			DbUtils.closeAllConnections(ps, con, null);
 		}
 	}
+	
+	public String getAttributeValueForCode(String tableName, String operatorName, String attributeGroupCode,
+			String attributeCode) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String attributeValue = null;
+		Connection connection = null;
+
+		try {
+
+			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
+
+			StringBuilder queryBuilder = new StringBuilder();
+
+			queryBuilder.append("select map.VALUE as attributeValue from ");
+			queryBuilder.append(DatabaseTables.MDXATTRIBGROUP +" attgroup, ");
+			queryBuilder.append(DatabaseTables.MDXATTRIBUTE + " attribute, ");
+			queryBuilder.append(DatabaseTables.MDTATTRIBUTEMAP + " map, ");
+			queryBuilder.append(DatabaseTables.OPERATORS + " operator ");
+			queryBuilder.append(" where ");
+			queryBuilder.append(" attgroup.GROUPDID = attribute.GROUPDID ");
+			queryBuilder.append(" and attribute.ATTRIBUTEDID = map.ATTRIBUTEDID ");
+			queryBuilder.append(" and map.OWNERDID = operator.id ");
+			queryBuilder.append(" and lower(map.TOBJECT) = ? ");
+			queryBuilder.append(" and lower(operator.operatorname) = ? ");
+			queryBuilder.append(" and lower(attribute.code) = ? ");
+			queryBuilder.append(" and lower(attgroup.CODE) = ? ");
+
+			statement = connection.prepareStatement(queryBuilder.toString());
+			statement.setString(1, tableName.toLowerCase());
+			statement.setString(2, operatorName.toLowerCase());
+			statement.setString(3, attributeCode.toLowerCase());
+			statement.setString(4, attributeGroupCode.toLowerCase());
+
+			resultSet = statement.executeQuery();
+
+			if (resultSet.next() && resultSet.getString("attributeValue") != null) {
+				attributeValue = resultSet.getString("attributeValue");
+			}
+
+		} catch (Exception ex) {
+			log.error("database operation error in getAttributeValueForCode :", ex);
+			throw ex;
+		} finally {
+			DbUtils.closeAllConnections(statement, connection, resultSet);
+		}
+
+		return attributeValue;
+	}
 }

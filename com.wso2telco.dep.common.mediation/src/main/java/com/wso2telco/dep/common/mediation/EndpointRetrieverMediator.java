@@ -9,6 +9,7 @@ import com.wso2telco.core.mnc.resolver.DataHolder;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 import com.wso2telco.core.mnc.resolver.MNCQueryClient;
+import com.wso2telco.core.mnc.resolver.dao.OperatorDAO;
 import com.wso2telco.core.msisdnvalidator.MSISDN;
 import com.wso2telco.core.msisdnvalidator.MSISDNUtil;
 import com.wso2telco.dep.operatorservice.model.OperatorEndPointDTO;
@@ -50,6 +51,9 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 					.getProperty("OPERATOR");
 			String validOperatorList = (String) synContext
 					.getProperty("VALID_OPERATORS");
+			String resourcePath = (String) synContext.getProperty("RESOURCE");
+			String mcc = (String) synContext.getProperty("mcc");
+			String mnc = (String) synContext.getProperty("mnc");
 
 			/**
 			 * MSISDN provided at JSon body convert into Phone number object.
@@ -92,19 +96,19 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 			 * goes as previous. ie select from MCC_NUMBER_RANGE
 			 */
 			if (operator == null) {
+				
+				if (getNullOrTrimmedValue(mcc) != null && getNullOrTrimmedValue(mnc) != null) {
+					operator = OperatorDAO.getOperatorByMCCMNC(mcc, mnc);
+				} else {
+					log.debug("unable to obtain operator from the header and check for mcc_number_range table "
+							+ operator
+							+ " mcc : null msisdn: "
+							+ msisdn.toString());
+					DataHolder.getInstance().setMobileCountryConfig(
+							ConfigLoader.getInstance().getMobileCountryConfig());
+					operator = mncQueryclient.QueryNetwork(null, msisdn.toString());
+				}
 
-				String mcc = null;
-
-				// mcc not known in mediator
-				log.debug("unable to obtain operator from the header and check for mcc_number_range table "
-						+ operator
-						+ " mcc :"
-						+ mcc
-						+ "msisdn: "
-						+ msisdn.toString());
-				DataHolder.getInstance().setMobileCountryConfig(
-						ConfigLoader.getInstance().getMobileCountryConfig());
-				operator = mncQueryclient.QueryNetwork(mcc, msisdn.toString());
 			}
 
 			if (operator == null) {
@@ -213,5 +217,15 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 		}
 
 		return validoperendpoint;
+	}
+	
+	private String getNullOrTrimmedValue(String input) {
+		String output = null;
+
+		if (input != null && input.trim().length() > 0) {
+			output = input.trim();
+		}
+
+		return output;
 	}
 }
