@@ -58,7 +58,7 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 					"500", "SERVICE_EXCEPTION");
 			messageContext.setProperty("INTERNAL_ERROR", "true");
 		}
-		return false;
+		return true;
 	}
 
 	private void setErrorInContext(MessageContext synContext, String messageId,
