@@ -283,4 +283,201 @@ public class APIDAO {
 
 		return attributeValue;
 	}
+
+
+
+	public String getAPIId(String apiPublisher, String apiName, String apiVersion) throws Exception{
+
+		String apiId = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		Connection connection = null;
+
+		try {
+
+
+			StringBuilder queryBuilder = new StringBuilder();
+
+			queryBuilder.append("select API_ID FROM ");
+			queryBuilder.append(DatabaseTables.AM_API + "  ");
+			queryBuilder.append(" where ");
+			queryBuilder.append(" API_PROVIDER = ? ");
+			queryBuilder.append(" AND API_NAME = ? ");
+			queryBuilder.append(" AND API_VERSION = ? ");
+
+			connection = DbUtils.getDbConnection(DataSourceNames.WSO2AM_DB);
+
+			statement = connection.prepareStatement(queryBuilder.toString());
+			statement.setString(1, apiPublisher);
+			statement.setString(2, apiName);
+			statement.setString(3, apiVersion);
+
+			resultSet = statement.executeQuery();
+
+			if (resultSet.next() && resultSet.getString("API_ID") != null) {
+				apiId = resultSet.getString("API_ID");
+			}
+
+		} catch (Exception ex) {
+			log.error("database operation error in API_ID :", ex);
+			throw ex;
+		} finally {
+			DbUtils.closeAllConnections(statement, connection, resultSet);
+		}
+
+		return apiId;
+	}
+
+	/**
+	 * Read blacklist numbers.
+	 *
+	 * @param apiId the api name
+	 * @return the list
+	 * @throws Exception the all exceptions
+	 */
+	public List<String> readBlacklistNumbers(String apiId) throws Exception {
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		List<String> msisdnArrayList = new ArrayList<String>();
+
+		try {
+			StringBuilder queryBuilder = new StringBuilder();
+
+			queryBuilder.append("select * FROM ");
+			queryBuilder.append(DatabaseTables.BLACKLIST_MSISDN + "  ");
+			queryBuilder.append(" where ");
+			queryBuilder.append(" API_ID = ? ");
+			//queryBuilder.append(" AND MSISDN = ? ");
+
+			connection = DbUtils.getDbConnection(DataSourceNames.WSO2AM_STATS_DB);
+
+			preparedStatement = connection.prepareStatement(queryBuilder.toString());
+			preparedStatement.setString(1, apiId);
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet != null) {
+				while (resultSet.next()) {
+					String msisdnTable = resultSet.getString("MSISDN").replace("tel3A+", "");
+					log.debug("msisdn in the table = " + msisdnTable);
+					msisdnArrayList.add(msisdnTable);
+				}
+			}
+
+		} catch (Exception ex) {
+			log.error("database operation error in API_ID :", ex);
+			throw ex;
+		} finally {
+			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
+		}
+		return msisdnArrayList;
+	}
+
+	public int getSubscriptionId(String apiID, String applicationID) throws Exception {
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		StringBuilder queryBuilder = new StringBuilder();
+
+		queryBuilder.append("SELECT SUBS.SUBSCRIPTION_ID AS SUBSCRIPTION_ID FROM ");
+		queryBuilder.append(DatabaseTables.AM_SUBSCRIPTION +" SUBS, ");
+		queryBuilder.append(DatabaseTables.AM_APPLICATION + " APP, ");
+		queryBuilder.append(DatabaseTables.AM_API + " API ");
+		queryBuilder.append(" where ");
+		queryBuilder.append(" API.API_ID = ?  ");
+		queryBuilder.append(" AND APP.APPLICATION_ID = ?  ");
+		queryBuilder.append(" AND SUBS.APPLICATION_ID = APP.APPLICATION_ID ");
+		queryBuilder.append("  AND API.API_ID = SUBS.API_ID  ");
+		queryBuilder.append(" AND SUBS.SUB_STATUS != 'REJECTED'  ");
+		queryBuilder.append("  ORDER BY APP.NAME ");
+
+		try {
+			connection = DbUtils.getDbConnection(DataSourceNames.WSO2AM_DB);
+			preparedStatement = connection.prepareStatement(queryBuilder.toString());
+			preparedStatement.setInt(1, Integer.parseInt(apiID));
+			preparedStatement.setInt(2, Integer.parseInt(applicationID));
+
+			resultSet = preparedStatement.executeQuery();
+
+
+			while (resultSet.next()) {
+				return resultSet.getInt("SUBSCRIPTION_ID");
+			}
+		} catch (Exception e) {
+			log.error("database operation error in SUBSCRIPTION_ID :", e);
+			throw e;
+		} finally {
+			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
+		}
+		return -1;
+	}
+
+
+	public boolean checkWhiteListed(String MSISDN, String applicationId, String subscriptionId, String apiId) throws Exception {
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		StringBuilder queryBuilder = new StringBuilder();
+
+		queryBuilder.append("SELECT * FROM  ");
+		queryBuilder.append(DatabaseTables.SUBSCRIPTION_WHITELIST + "  WHERE  ");
+		queryBuilder.append("( subscriptionID  = ? AND  msisdn = ? AND  api_id = ? AND  application_id  =  ?) OR ");
+		queryBuilder.append("( subscriptionID IS NULL  AND  msisdn = ? AND  api_id = ? AND  application_id  =  ?) OR  ");
+		queryBuilder.append("( subscriptionID = ? AND  msisdn = ? AND  api_id IS NULL  AND  application_id IS NULL ) OR  ");
+		queryBuilder.append("( subscriptionID IS NULL  AND  msisdn = ? AND  api_id IS NULL  AND  application_id =?) OR   ");
+		queryBuilder.append("( subscriptionID IS NULL  AND  msisdn  IS NULL  AND  api_id IS NULL  AND application_id =  ?) OR   ");
+		queryBuilder.append("( subscriptionID IS NULL  AND  msisdn IS NULL  AND api_id = ? AND application_id  = ?)  " +
+				"LIMIT 0,1    ");
+
+		try {
+			connection = DbUtils.getDbConnection(DataSourceNames.WSO2AM_STATS_DB);
+			preparedStatement = connection.prepareStatement(queryBuilder.toString());
+
+			//"(`subscriptionID` = ? AND `msisdn` = ? AND `api_id` = ? AND `application_id` =  >) OR \n" +
+			preparedStatement.setString(1, subscriptionId);
+			preparedStatement.setString(2, MSISDN);
+			preparedStatement.setString(3, apiId);
+			preparedStatement.setString(4, applicationId);
+
+			//"(`subscriptionID` = null AND `msisdn` = ? AND `api_id` = ? AND `application_id` =  ?) OR\n"
+			preparedStatement.setString(5, MSISDN);
+			preparedStatement.setString(6, apiId);
+			preparedStatement.setString(7, applicationId);
+
+			// "(`subscriptionID` = ? AND `msisdn` = ? AND `api_id` = null AND `application_id` =  null) OR \n" +
+			preparedStatement.setString(8, subscriptionId);
+			preparedStatement.setString(9, MSISDN);
+
+			// "(`subscriptionID` = null AND `msisdn` = ? AND `api_id` = null AND `application_id` =  ?) OR \n" +
+			preparedStatement.setString(10, MSISDN);
+			preparedStatement.setString(11, applicationId);
+
+			//"(`subscriptionID` = null AND `msisdn` = null AND `api_id` = null AND `application_id` =  ?) OR \n" +
+			preparedStatement.setString(12, applicationId);
+
+			// "(`subscriptionID` = null AND `msisdn` = null AND `api_id` = ? AND `application_id` =  ?)  ";
+			preparedStatement.setString(13, apiId);
+			preparedStatement.setString(14, applicationId);
+
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet != null) {
+				while (resultSet.next()) {
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			log.error("database operation error in subscription whitelist :", e);
+			throw e;
+		} finally {
+			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
+		}
+
+		return false;
+	}
 }
