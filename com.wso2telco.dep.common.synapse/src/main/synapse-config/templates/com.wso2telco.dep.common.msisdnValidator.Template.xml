@@ -52,7 +52,7 @@
 
                         <filter regex="^true$" source="$ctx:INTERNAL_ERROR">
                                 <then>
-                                    <property expression="fn:concat($func:paramName, '$ctx:errorTextTemp')"
+                                    <property expression="fn:concat($func:paramName, '$ctx:mediationErrorText')"
                                               name="errorText"
                                               scope="default" type="STRING"/>
                                     <property value="SERVICE_EXCEPTION"
@@ -62,7 +62,7 @@
                                 <else>
                                     <filter regex="^true$" source="$ctx:BLACKLISTED_MSISDN">
                                         <then>
-                                            <property expression="fn:concat($func:paramName, '$ctx:errorText1')"
+                                            <property expression="fn:concat($func:paramName, '$ctx:mediationErrorText')"
                                                       name="errorText"
                                                       scope="default" type="STRING"/>
                                             <property value="POLICY_EXCEPTION"
@@ -84,7 +84,7 @@
                         <filter regex="^true$" source="$ctx:INTERNAL_ERROR">
                             <then>
                                 <property name="messageId" scope="default" type="STRING" expression="$ctx:messageId"/>
-                                <property expression="fn:concat($func:paramName, '$ctx:errorTextTemp')" name="errorText"
+                                <property expression="fn:concat($func:paramName, '$ctx:mediationErrorText')" name="errorText"
                                           scope="default" type="STRING"/>
                                 <property value="SERVICE_EXCEPTION"
                                           name="exceptionType" scope="default" type="STRING"/>
@@ -94,7 +94,7 @@
                                 <filter regex="^false$" source="$ctx:WHITELISTED_MSISDN">
                                     <then>
                                         <property name="messageId" scope="default" type="STRING" expression="$ctx:messageId"/>
-                                        <property expression="fn:concat($func:paramName, $ctx:errorTextTemp)"
+                                        <property expression="fn:concat($func:paramName, $ctx:mediationErrorText)"
                                                   name="errorText"
                                                   scope="default" type="STRING"/>
                                         <property value="POLICY_EXCEPTION"

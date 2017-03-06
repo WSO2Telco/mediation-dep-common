@@ -15,7 +15,7 @@ public class MSISDNBlacklistMediator extends AbstractMediator {
 	                               String exceptionType) {
 
 		synContext.setProperty("messageId", messageId);
-		synContext.setProperty("errorTextTemp", errorText);
+		synContext.setProperty("mediationErrorText", errorText);
 		synContext.setProperty("errorVariable", errorVariable);
 		synContext.setProperty("httpStatusCode", httpStatusCode);
 		synContext.setProperty("exceptionType", exceptionType);

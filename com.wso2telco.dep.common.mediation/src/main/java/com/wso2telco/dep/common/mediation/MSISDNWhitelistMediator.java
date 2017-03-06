@@ -13,6 +13,7 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 	public boolean mediate(MessageContext messageContext) {
 
 		String msisdn = (String) messageContext.getProperty("paramValue");
+		String paramArray = (String) messageContext.getProperty("paramArray");
 		String apiName = (String) messageContext.getProperty("API_NAME");
 		String apiVersion = (String) messageContext.getProperty("VERSION");
 		String apiPublisher = (String) messageContext.getProperty("API_PUBLISHER");
@@ -44,18 +45,35 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 				messageContext.setProperty(SynapseConstants.ERROR_MESSAGE, "Internal Server Error. Not a white listed" +
 						" Number");
 				messageContext.setProperty("WHITELISTED_MSISDN", "false");
+
+				String errorVariable = msisdn;
+
+				if(paramArray != null){
+					errorVariable = paramArray;
+				}
+				setErrorInContext(
+						messageContext,
+						"SVC0004",
+						" Not a whitelisted number. %1",
+						errorVariable,
+						"400", "POLICY_EXCEPTION");
 			}
 
 		} catch(Exception e) {
 
 			log.error("error in MSISDNWhitelistMediator mediate : "
 					+ e.getMessage());
+
+			String errorVariable = msisdn;
+
+			if(paramArray != null){
+				errorVariable = paramArray;
+			}
 			setErrorInContext(
 					messageContext,
 					"SVC0001",
 					"A service error occurred. Error code is %1",
-					"An internal service error has occured. Please try again later.",
-					"500", "SERVICE_EXCEPTION");
+					errorVariable,					"500", "SERVICE_EXCEPTION");
 			messageContext.setProperty("INTERNAL_ERROR", "true");
 		}
 		return true;
@@ -66,7 +84,7 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 	                               String exceptionType) {
 
 		synContext.setProperty("messageId", messageId);
-		synContext.setProperty("errorText", errorText);
+		synContext.setProperty("mediationErrorText", errorText);
 		synContext.setProperty("errorVariable", errorVariable);
 		synContext.setProperty("httpStatusCode", httpStatusCode);
 		synContext.setProperty("exceptionType", exceptionType);
