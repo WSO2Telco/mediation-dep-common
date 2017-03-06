@@ -3,30 +3,28 @@
   <parameter name="paramName"/>
   <parameter name="paramValue"/>
   <parameter name="validationType"/>
-  <sequence>
+  <sequence onError="com.wso2telco.dep.common.response.unexpectedError.Sequence">
+  
     <switch source="$func:validationType">
-      <case regex="^GE_ZERO$">
+      <case regex="^GE_ZERO$">      
         <filter regex="^([0-9]+(\.[0-9]+)?)$" source="$func:paramValue">
           <then/>
           <else>
-            <property name="httpStatusCode" scope="default"
-              type="STRING" value="400"/>
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
             <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
             <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
             <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
-            <property
-              expression="fn:concat($func:paramName, ' should be a whole or two digit decimal positive number')"
-              name="errorVariable" scope="default" type="STRING"/>
+            <property expression="fn:concat($func:paramName, ' should be a whole or two digit decimal positive number')" name="errorVariable" scope="default" type="STRING"/>
             <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
           </else>
         </filter>
       </case>
-      <case regex="^GT_ZERO$">
+      
+      <case regex="^GT_ZERO$">      
         <filter regex="^(([1-9][0-9]+|[1-9])+(\.[0-9]+)?)$" source="$func:paramValue">
           <then/>
           <else>
-            <property name="httpStatusCode" scope="default"
-              type="STRING" value="400"/>
+            <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
             <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
             <property name="messageId" scope="default" type="STRING" value="SVC0007"/>
             <property name="errorText" scope="default" type="STRING" value="Invalid charging information"/>
@@ -35,6 +33,7 @@
           </else>
         </filter>
       </case>
+      
       <default>
         <sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
       </default>
