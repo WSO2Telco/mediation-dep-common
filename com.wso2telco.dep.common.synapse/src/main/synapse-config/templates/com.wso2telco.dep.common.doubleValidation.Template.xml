@@ -15,7 +15,7 @@
             <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
             <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
             <property
-              expression="fn:concat($func:paramName, 'should be a whole or two digit decimal positive number')"
+              expression="fn:concat($func:paramName, ' should be a whole or two digit decimal positive number')"
               name="errorVariable" scope="default" type="STRING"/>
             <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
           </else>
