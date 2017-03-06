@@ -7,7 +7,7 @@
   <sequence>
     <filter regex="GT" source="$func:paramValidationType" xmlns:ns="http://org.apache.synapse/xsd">
       <then>
-        <filter xpath="fn:string-length($func:paramValue) > $func:paramValidLength">
+        <filter xpath="fn:string-length($func:paramValue) &gt; $func:paramValidLength">
           <then/>
           <else>
             <log category="ERROR" level="full">
