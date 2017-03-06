@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template
+  name="com.wso2telco.dep.common.requestIdentifier.generator.Template" xmlns="http://ws.apache.org/ns/synapse">
+  <parameter name="requestIdentifier"/>
+  <sequence>
+    <filter xpath="not(boolean(fn:normalize-space($func:requestIdentifier)))">
+      <then>
+        <property expression="get-property('REQUEST_ID')"
+          name="uniqueRequestIdentifier" scope="default" type="STRING"/>
+      </then>
+      <else>
+        <property
+          expression="fn:concat($func:requestIdentifier , ':' , get-property('REQUEST_ID'))"
+          name="uniqueRequestIdentifier" scope="default" type="STRING"/>
+      </else>
+    </filter>
+  </sequence>
+</template>
