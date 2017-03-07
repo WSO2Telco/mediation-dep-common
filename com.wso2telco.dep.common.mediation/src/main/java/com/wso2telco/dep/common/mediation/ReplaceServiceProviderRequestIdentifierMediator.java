@@ -20,11 +20,12 @@ public class ReplaceServiceProviderRequestIdentifierMediator extends AbstractMed
 
 		try {
 
+			String currentEndpoint = (String) synContext.getProperty("API_ENDPOINT");
 			String resourcePath = (String) synContext.getProperty("RESOURCE");
 			String uniqueRequestIdentifier = (String) synContext.getProperty("uniqueRequestIdentifier");
 			String changedResourcePath = resourcePath.replaceAll("(?<=[?&;])requestIdentifier=[^&;]*",
 					"requestIdentifier=" + uniqueRequestIdentifier);
-			synContext.setProperty("API_ENDPOINT", changedResourcePath);
+			synContext.setProperty("API_ENDPOINT", currentEndpoint + changedResourcePath);
 		} catch (Exception e) {
 
 			log.error("error in ReplaceRequestIdetifierMediator mediate : "
