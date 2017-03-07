@@ -3,7 +3,7 @@ package com.wso2telco.dep.common.mediation;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
-public class ReplaceRequestIdetifierMediator extends AbstractMediator {
+public class ReplaceServiceProviderRequestIdentifierMediator extends AbstractMediator {
 
 	private void setErrorInContext(MessageContext synContext, String messageId,
 			String errorText, String errorVariable, String httpStatusCode,

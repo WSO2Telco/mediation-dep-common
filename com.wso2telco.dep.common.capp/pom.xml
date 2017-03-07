@@ -31,7 +31,7 @@
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.call.notification.endpoint.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.call.notification.endpoint.Sequence>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.select.token.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.select.token.Sequence>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.doubleValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.doubleValidation.Template>
-    <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.replace.request.identifier.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.replace.request.identifier.Sequence>
+    <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.replace.service.provider.request.identifier.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.replace.service.provider.request.identifier.Sequence>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.main.property.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.main.property.Sequence>
     <com.wso2telco.dep.common.resource_._mediationConfig_xml>capp/EnterpriseServiceBus</com.wso2telco.dep.common.resource_._mediationConfig_xml>
     <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,lib/registry/handlers=jar,service/rule=aar,lib/registry/filter=jar,synapse/message-store=xml,event/stream=json,service/meta=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,synapse/api=xml,wso2/gadget=dar,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
@@ -226,7 +226,7 @@
     </dependency>
     <dependency>
       <groupId>com.wso2telco.dep.common.sequence</groupId>
-      <artifactId>com.wso2telco.dep.common.replace.request.identifier.Sequence</artifactId>
+      <artifactId>com.wso2telco.dep.common.replace.service.provider.request.identifier.Sequence</artifactId>
       <version>2.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
