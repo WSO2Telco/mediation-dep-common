@@ -7,46 +7,42 @@
   <sequence>
     <filter regex="GT" source="$func:paramValidationType" xmlns:ns="http://org.apache.synapse/xsd">
       <then>
-        <filter xpath="fn:string-length($func:paramValue) &gt; $func:paramValidLength">
-          <then/>
-          <else>
+        <filter xpath="fn:string-length($func:paramValue) > $func:paramValidLength">
+          <then>
             <log category="ERROR" level="full">
               <property name="ERROR" value="returning error response"/>
             </log>
             <property name="httpStatusCode" scope="default"
               type="STRING" value="400"/>
             <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
-            <property
-              expression="fn:concat('Invalid input value for message part %1')"
-              name="errorText" scope="default" type="STRING"/>
+            <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
             <property expression="$func:paramName" name="errorVariable"
               scope="default" type="STRING"/>
             <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
             <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-          </else>
+          </then>
+          <else/>
         </filter>
       </then>
       <else>
         <filter regex="LT" source="$func:paramValidationType">
           <then>
             <filter xpath="fn:string-length($func:paramValue) &lt; $func:paramValidLength">
-              <then/>
-              <else>
+              <then>
                 <log category="ERROR" level="full">
                   <property name="ERROR" value="returning error response"/>
                 </log>
                 <property name="httpStatusCode" scope="default"
                   type="STRING" value="400"/>
                 <property name="messageId" scope="default" type="STRING" value="SVC0002"/>
-                <property
-                  expression="fn:concat('Invalid input value for message part %1')"
-                  name="errorText" scope="default" type="STRING"/>
+                <property name="errorText" scope="default" type="STRING" value="Invalid input value for message part %1"/>
                 <property expression="$func:paramName"
                   name="errorVariable" scope="default" type="STRING"/>
                 <property name="exceptionType" scope="default"
                   type="STRING" value="SERVICE_EXCEPTION"/>
                 <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-              </else>
+              </then>
+              <else/>
             </filter>
           </then>
           <else/>
