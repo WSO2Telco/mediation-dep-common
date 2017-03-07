@@ -115,4 +115,44 @@ public class APIService {
 
 		return attributeValue;
 	}
+
+
+	public String getAPIId(String apiPublisher, String apiName, String apiVersion) throws Exception {
+			String apiId;
+			try {
+				apiId = apiDAO.getAPIId(apiPublisher,apiName,apiVersion);
+			} catch (Exception ex) {
+				log.error("Error while retrieving API Id value", ex);
+				throw ex;
+			}
+			return apiId;
+	}
+
+
+	public boolean isBlackListedNumber(String apiId, String msisdn) throws Exception {
+		try {
+			List<String> msisdnArrayList = apiDAO.readBlacklistNumbers(apiId);
+			if(msisdnArrayList.contains(msisdn)){
+				return true;
+			}
+		} catch (Exception ex) {
+			log.error("Error while checking whether the msisdn :" + msisdn + " is blacklisted", ex);
+			throw ex;
+		}
+
+		return false;
+	}
+
+	public String getSubscriptionID(String apiId, String applicationId)
+			throws Exception {
+		return String.valueOf(apiDAO.getSubscriptionId(apiId, applicationId));
+	}
+
+
+	public boolean isWhiteListed(String MSISDN, String applicationId, String subscriptionId, String apiId) throws
+			Exception{
+		MSISDN = "tel3A+" + MSISDN;
+		return apiDAO.checkWhiteListed(MSISDN, applicationId, subscriptionId, apiId);
+	}
+
 }
