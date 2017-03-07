@@ -8,8 +8,7 @@
     <filter regex="GT" source="$func:paramValidationType" xmlns:ns="http://org.apache.synapse/xsd">
       <then>
         <filter xpath="fn:string-length($func:paramValue) > $func:paramValidLength">
-          <then/>
-          <else>
+          <then>
             <log category="ERROR" level="full">
               <property name="ERROR" value="returning error response"/>
             </log>
@@ -21,15 +20,15 @@
               scope="default" type="STRING"/>
             <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
             <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-          </else>
+          </then>
+          <else/>
         </filter>
       </then>
       <else>
         <filter regex="LT" source="$func:paramValidationType">
           <then>
             <filter xpath="fn:string-length($func:paramValue) &lt; $func:paramValidLength">
-              <then/>
-              <else>
+              <then>
                 <log category="ERROR" level="full">
                   <property name="ERROR" value="returning error response"/>
                 </log>
@@ -42,7 +41,8 @@
                 <property name="exceptionType" scope="default"
                   type="STRING" value="SERVICE_EXCEPTION"/>
                 <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-              </else>
+              </then>
+              <else/>
             </filter>
           </then>
           <else/>
