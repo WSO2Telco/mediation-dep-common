@@ -132,7 +132,7 @@ public class APIService {
 	public boolean isBlackListedNumber(String apiId, String msisdn) throws Exception {
 		try {
 			List<String> msisdnArrayList = apiDAO.readBlacklistNumbers(apiId);
-			if(msisdnArrayList.contains(msisdn)){
+			if(msisdnArrayList.contains(msisdn) || msisdnArrayList.contains("tel3A+" + msisdn)){
 				return true;
 			}
 		} catch (Exception ex) {
