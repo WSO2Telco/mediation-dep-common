@@ -12,7 +12,7 @@
                 <log level="custom">
                     <property expression="get-property('requestDetails')" name="###REQUEST_INFO###"/>
                 </log>
-                <filter regex="true" source="fn:normalize-space($func:payloadLoggingEnabled)">
+                <filter regex="true" source="get-property('payloadLoggingEnabled')">
                     <then>
                         <log level="custom">
                             <property expression="json-eval($.)" name="###REQUEST_INFO### >>>>> reqBody In:"/>
@@ -26,7 +26,7 @@
                 <log level="custom">
                     <property expression="get-property('requestDetails')" name="###REQUEST_INFO###"/>
                 </log>
-                <filter regex="true" source="fn:normalize-space($func:payloadLoggingEnabled)">
+                <filter regex="true" source="get-property('payloadLoggingEnabled')">
                     <then>
                         <log level="custom">
                             <property expression="json-eval($.)" name="###REQUEST_INFO### >>>>> reqBody Out:"/>
@@ -40,7 +40,7 @@
                 <log level="custom">
                     <property expression="get-property('requestDetails')" name="###RESPONSE_INFO###"/>
                 </log>
-                <filter regex="true" source="fn:normalize-space($func:payloadLoggingEnabled)">
+                <filter regex="true" source="get-property('payloadLoggingEnabled')">
                     <then>
                         <log level="custom">
                             <property expression="json-eval($.)" name="###RESPONSE_INFO### &lt;&lt;&lt;&lt;&lt; respBody In:"/>
@@ -54,7 +54,7 @@
                 <log level="custom">
                     <property expression="get-property('requestDetails')" name="###RESPONSE_INFO###"/>
                 </log>
-                <filter regex="true" source="fn:normalize-space($func:payloadLoggingEnabled)">
+                <filter regex="true" source="get-property('payloadLoggingEnabled')">
                     <then>
                         <log level="custom">
                             <property expression="json-eval($.)" name="###RESPONSE_INFO### &lt;&lt;&lt;&lt;&lt; respBody Out:"/>
