@@ -4,11 +4,17 @@
   <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
   <header expression="get-property('NOTIFY_INFO_URL')" name="To" scope="default"/>
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+  <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
+      <with-param name="direction" value="REQUESTOUT"/>
+  </call-template>
   <call>
     <endpoint>
       <default trace="disable"/>
     </endpoint>
   </call>
+  <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
+      <with-param name="direction" value="RESPONSEIN"/>
+  </call-template>
   <filter regex="200" source="get-property('axis2', 'HTTP_SC')">
     <then>
       <sequence key="com.wso2telco.dep.common.notification.url.info.status.updater.Sequence"/>
