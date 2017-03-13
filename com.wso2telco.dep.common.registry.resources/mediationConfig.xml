@@ -13,4 +13,7 @@
 	<!-- This is to take the numeric value out by dropping the prefix. please change it to the regex group which identifies the number -->
 	<msisdn_regex_num_grp>9</msisdn_regex_num_grp>
 	<payload_logging_enabled>true</payload_logging_enabled>
+	<validationConfig>
+		<requestIdentifierLength>6</requestIdentifierLength>
+	</validationConfig>
 </mediationConfig>
