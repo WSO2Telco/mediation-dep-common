@@ -38,5 +38,8 @@
   <property expression="$ctx:httpStatusCode" name="HTTP_SC"
     scope="axis2" type="STRING"/>
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+  <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
+      <with-param name="direction" value="RESPONSEOUT"/>
+  </call-template>
   <respond/>
 </sequence>

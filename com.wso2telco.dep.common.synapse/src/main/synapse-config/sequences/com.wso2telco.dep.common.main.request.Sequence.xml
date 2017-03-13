@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.common.main.request.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+
+  <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
+      <with-param name="direction" value="REQUESTIN"/>
+  </call-template>
+
   <sequence key="com.wso2telco.dep.common.main.property.Sequence"/>
+  
   <filter regex="[0-9]+" source="get-property('APPLICATION_ID')" xmlns:ns="http://org.apache.synapse/xsd">
     <then>
       <class name="com.wso2telco.dep.common.mediation.OperatorValidationMediator"/>
+      
       <filter regex="false" source="get-property('OPERATOR_VALIDATED')">
         <then>
           <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
@@ -11,6 +18,7 @@
         </then>
         <else/>
       </filter>
+      
     </then>
     <else>
       <property name="messageId" scope="default" type="STRING" value="SVC0001"/>
@@ -21,4 +29,5 @@
       <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
     </else>
   </filter>
+  
 </sequence>
