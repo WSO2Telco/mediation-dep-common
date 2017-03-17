@@ -51,7 +51,6 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 					.getProperty("OPERATOR");
 			String validOperatorList = (String) synContext
 					.getProperty("VALID_OPERATORS");
-			String resourcePath = (String) synContext.getProperty("RESOURCE");
 			String mcc = (String) synContext.getProperty("mcc");
 			String mnc = (String) synContext.getProperty("mnc");
 
