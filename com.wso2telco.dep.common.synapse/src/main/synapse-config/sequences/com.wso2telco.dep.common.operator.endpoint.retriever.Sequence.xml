@@ -4,13 +4,17 @@
     <class name="com.wso2telco.dep.common.mediation.OperatorEndpointRetrieverMediator"/>
     <filter regex="true" source="get-property('ENDPOINT_ERROR')">
         <then>
-            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+            <log level="debug">
+                <property name="state" value="ENDPOINT_ERROR with OperatorEndpointRetrieverMediator"/>
+            </log>
         </then>
         <else/>
     </filter>
     <filter regex="true" source="get-property('INTERNAL_ERROR')">
         <then>
-            <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+            <log level="debug">
+                <property name="state" value="INTERNAL_ERROR with OperatorEndpointRetrieverMediator"/>
+            </log>
         </then>
         <else/>
     </filter>
