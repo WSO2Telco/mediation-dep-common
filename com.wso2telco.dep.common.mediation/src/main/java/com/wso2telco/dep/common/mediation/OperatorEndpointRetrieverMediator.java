@@ -12,8 +12,6 @@ public class OperatorEndpointRetrieverMediator extends AbstractMediator {
 	/** The operatorEndpoints. */
 	private List<OperatorEndPointDTO> operatorEndpoints;
 
-	private OperatorEndPointDTO selectedEndpoint = null;
-
 	public OperatorEndpointRetrieverMediator() {
 		try {
 			operatorEndpoints = new OparatorService().getOperatorEndpoints();
@@ -35,6 +33,8 @@ public class OperatorEndpointRetrieverMediator extends AbstractMediator {
 	}
 
 	public boolean mediate(MessageContext synContext) {
+
+		OperatorEndPointDTO selectedEndpoint = null;
 
 		try {
 			String apiName = (String) synContext.getProperty("API_NAME");
@@ -69,13 +69,13 @@ public class OperatorEndpointRetrieverMediator extends AbstractMediator {
 						"SERVICE_EXCEPTION");
 				synContext.setProperty("ENDPOINT_ERROR", "true");
 				synContext.setProperty("ENDPOINT_NOT_PROVISIONED", "true");
+			} else {
+				String apiEndpoint = selectedEndpoint.getEndpoint();
+				synContext.setProperty("OPERATOR_ENDPOINT", apiEndpoint);
+				synContext.setProperty("API_ENDPOINT", apiEndpoint);
+				synContext.setProperty("OPERATOR_ID", selectedEndpoint.getOperatorid());
+				synContext.setProperty("OPERATOR_NAME", operatorCode.toUpperCase());
 			}
-
-			String apiEndpoint = selectedEndpoint.getEndpoint();
-			synContext.setProperty("OPERATOR_ENDPOINT", apiEndpoint);
-			synContext.setProperty("API_ENDPOINT", apiEndpoint);
-			synContext.setProperty("OPERATOR_ID", selectedEndpoint.getOperatorid());
-			synContext.setProperty("OPERATOR_NAME", operatorCode.toUpperCase());
 
 		} catch (Exception e) {
 
