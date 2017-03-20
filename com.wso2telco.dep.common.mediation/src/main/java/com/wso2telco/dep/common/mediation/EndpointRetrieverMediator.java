@@ -129,6 +129,7 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 						"Requested service is not provisioned", "400",
 						"SERVICE_EXCEPTION");
 				synContext.setProperty("ENDPOINT_ERROR", "true");
+				synContext.setProperty("ENDPOINT_NOT_PROVISIONED", "true");
 			}
 
 			OperatorEndPointDTO validOperatorendpoint = getValidEndpoints(
@@ -141,6 +142,7 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 						"Requested service is not provisioned", "400",
 						"SERVICE_EXCEPTION");
 				synContext.setProperty("ENDPOINT_ERROR", "true");
+				synContext.setProperty("ENDPOINT_NOT_PROVISIONED", "true");
 			}
 
 			String apiEndpoint = validOperatorendpoint.getEndpoint();

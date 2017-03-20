@@ -3,5 +3,6 @@
     <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
         <with-param name="direction" value="RESPONSEOUT"/>
     </call-template>
+    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
     <respond/>
 </sequence>
