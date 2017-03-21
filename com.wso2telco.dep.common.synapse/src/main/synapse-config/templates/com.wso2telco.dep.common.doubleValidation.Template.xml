@@ -7,7 +7,7 @@
   
     <switch source="$func:validationType">
       <case regex="^GE_ZERO$">      
-        <filter regex="^(\d{1,5}|\d{0,5}\.\d{1,2})$" source="$func:paramValue">
+        <filter regex="^((\d{1,}((\.\d{1,2})|(?!.))))$" source="$func:paramValue">
           <then/>
           <else>
             <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
