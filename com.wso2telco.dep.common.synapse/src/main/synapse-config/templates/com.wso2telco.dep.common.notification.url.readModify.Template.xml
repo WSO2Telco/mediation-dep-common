@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template name="com.wso2telco.dep.common.notification.url.readModify.Template" xmlns="http://ws.apache.org/ns/synapse">
+	<!-- Sequence template to read the notification url from registry -->
+	<parameter name="apiRefCode"/>
+	<parameter name="notifyURL"/>
+    <sequence>
+	    <filter xpath="boolean($ctx:notifyURL)">
+	    	<then>
+	    		<property name="apiConfig" expression="fn:concat('conf:/repository/wso2telco/configurations/api/', $func:apiRefCode, 'Config.xml')"/>
+				
+				<property  expression="get-property('registry', get-property('apiConfig'))" name="notificationURLConfig" scope="default" type="OM"/>
+				<property expression="$ctx:notificationURLConfig//notificationURL" name="NOTIFICATION_URL" scope="default" type="STRING"/>
+				<!-- save service provider's notify url and generate new notify url from hub -->
+				
+				<sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
+				<filter regex="true" source="get-property('INTERNAL_ERROR')">
+				  <then>
+				    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+				  </then>
+				  <else/>
+				</filter>    		
+	    	</then>
+	    	<else/>
+	    </filter>    	
+    </sequence>
+</template>
