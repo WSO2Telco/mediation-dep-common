@@ -15,10 +15,4 @@
   <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
       <with-param name="direction" value="RESPONSEIN"/>
   </call-template>
-  <filter regex="200" source="get-property('axis2', 'HTTP_SC')">
-    <then>
-      <sequence key="com.wso2telco.dep.common.notification.url.info.status.updater.Sequence"/>
-    </then>
-    <else/>
-  </filter>
 </sequence>
