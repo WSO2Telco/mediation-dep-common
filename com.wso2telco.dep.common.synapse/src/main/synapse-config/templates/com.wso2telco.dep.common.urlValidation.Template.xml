@@ -2,7 +2,7 @@
 <template name="com.wso2telco.dep.common.urlValidation.Template" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="paramName"/>
     <parameter name="paramValue"/>
-    <sequence onError="com.wso2telco.dep.common.response.unexpectedError.Sequence">
+    <sequence>
         <filter regex="^(http\:\/\/.+|https\:\/\/.+)$" source="$func:paramValue">
             <then/>
             <else>
