@@ -15,5 +15,8 @@
 	<payload_logging_enabled>false</payload_logging_enabled>
 	<validationConfig>
 		<requestIdentifierLength>6</requestIdentifierLength>
+		<mccLength>3</mccLength>
+		<mncLength>2</mncLength>
+		<imsiLength>15</imsiLength>
 	</validationConfig>
 </mediationConfig>
