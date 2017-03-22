@@ -1,8 +1,0 @@
-<mediationConfig>
-	<hubGateway>https://gateway1a.mife.sla-mobile.com.my:8243</hubGateway>
-	<hub_gateway_id>0001</hub_gateway_id>
-	<searchOperatorOnHeader>91</searchOperatorOnHeader>
-	<retry_on_fail>true</retry_on_fail>
-	<retry_count>3</retry_count>
-	<numberOfThreads>5</numberOfThreads>
-</mediationConfig>
