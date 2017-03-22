@@ -1,10 +1,6 @@
 package com.wso2telco.dep.common.mediation.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -479,5 +475,47 @@ public class APIDAO {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Generic method to execute a select query
+	 *
+	 * @param selectQuery   Select query to execute
+	 *
+	 * @return   List of rows selected
+	 * @throws Exception
+	 */
+	public List<Map<String, Object>> executeCustomSelectQuery(String selectQuery) throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		List<Map<String, Object>> recordList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> record = null;
+
+		try {
+			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
+			preparedStatement = connection.prepareStatement(selectQuery);
+			resultSet = preparedStatement.executeQuery();
+			ResultSetMetaData rsmd = resultSet.getMetaData();
+
+			while (resultSet.next()) {
+				record = new HashMap<String, Object>();
+
+				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+					String columnName = rsmd.getColumnName(i);
+					String columnValue = resultSet.getObject(i).toString();
+					record.put(columnName, columnValue);
+				}
+
+				recordList.add(record);
+			}
+		} catch (Exception e) {
+			log.error("database operation error in executing custom query :", e);
+			throw e;
+		} finally {
+			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
+		}
+		return recordList;
 	}
 }

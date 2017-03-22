@@ -52,6 +52,7 @@
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.urlValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.urlValidation.Template>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.main.response.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.main.response.Sequence>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.msisdnValidator.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.msisdnValidator.Template>
+    <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.execute.select.query.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.execute.select.query.Sequence>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.doubleValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.doubleValidation.Template>
   </properties>
   <dependencies>
@@ -268,6 +269,12 @@
     <dependency>
       <groupId>com.wso2telco.dep.common.template</groupId>
       <artifactId>com.wso2telco.dep.common.api.configReader.Template</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+		<dependency>
+      <groupId>com.wso2telco.dep.common.sequence</groupId>
+      <artifactId>com.wso2telco.dep.common.execute.select.query.Sequence</artifactId>
       <version>2.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>

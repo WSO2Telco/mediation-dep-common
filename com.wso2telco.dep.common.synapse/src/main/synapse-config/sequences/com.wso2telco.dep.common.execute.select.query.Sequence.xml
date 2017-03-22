@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.common.execute.select.query.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <class name="com.wso2telco.dep.common.mediation.SelectQueryExecutingMediator"/>
+</sequence>
