@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template name="com.wso2telco.dep.common.api.configReader.Template" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="apiRefCode"/>
+    <!-- "apiConfigurationOM" value will be set with the configuration -->
+    <sequence>
+    	<filter xpath="boolean($func:apiRefCode)">
+    		<then>
+	    		<property name="apiConfig" expression="fn:concat('conf:/repository/wso2telco/configurations/api/', $func:apiRefCode, 'Config.xml')"/>
+				<property  expression="get-property('registry', get-property('apiConfig'))" name="apiConfigurationOM" scope="default" type="OM"/>	
+				
+				<filter xpath="boolean($ctx:apiConfigurationOM)">
+					<then/>
+					<else>
+						<log level="custom" category="WARN">
+							<property name="WARN" value="Configuration file read error"/>
+						</log>
+					</else>
+				</filter>						    			
+    		</then>
+    		<else>
+    			<log level="custom" category="ERROR">
+    				<property name="ERROR" value="apiRefCode cannot be empty"/>
+    			</log>
+    			<sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>
+    		</else>
+    	</filter>    
+    </sequence>
+</template>

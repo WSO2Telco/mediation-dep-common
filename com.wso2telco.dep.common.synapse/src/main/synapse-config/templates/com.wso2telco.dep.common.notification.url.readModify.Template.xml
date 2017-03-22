@@ -3,13 +3,26 @@
 	<!-- Sequence template to read the notification url from registry -->
 	<parameter name="apiRefCode"/>
 	<parameter name="notifyURL"/>
+	<!-- configuration element name -->
+	<parameter name="notifyURLParamName"/>
     <sequence>
 	    <filter xpath="boolean($ctx:notifyURL)">
 	    	<then>
-	    		<property name="apiConfig" expression="fn:concat('conf:/repository/wso2telco/configurations/api/', $func:apiRefCode, 'Config.xml')"/>
-				
-				<property  expression="get-property('registry', get-property('apiConfig'))" name="notificationURLConfig" scope="default" type="OM"/>
-				<property expression="$ctx:notificationURLConfig//notificationURL" name="NOTIFICATION_URL" scope="default" type="STRING"/>
+				<!-- read api configuration -->
+				<call-template target="com.wso2telco.dep.common.api.configReader.Template">
+				    <with-param name="apiRefCode" value="{$func:apiRefCode}"/>
+				</call-template>
+					    	
+	    		<filter xpath="boolean($func:notifyURLParamName)">
+	    			<then>
+						<property expression="evaluate(fn:concat('$ctx:apiConfigurationOM//',$func:notifyURLParamName))" name="NOTIFICATION_URL" scope="default" type="STRING"/>	    			
+	    			</then>
+	    			<else>
+	    				<!-- Default param value -->
+						<property expression="$ctx:apiConfigurationOM//notificationURL" name="NOTIFICATION_URL" scope="default" type="STRING"/>	    				    				
+	    			</else>
+	    		</filter>
+	    		 		
 				<!-- save service provider's notify url and generate new notify url from hub -->
 				
 				<sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
