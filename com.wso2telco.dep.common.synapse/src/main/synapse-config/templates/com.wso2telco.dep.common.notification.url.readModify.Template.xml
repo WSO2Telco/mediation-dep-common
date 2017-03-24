@@ -1,37 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template name="com.wso2telco.dep.common.notification.url.readModify.Template" xmlns="http://ws.apache.org/ns/synapse">
-	<!-- Sequence template to read the notification url from registry -->
-	<parameter name="apiRefCode"/>
+	<!-- Sequence template to genenrate the notification url -->
+	<parameter name="apiContext"/>
 	<parameter name="notifyURL"/>
-	<!-- configuration element name -->
-	<parameter name="notifyURLParamName"/>
+	<!-- resource name -->
+	<parameter name="apiResourceSuffix"/>
     <sequence>
-	    <filter xpath="boolean($ctx:notifyURL)">
+    
+	    <filter xpath="boolean($func:notifyURL)">
 	    	<then>
-				<!-- read api configuration -->
-				<call-template target="com.wso2telco.dep.common.api.configReader.Template">
-				    <with-param name="apiRefCode" value="{$func:apiRefCode}"/>
-				</call-template>
-					    	
-	    		<filter xpath="boolean($func:notifyURLParamName)">
-	    			<then>
-						<property expression="evaluate(fn:concat('$ctx:apiConfigurationOM//',$func:notifyURLParamName))" name="NOTIFICATION_URL" scope="default" type="STRING"/>	    			
-	    			</then>
+	    		<property name="hubAPIContext" action="set" scope="default" expression="fn:normalize-space($func:apiContext)" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+	    		<property name="notifyURL" action="set" scope="default" expression="$func:notifyURL" type="STRING"/>
+	    		
+	    		<filter xpath="boolean($ctx:hubAPIContext)">
+	    			<then/>
 	    			<else>
-	    				<!-- Default param value -->
-						<property expression="$ctx:apiConfigurationOM//notificationURL" name="NOTIFICATION_URL" scope="default" type="STRING"/>	    				    				
+	    				<property name="hubAPIContext" action="set" expression="fn:normalize-space($ctx:CONTEXT)" pattern="((^(?!null).*$)|(^(null).+$))" group="1"/>
+	    				
+	    				<filter xpath="boolean($ctx:hubAPIContext)">
+	    					<then/>
+	    					<else>
+				    			<log level="custom" category="ERROR">
+				    				<property name="ERROR" value="API Context cannot be empty"/>
+				    			</log>
+				    			<sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>	    						
+	    					</else>
+	    				</filter>
 	    			</else>
 	    		</filter>
-	    		 		
-				<!-- save service provider's notify url and generate new notify url from hub -->
-				
-				<sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
-				<filter regex="true" source="get-property('INTERNAL_ERROR')">
-				  <then>
-				    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
-				  </then>
-				  <else/>
-				</filter>    		
+	    	
+				<property  expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>	
+	    		<property name="hubURLPrefix" expression="$ctx:mediationConfig//huburl" scope="default" type="STRING"/>
+	    		
+	    		<filter xpath="boolean($ctx:hubURLPrefix)">
+	    			<then/>
+	    			<else>
+		    			<log level="custom" category="WARN">
+		    				<property name="ERROR" value="Hub url cannot be empty"/>
+		    			</log>
+		    			<sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>	    				
+	    			</else>
+	    		</filter>
+	    		
+	    		<filter xpath="boolean($func:apiResourceSuffix)">
+	    			<then>
+						<property expression="fn:concat($ctx:hubURLPrefix, $ctx:hubAPIContext, $func:apiResourceSuffix)" name="NOTIFICATION_URL" action="set" scope="default" type="STRING"/>	    				    	
+						<!-- save service provider's notify url and generate new notify url from hub -->
+						
+						<sequence key="com.wso2telco.dep.common.notification.url.modify.Sequence"/>
+						
+						<filter regex="true" source="get-property('INTERNAL_ERROR')">
+						  <then>
+						    <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+						  </then>
+						  <else/>
+						</filter>  	    			
+	    			</then>
+	    			<else>
+		    			<log level="custom" category="WARN">
+		    				<property name="ERROR" value="API resource path cannot be empty"/>
+		    			</log>
+		    			<sequence key="com.wso2telco.dep.common.response.unexpectedError.Sequence"/>	    				
+	    			</else>
+	    		</filter>							  		
 	    	</then>
 	    	<else/>
 	    </filter>    	
