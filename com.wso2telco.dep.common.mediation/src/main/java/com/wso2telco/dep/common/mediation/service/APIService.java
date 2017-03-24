@@ -155,4 +155,7 @@ public class APIService {
 		return apiDAO.checkWhiteListed(MSISDN, applicationId, subscriptionId, apiId);
 	}
 
+	public List<Map<String, Object>> executeCustomSelectQuery(String selectQuery) throws Exception {
+		return apiDAO.executeCustomSelectQuery(selectQuery);
+	}
 }
