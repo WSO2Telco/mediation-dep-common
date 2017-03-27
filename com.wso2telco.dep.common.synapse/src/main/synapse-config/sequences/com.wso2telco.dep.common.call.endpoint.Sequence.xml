@@ -21,7 +21,7 @@
     <else>
       <property expression="json-eval($.requestError.serviceException)"
         name="serviceException" scope="default" type="STRING"/>
-      <filter regex="true" source="get-property('serviceException')">
+      <filter xpath="boolean($ctx:serviceException)">
         <then>
           <property
             expression="json-eval($.requestError.serviceException.messageId)"
@@ -40,7 +40,7 @@
           <property
             expression="json-eval($.requestError.policyException)"
             name="policyException" scope="default" type="STRING"/>
-          <filter regex="true" source="get-property('policyException')">
+          <filter xpath="boolean($ctx:policyException)">
             <then>
               <property
                 expression="json-eval($.requestError.policyException.messageId)"
