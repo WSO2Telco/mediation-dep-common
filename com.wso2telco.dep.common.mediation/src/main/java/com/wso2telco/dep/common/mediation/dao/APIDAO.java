@@ -535,7 +535,7 @@ public class APIDAO {
 		
 		try {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
-			preparedStatement = connection.prepareStatement(insertQuery);
+			preparedStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
 			
 			preparedStatement.executeUpdate();
 			
