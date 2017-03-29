@@ -28,6 +28,7 @@
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.integerValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.integerValidation.Template>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.loggingExtension.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.loggingExtension.Template>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.integerOffsetAndLimitValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.integerOffsetAndLimitValidation.Template>
+    <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.execute.insert.query.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.execute.insert.query.Sequence>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.notification.url.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.notification.url.retriever.Sequence>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.mandatoryParameterValueValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.mandatoryParameterValueValidation.Template>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.endpoint.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.endpoint.retriever.Sequence>
@@ -283,6 +284,12 @@
       <groupId>com.wso2telco.dep.common.sequence</groupId>
       <artifactId>com.wso2telco.dep.common.handle.gateway.error.Sequence</artifactId>
       <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.sequence</groupId>
+      <artifactId>com.wso2telco.dep.common.execute.insert.query.Sequence</artifactId>
+      <version>2.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
   </dependencies>
