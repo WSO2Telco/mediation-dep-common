@@ -289,7 +289,7 @@
     <dependency>
       <groupId>com.wso2telco.dep.common.sequence</groupId>
       <artifactId>com.wso2telco.dep.common.execute.insert.query.Sequence</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
   </dependencies>

@@ -110,7 +110,7 @@
     <artifact name="com.wso2telco.dep.common.handle.gateway.error.Sequence" groupId="com.wso2telco.dep.common.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.handle.gateway.error.Sequence.xml</file>
     </artifact>
-    <artifact name="com.wso2telco.dep.common.execute.insert.query.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+    <artifact name="com.wso2telco.dep.common.execute.insert.query.Sequence" groupId="com.wso2telco.dep.common.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.execute.insert.query.Sequence.xml</file>
     </artifact>
 </artifacts>
