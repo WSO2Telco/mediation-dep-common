@@ -22,7 +22,7 @@
 			<groupId>com.wso2telco.core</groupId>
 			<artifactId>dbutils</artifactId>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>com.wso2telco.core</groupId>
 			<artifactId>mnc-resolver</artifactId>
 		</dependency>
