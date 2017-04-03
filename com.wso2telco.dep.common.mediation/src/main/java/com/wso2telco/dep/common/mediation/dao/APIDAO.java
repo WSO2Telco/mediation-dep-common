@@ -518,4 +518,39 @@ public class APIDAO {
 		}
 		return recordList;
 	}
+	
+	/**
+	 * Generic method to execute a insert query
+	 *
+	 * @param insertQuery   Insert query to execute
+	 *
+	 * @return   Generated ID
+	 * @throws Exception
+	 */
+	public int executeCustomInsertQueryAndGetGeneratedPrimaryKey (String insertQuery) throws Exception {
+		int generatedId = 0;
+		Connection connection = null;
+		PreparedStatement preparedStatement=null;
+		ResultSet insertResults = null;
+		
+		try {
+			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
+			preparedStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+			
+			preparedStatement.executeUpdate();
+			
+			insertResults = preparedStatement.getGeneratedKeys();
+			
+			while (insertResults.next()) {
+				generatedId = insertResults.getInt(1);
+			}
+		} catch (Exception ex) {
+			log.error("database operation error in executing custom insert query : ", ex);
+			throw ex;
+		} finally {
+			DbUtils.closeAllConnections(preparedStatement, connection, insertResults);
+		}
+		
+		return generatedId;
+	}
 }

@@ -158,4 +158,8 @@ public class APIService {
 	public List<Map<String, Object>> executeCustomSelectQuery(String selectQuery) throws Exception {
 		return apiDAO.executeCustomSelectQuery(selectQuery);
 	}
+	
+	public int executeCustomInsertQueryAndGetGeneratedPrimaryKey (String insertQuery) throws Exception {
+		return apiDAO.executeCustomInsertQueryAndGetGeneratedPrimaryKey(insertQuery);
+	}
 }
