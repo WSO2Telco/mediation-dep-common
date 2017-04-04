@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.wso2telco.core.dbutils.DbUtils;
 import com.wso2telco.core.dbutils.util.DataSourceNames;
 import com.wso2telco.dep.common.mediation.util.DatabaseTables;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -22,8 +20,8 @@ public class APIDAO {
 	private final Log log = LogFactory.getLog(APIDAO.class);
 
 	public Integer insertServiceProviderNotifyURL(String apiName,
-			String notifyURL, String serviceProvider, String clientCorrelator)
-			throws SQLException, Exception {
+			String notifyURL, String serviceProvider, String clientCorrelator,
+			String operatorName) throws SQLException, Exception {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -41,8 +39,8 @@ public class APIDAO {
 			StringBuilder insertQueryString = new StringBuilder("INSERT INTO ");
 			insertQueryString.append(DatabaseTables.NOTIFICATION_URLS);
 			insertQueryString
-					.append(" (apiname, notifyurl, serviceprovider, clientCorrelator) ");
-			insertQueryString.append("VALUES (?, ?, ?, ?)");
+					.append(" (apiname, notifyurl, serviceprovider, clientCorrelator, operatorName) ");
+			insertQueryString.append("VALUES (?, ?, ?, ?, ?)");
 
 			ps = con.prepareStatement(insertQueryString.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -51,6 +49,7 @@ public class APIDAO {
 			ps.setString(2, notifyURL);
 			ps.setString(3, serviceProvider);
 			ps.setString(4, clientCorrelator);
+			ps.setString(5, operatorName);
 
 			log.debug("sql query in insertServiceProviderNotifyURL : " + ps);
 
@@ -146,7 +145,7 @@ public class APIDAO {
 			}
 
 			StringBuilder queryString = new StringBuilder(
-					"SELECT apiname, notifyurl, serviceprovider, notifystatus, clientCorrelator ");
+					"SELECT apiname, notifyurl, serviceprovider, notifystatus, clientCorrelator, operatorName ");
 			queryString.append("FROM ");
 			queryString.append(DatabaseTables.NOTIFICATION_URLS);
 			queryString.append(" WHERE notifyurldid = ?");
@@ -170,7 +169,9 @@ public class APIDAO {
 				notificationURLInformation.put("notifystatus",
 						String.valueOf(rs.getInt("notifystatus")));
 				notificationURLInformation.put("clientCorrelator",
-						String.valueOf(rs.getInt("clientCorrelator")));
+						rs.getString("clientCorrelator"));
+				notificationURLInformation.put("operatorName",
+						rs.getString("operatorName"));
 			}
 		} catch (SQLException e) {
 
@@ -233,9 +234,10 @@ public class APIDAO {
 			DbUtils.closeAllConnections(ps, con, null);
 		}
 	}
-	
-	public String getAttributeValueForCode(String tableName, String operatorName, String attributeGroupCode,
-			String attributeCode) throws Exception {
+
+	public String getAttributeValueForCode(String tableName,
+			String operatorName, String attributeGroupCode, String attributeCode)
+			throws Exception {
 
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -244,18 +246,20 @@ public class APIDAO {
 
 		try {
 
-			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
+			connection = DbUtils
+					.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
 
 			StringBuilder queryBuilder = new StringBuilder();
 
 			queryBuilder.append("select map.VALUE as attributeValue from ");
-			queryBuilder.append(DatabaseTables.MDXATTRIBGROUP +" attgroup, ");
+			queryBuilder.append(DatabaseTables.MDXATTRIBGROUP + " attgroup, ");
 			queryBuilder.append(DatabaseTables.MDXATTRIBUTE + " attribute, ");
 			queryBuilder.append(DatabaseTables.MDTATTRIBUTEMAP + " map, ");
 			queryBuilder.append(DatabaseTables.OPERATORS + " operator ");
 			queryBuilder.append(" where ");
 			queryBuilder.append(" attgroup.GROUPDID = attribute.GROUPDID ");
-			queryBuilder.append(" and attribute.ATTRIBUTEDID = map.ATTRIBUTEDID ");
+			queryBuilder
+					.append(" and attribute.ATTRIBUTEDID = map.ATTRIBUTEDID ");
 			queryBuilder.append(" and map.OWNERDID = operator.id ");
 			queryBuilder.append(" and lower(map.TOBJECT) = ? ");
 			queryBuilder.append(" and lower(operator.operatorname) = ? ");
@@ -270,12 +274,14 @@ public class APIDAO {
 
 			resultSet = statement.executeQuery();
 
-			if (resultSet.next() && resultSet.getString("attributeValue") != null) {
+			if (resultSet.next()
+					&& resultSet.getString("attributeValue") != null) {
 				attributeValue = resultSet.getString("attributeValue");
 			}
 
 		} catch (Exception ex) {
-			log.error("database operation error in getAttributeValueForCode :", ex);
+			log.error("database operation error in getAttributeValueForCode :",
+					ex);
 			throw ex;
 		} finally {
 			DbUtils.closeAllConnections(statement, connection, resultSet);
@@ -284,9 +290,8 @@ public class APIDAO {
 		return attributeValue;
 	}
 
-
-
-	public String getAPIId(String apiPublisher, String apiName, String apiVersion) throws Exception{
+	public String getAPIId(String apiPublisher, String apiName,
+			String apiVersion) throws Exception {
 
 		String apiId = null;
 		PreparedStatement statement = null;
@@ -294,7 +299,6 @@ public class APIDAO {
 		Connection connection = null;
 
 		try {
-
 
 			StringBuilder queryBuilder = new StringBuilder();
 
@@ -331,9 +335,11 @@ public class APIDAO {
 	/**
 	 * Read blacklist numbers.
 	 *
-	 * @param apiId the api name
+	 * @param apiId
+	 *            the api name
 	 * @return the list
-	 * @throws Exception the all exceptions
+	 * @throws Exception
+	 *             the all exceptions
 	 */
 	public List<String> readBlacklistNumbers(String apiId) throws Exception {
 
@@ -349,18 +355,21 @@ public class APIDAO {
 			queryBuilder.append(DatabaseTables.BLACKLIST_MSISDN + "  ");
 			queryBuilder.append(" where ");
 			queryBuilder.append(" API_ID = ? ");
-			//queryBuilder.append(" AND MSISDN = ? ");
+			// queryBuilder.append(" AND MSISDN = ? ");
 
-			connection = DbUtils.getDbConnection(DataSourceNames.WSO2AM_STATS_DB);
+			connection = DbUtils
+					.getDbConnection(DataSourceNames.WSO2AM_STATS_DB);
 
-			preparedStatement = connection.prepareStatement(queryBuilder.toString());
+			preparedStatement = connection.prepareStatement(queryBuilder
+					.toString());
 			preparedStatement.setString(1, apiId);
 
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet != null) {
 				while (resultSet.next()) {
-					String msisdnTable = resultSet.getString("MSISDN").replace("tel3A+", "");
+					String msisdnTable = resultSet.getString("MSISDN").replace(
+							"tel3A+", "");
 					log.debug("msisdn in the table = " + msisdnTable);
 					msisdnArrayList.add(msisdnTable);
 				}
@@ -370,12 +379,14 @@ public class APIDAO {
 			log.error("database operation error in API_ID :", ex);
 			throw ex;
 		} finally {
-			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
+			DbUtils.closeAllConnections(preparedStatement, connection,
+					resultSet);
 		}
 		return msisdnArrayList;
 	}
 
-	public int getSubscriptionId(String apiID, String applicationID) throws Exception {
+	public int getSubscriptionId(String apiID, String applicationID)
+			throws Exception {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -383,8 +394,9 @@ public class APIDAO {
 
 		StringBuilder queryBuilder = new StringBuilder();
 
-		queryBuilder.append("SELECT SUBS.SUBSCRIPTION_ID AS SUBSCRIPTION_ID FROM ");
-		queryBuilder.append(DatabaseTables.AM_SUBSCRIPTION +" SUBS, ");
+		queryBuilder
+				.append("SELECT SUBS.SUBSCRIPTION_ID AS SUBSCRIPTION_ID FROM ");
+		queryBuilder.append(DatabaseTables.AM_SUBSCRIPTION + " SUBS, ");
 		queryBuilder.append(DatabaseTables.AM_APPLICATION + " APP, ");
 		queryBuilder.append(DatabaseTables.AM_API + " API ");
 		queryBuilder.append(" where ");
@@ -397,12 +409,12 @@ public class APIDAO {
 
 		try {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2AM_DB);
-			preparedStatement = connection.prepareStatement(queryBuilder.toString());
+			preparedStatement = connection.prepareStatement(queryBuilder
+					.toString());
 			preparedStatement.setInt(1, Integer.parseInt(apiID));
 			preparedStatement.setInt(2, Integer.parseInt(applicationID));
 
 			resultSet = preparedStatement.executeQuery();
-
 
 			while (resultSet.next()) {
 				return resultSet.getInt("SUBSCRIPTION_ID");
@@ -411,13 +423,14 @@ public class APIDAO {
 			log.error("database operation error in SUBSCRIPTION_ID :", e);
 			throw e;
 		} finally {
-			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
+			DbUtils.closeAllConnections(preparedStatement, connection,
+					resultSet);
 		}
 		return -1;
 	}
 
-
-	public boolean checkWhiteListed(String MSISDN, String applicationId, String subscriptionId, String apiId) throws Exception {
+	public boolean checkWhiteListed(String MSISDN, String applicationId,
+			String subscriptionId, String apiId) throws Exception {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -426,39 +439,52 @@ public class APIDAO {
 		StringBuilder queryBuilder = new StringBuilder();
 
 		queryBuilder.append("SELECT * FROM  ");
-		queryBuilder.append(DatabaseTables.SUBSCRIPTION_WHITELIST + "  WHERE  ");
-		queryBuilder.append("( subscriptionID  = ? AND  msisdn = ? AND  api_id = ? AND  application_id  =  ?) OR ");
-		queryBuilder.append("( subscriptionID IS NULL  AND  msisdn = ? AND  api_id = ? AND  application_id  =  ?) OR  ");
-		queryBuilder.append("( subscriptionID = ? AND  msisdn = ? AND  api_id IS NULL  AND  application_id IS NULL ) OR  ");
-		queryBuilder.append("( subscriptionID IS NULL  AND  msisdn = ? AND  api_id IS NULL  AND  application_id =?) OR   ");
-		queryBuilder.append("( subscriptionID IS NULL  AND  msisdn  IS NULL  AND  api_id IS NULL  AND application_id =  ?) OR   ");
-		queryBuilder.append("( subscriptionID IS NULL  AND  msisdn IS NULL  AND api_id = ? AND application_id  = ?)  " +
-				"LIMIT 0,1    ");
+		queryBuilder
+				.append(DatabaseTables.SUBSCRIPTION_WHITELIST + "  WHERE  ");
+		queryBuilder
+				.append("( subscriptionID  = ? AND  msisdn = ? AND  api_id = ? AND  application_id  =  ?) OR ");
+		queryBuilder
+				.append("( subscriptionID IS NULL  AND  msisdn = ? AND  api_id = ? AND  application_id  =  ?) OR  ");
+		queryBuilder
+				.append("( subscriptionID = ? AND  msisdn = ? AND  api_id IS NULL  AND  application_id IS NULL ) OR  ");
+		queryBuilder
+				.append("( subscriptionID IS NULL  AND  msisdn = ? AND  api_id IS NULL  AND  application_id =?) OR   ");
+		queryBuilder
+				.append("( subscriptionID IS NULL  AND  msisdn  IS NULL  AND  api_id IS NULL  AND application_id =  ?) OR   ");
+		queryBuilder
+				.append("( subscriptionID IS NULL  AND  msisdn IS NULL  AND api_id = ? AND application_id  = ?)  "
+						+ "LIMIT 0,1    ");
 
 		try {
-			connection = DbUtils.getDbConnection(DataSourceNames.WSO2AM_STATS_DB);
-			preparedStatement = connection.prepareStatement(queryBuilder.toString());
+			connection = DbUtils
+					.getDbConnection(DataSourceNames.WSO2AM_STATS_DB);
+			preparedStatement = connection.prepareStatement(queryBuilder
+					.toString());
 
-			//"(`subscriptionID` = ? AND `msisdn` = ? AND `api_id` = ? AND `application_id` =  >) OR \n" +
+			// "(`subscriptionID` = ? AND `msisdn` = ? AND `api_id` = ? AND `application_id` =  >) OR \n"
+			// +
 			preparedStatement.setString(1, subscriptionId);
 			preparedStatement.setString(2, MSISDN);
 			preparedStatement.setString(3, apiId);
 			preparedStatement.setString(4, applicationId);
 
-			//"(`subscriptionID` = null AND `msisdn` = ? AND `api_id` = ? AND `application_id` =  ?) OR\n"
+			// "(`subscriptionID` = null AND `msisdn` = ? AND `api_id` = ? AND `application_id` =  ?) OR\n"
 			preparedStatement.setString(5, MSISDN);
 			preparedStatement.setString(6, apiId);
 			preparedStatement.setString(7, applicationId);
 
-			// "(`subscriptionID` = ? AND `msisdn` = ? AND `api_id` = null AND `application_id` =  null) OR \n" +
+			// "(`subscriptionID` = ? AND `msisdn` = ? AND `api_id` = null AND `application_id` =  null) OR \n"
+			// +
 			preparedStatement.setString(8, subscriptionId);
 			preparedStatement.setString(9, MSISDN);
 
-			// "(`subscriptionID` = null AND `msisdn` = ? AND `api_id` = null AND `application_id` =  ?) OR \n" +
+			// "(`subscriptionID` = null AND `msisdn` = ? AND `api_id` = null AND `application_id` =  ?) OR \n"
+			// +
 			preparedStatement.setString(10, MSISDN);
 			preparedStatement.setString(11, applicationId);
 
-			//"(`subscriptionID` = null AND `msisdn` = null AND `api_id` = null AND `application_id` =  ?) OR \n" +
+			// "(`subscriptionID` = null AND `msisdn` = null AND `api_id` = null AND `application_id` =  ?) OR \n"
+			// +
 			preparedStatement.setString(12, applicationId);
 
 			// "(`subscriptionID` = null AND `msisdn` = null AND `api_id` = ? AND `application_id` =  ?)  ";
@@ -475,7 +501,8 @@ public class APIDAO {
 			log.error("database operation error in subscription whitelist :", e);
 			throw e;
 		} finally {
-			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
+			DbUtils.closeAllConnections(preparedStatement, connection,
+					resultSet);
 		}
 
 		return false;
