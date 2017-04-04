@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.common.operator.endpoint.retriever.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <!-- OPERATOR_CODE property should contain the name of operator -->
+    <class name="com.wso2telco.dep.common.mediation.OperatorEndpointRetrieverMediator"/>
+    <filter regex="true" source="get-property('ENDPOINT_ERROR')">
+        <then>
+            <log level="debug">
+                <property name="state" value="ENDPOINT_ERROR with OperatorEndpointRetrieverMediator"/>
+            </log>
+        </then>
+        <else/>
+    </filter>
+    <filter regex="true" source="get-property('INTERNAL_ERROR')">
+        <then>
+            <log level="debug">
+                <property name="state" value="INTERNAL_ERROR with OperatorEndpointRetrieverMediator"/>
+            </log>
+        </then>
+        <else/>
+    </filter>
+</sequence>
