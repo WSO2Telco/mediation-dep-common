@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.wso2telco.core.dbutils.DbUtils;
 import com.wso2telco.core.dbutils.util.DataSourceNames;
 import com.wso2telco.dep.common.mediation.util.DatabaseTables;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -22,7 +20,7 @@ public class APIDAO {
 	private final Log log = LogFactory.getLog(APIDAO.class);
 
 	public Integer insertServiceProviderNotifyURL(String apiName,
-			String notifyURL, String serviceProvider, String clientCorrelator)
+			String notifyURL, String serviceProvider, String clientCorrelator, String operatorName)
 			throws SQLException, Exception {
 
 		Connection con = null;
@@ -41,8 +39,8 @@ public class APIDAO {
 			StringBuilder insertQueryString = new StringBuilder("INSERT INTO ");
 			insertQueryString.append(DatabaseTables.NOTIFICATION_URLS);
 			insertQueryString
-					.append(" (apiname, notifyurl, serviceprovider, clientCorrelator) ");
-			insertQueryString.append("VALUES (?, ?, ?, ?)");
+					.append(" (apiname, notifyurl, serviceprovider, clientCorrelator, operatorName) ");
+			insertQueryString.append("VALUES (?, ?, ?, ?, ?)");
 
 			ps = con.prepareStatement(insertQueryString.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -51,6 +49,7 @@ public class APIDAO {
 			ps.setString(2, notifyURL);
 			ps.setString(3, serviceProvider);
 			ps.setString(4, clientCorrelator);
+			ps.setString(5, operatorName);
 
 			log.debug("sql query in insertServiceProviderNotifyURL : " + ps);
 
