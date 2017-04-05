@@ -30,4 +30,7 @@
     </else>
   </filter>
   
+  <!-- Reading the cofiguration -->
+  <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
+  
 </sequence>
