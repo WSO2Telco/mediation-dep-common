@@ -12,7 +12,7 @@
 		var splittedParts = requestId.split(":");
 		if(splittedParts.length > 3) {
 			var modifiedId = splittedParts[0] + ":" + splittedParts[1] + ":" + splittedParts[3];
-			mc.setProperty("REQUEST_ID", modifiedId);
+			mc.setProperty("REQUEST_ID", String(modifiedId));
 		}
 		]]></script>
                 <property expression="fn:concat($func:clientCorrelator , ':' , get-property('REQUEST_ID'))" name="uniqueClientCorrelator" scope="default" type="STRING"/>
