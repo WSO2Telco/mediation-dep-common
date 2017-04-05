@@ -7,6 +7,14 @@
                 <property expression="get-property('REQUEST_ID')" name="uniqueClientCorrelator" scope="default" type="STRING"/>
             </then>
             <else>
+		<script language="js"><![CDATA[
+		var requestId = mc.getProperty("REQUEST_ID");
+		var splittedParts = requestId.split(":");
+		if(splittedParts.length > 3) {
+			var modifiedId = splittedParts[0] + ":" + splittedParts[1] + ":" + splittedParts[3];
+			mc.setProperty("REQUEST_ID", modifiedId);
+		}
+		]]></script>
                 <property expression="fn:concat($func:clientCorrelator , ':' , get-property('REQUEST_ID'))" name="uniqueClientCorrelator" scope="default" type="STRING"/>
             </else>
         </filter>
