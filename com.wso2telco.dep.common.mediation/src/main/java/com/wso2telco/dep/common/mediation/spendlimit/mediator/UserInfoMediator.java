@@ -17,7 +17,13 @@ public class UserInfoMediator extends AbstractMediator {
             String spendLimitConfig = messageContext.getProperty("spendLimitConfig").toString();
             messageContext.setProperty("userInfoEnabled", getGroupUserInfo(operatorName, consumerKey,spendLimitConfig));
         } catch (Exception e) {
-        //do error handling here
+            setErrorInContext(
+                    messageContext,
+                    "SVC0001",
+                    "A service error occurred. Error code is %1",
+                    "An internal service error has occured. Please try again later.",
+                    "500", "SERVICE_EXCEPTION");
+            messageContext.setProperty("INTERNAL_ERROR", "true");
         }
 
         return true;
@@ -30,5 +36,16 @@ public class UserInfoMediator extends AbstractMediator {
         GroupDTO operatorGroup = unmarshaller.getGroupDTO(operatorName, consumerKey);
 
         return operatorGroup.getUserInfoEnabled();
+    }
+
+    private void setErrorInContext(MessageContext synContext, String messageId,
+                                   String errorText, String errorVariable, String httpStatusCode,
+                                   String exceptionType) {
+
+        synContext.setProperty("messageId", messageId);
+        synContext.setProperty("errorText", errorText);
+        synContext.setProperty("errorVariable", errorVariable);
+        synContext.setProperty("httpStatusCode", httpStatusCode);
+        synContext.setProperty("exceptionType", exceptionType);
     }
 }
