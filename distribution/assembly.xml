@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly
+		xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+
+	<id>dist</id>
+
+	<baseDirectory>/</baseDirectory>
+
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+
+	<fileSets>
+		<fileSet>
+			<directory>../com.wso2telco.dep.common.mediation/target</directory>
+			<includes>
+				<include>com.wso2telco.dep.common.mediation-${pom.version}.jar</include>
+			</includes>
+			<outputDirectory>/others/lib</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>../com.wso2telco.dep.common.capp/target</directory>
+			<includes>
+				<include>com.wso2telco.dep.common.capp_${pom.version}.car</include>
+			</includes>
+			<outputDirectory>/capps</outputDirectory>
+		</fileSet>
+		<!-- External files -->
+		<fileSet>
+			<directory>downloads</directory>
+			<includes>
+				<include>dbutils-${com.wso2telco.core.version}.jar</include>
+			</includes>
+			<outputDirectory>/others/dropins</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>downloads</directory>
+			<includes>
+				<include>mnc-resolver-${com.wso2telco.core.version}.jar</include>
+			</includes>
+			<outputDirectory>/others/dropins</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>downloads</directory>
+			<includes>
+				<include>msisdn-validator-${com.wso2telco.core.version}.jar</include>
+			</includes>
+			<outputDirectory>/others/dropins</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>downloads</directory>
+			<includes>
+				<include>operator-service-${com.wso2telco.dep.version}.jar</include>
+			</includes>
+			<outputDirectory>/others/dropins</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>downloads</directory>
+			<includes>
+				<include>subscription-validator-${com.wso2telco.dep.version}.jar</include>
+			</includes>
+			<outputDirectory>/others/dropins</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>downloads</directory>
+			<includes>
+				<include>oneapi-validation-${com.wso2telco.dep.version}.jar</include>
+			</includes>
+			<outputDirectory>/others/lib</outputDirectory>
+		</fileSet>		
+	</fileSets>
+</assembly>
