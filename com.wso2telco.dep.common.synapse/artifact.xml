@@ -113,4 +113,7 @@
     <artifact name="com.wso2telco.dep.common.execute.insert.query.Sequence" groupId="com.wso2telco.dep.common.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.execute.insert.query.Sequence.xml</file>
     </artifact>
+    <artifact name="com.wso2telco.dep.common.call.blocking.endpoint.Sequence" groupId="com.wso2telco.dep.common.sequence" version="3.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.call.blocking.endpoint.Sequence.xml</file>
+    </artifact>
 </artifacts>
