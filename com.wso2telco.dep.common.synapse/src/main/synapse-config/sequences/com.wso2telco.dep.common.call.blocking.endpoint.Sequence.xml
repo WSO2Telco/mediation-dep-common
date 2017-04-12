@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.common.call.blocking.endpoint.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <header expression="get-property('API_ENDPOINT')" name="To" scope="default"/>
+    <property expression="fn:concat('Bearer ',get-property('ACCESS_TOKEN'))" name="Authorization" scope="transport" type="STRING"/>
+    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+    <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
+        <with-param name="direction" value="REQUESTOUT"/>
+    </call-template>
+    <call blocking="true">
+        <endpoint>
+            <default/>
+        </endpoint>
+    </call>
+    <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
+        <with-param name="direction" value="RESPONSEIN"/>
+    </call-template>
+</sequence>
