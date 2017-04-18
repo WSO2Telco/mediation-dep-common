@@ -37,6 +37,11 @@
     <dependencies>
       <dependency>
         <groupId>com.wso2telco.core</groupId>
+        <artifactId>redis-client-wso2telco</artifactId>
+        <version>${com.wso2telco.core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.wso2telco.core</groupId>
         <artifactId>mnc-resolver</artifactId>
         <version>${com.wso2telco.core.version}</version>
       </dependency>

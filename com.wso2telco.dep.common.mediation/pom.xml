@@ -20,6 +20,10 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.wso2telco.core</groupId>
+			<artifactId>redis-client-wso2telco</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.wso2telco.core</groupId>
 			<artifactId>dbutils</artifactId>
 		</dependency>
 		<dependency>
