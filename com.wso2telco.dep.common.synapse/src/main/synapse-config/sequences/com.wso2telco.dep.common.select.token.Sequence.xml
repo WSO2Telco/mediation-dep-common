@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.common.select.token.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <!-- remove rest url postfix -->
+  <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
   <property
     expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
     name="mediationConfig" scope="default" type="OM"/>
