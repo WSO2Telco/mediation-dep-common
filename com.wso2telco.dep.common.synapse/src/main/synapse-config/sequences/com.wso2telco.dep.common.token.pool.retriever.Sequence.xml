@@ -4,7 +4,7 @@
   <!-- set http method to GET -->
   <property name="HTTP_METHOD" scope="axis2" type="STRING" value="GET"/>
   <property
-    expression="fn:concat($ctx:TOKEN_POOL_SERVICE_URL,'/',$ctx:OPERATOR_ID)"
+    expression="fn:concat($ctx:TOKEN_POOL_SERVICE_URL,'/',$ctx:OPERATOR_NAME)"
     name="uri.var.TOKEN_POOL_ENDPOINT" scope="default" type="STRING"/>
   <call>
     <endpoint key="com.wso2telco.dep.common.token.pool.service.Endpoint"/>
