@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.common.token.pool.retriever.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <!-- set http method to GET -->
+  <property name="HTTP_METHOD" scope="axis2" type="STRING" value="GET"/>
   <property
     expression="fn:concat($ctx:TOKEN_POOL_SERVICE_URL,'/',$ctx:OPERATOR_ID)"
     name="uri.var.TOKEN_POOL_ENDPOINT" scope="default" type="STRING"/>
   <call>
     <endpoint key="com.wso2telco.dep.common.token.pool.service.Endpoint"/>
   </call>
+  <!-- set message type to text/plain -->
   <property name="ContentType" scope="axis2" type="STRING" value="text/plain"/>
-  <property expression="$body/m0:text" name="ACCESS_TOKEN"
+  <property expression="//text()" name="ACCESS_TOKEN"
     scope="default" type="STRING"
     xmlns:m0="http://ws.apache.org/commons/ns/payload" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <!-- set message type to application/json -->
+  <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
 </sequence>

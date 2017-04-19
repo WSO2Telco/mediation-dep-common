@@ -29,6 +29,4 @@
     scope="default" type="STRING"/>
   <property expression="json-eval($.expires_in)" name="TOKEN_VALIDITY"
     scope="default" type="STRING"/>
-  <!-- set http method to incoming http method -->
-  <property name="HTTP_METHOD" scope="axis2" expression="$ctx:HTTP_METHOD"/>
 </sequence>
