@@ -9,9 +9,9 @@
       <with-param name="direction" value="REQUESTOUT"/>
   </call-template>
   <call>
-    <endpoint>
-      <default trace="disable"/>
-    </endpoint>
+     <endpoint>
+        <default format="rest"/>
+     </endpoint>
   </call>
   <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
       <with-param name="direction" value="RESPONSEIN"/>
