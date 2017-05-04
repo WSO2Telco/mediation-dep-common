@@ -3,82 +3,96 @@
 	<parameter name="msisdn"/>
 	<parameter name="direction"/>
 	<sequence>
-		<log level="custom">
-			<property name="status" value="publishing response data"/>
-		</log>
-		<property expression="synapse:get-property('SYSTEM_TIME')"
-				  name="RESPONSE_TIME" scope="default" type="STRING"/>
-		<property expression="json-eval($.)" name="JSON_BODY"
-				  scope="default" type="STRING"/>
-		<script language="js"><![CDATA[var diff = mc.getProperty('RESPONSE_TIME') - mc.getProperty('REQUEST_TIME');
-        		mc.setProperty('SERVICE_TIME', diff);]]></script>
-		<publishEvent>
-			<eventSink>GatewayAnalyticsEvent</eventSink>
-			<streamName>org.wso2telco.analytics.hub.stream.responseStatistics</streamName>
-			<streamVersion>1.0.0</streamVersion>
-			<attributes>
-				<meta>
-					<attribute defaultValue="" name="clientType" type="STRING" value="NOT-REQUIRED"/>
-				</meta>
-				<correlation/>
-				<payload>
-					<attribute defaultValue="" expression="$ctx:CONSUMER_KEY"
-							   name="consumerKey" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:CONTEXT"
-							   name="context" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:VERSION"
-							   name="apiVersion" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:API_NAME"
-							   name="api" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:RESOURCE"
-							   name="resourcePath" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:HTTP_METHOD"
-							   name="method" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:VERSION"
-							   name="version" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:RESPONSE_TIME"
-							   name="responseTime" type="LONG"/>
-					<attribute defaultValue="" name="serviceTime" type="LONG" value="860"/>
-					<attribute defaultValue="" expression="$ctx:USER_ID"
-							   name="serviceProvider" type="STRING"/>
-					<attribute defaultValue="" name="tenantDomain" type="STRING" value="carbon.super"/>
-					<attribute defaultValue="" expression="$ctx:HOST_NAME"
-							   name="hostName" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:API_PUBLISHER"
-							   name="apiPublisher" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:APPLICATION_NAME"
-							   name="applicationName" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:REQUEST_ID"
-							   name="requestId" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:OPERATOR_ID"
-							   name="operatorId" type="STRING"/>
-					<attribute defaultValue="" expression="$axis2:HTTP_SC"
-							   name="apiPublisher" type="STRING"/>
-					<attribute defaultValue=""
-							   expression="fn:normalize-space($func:msisdn)" name="msisdn" type="STRING"/>
-					<attribute defaultValue=""
-							   expression="fn:normalize-space($func:direction)"
-							   name="direction" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:JSON_BODY"
-							   name="jsonBody" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:USER_ID"
-							   name="serviceProviderId" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:USER_ID"
-							   name="spUserId" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:CONSUMER_KEY"
-							   name="spConsumerKey" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:OPERATOR_NAME"
-							   name="operatorName" type="STRING"/>
-					<attribute defaultValue="" expression="$ctx:API_PUBLISHER"
-							   name="apiPublisherID" type="STRING"/>
-					<attribute defaultValue="" value="NOT-REQUIRED"
-							   name="apiID" type="STRING"/>
-					<attribute defaultValue="" name="department" type="STRING" value="NOT-REQUIRED"/>
-					<attribute defaultValue="" expression="$ctx:APPLICATION_ID"
-							   name="applicationId" type="STRING"/>
-				</payload>
-				<arbitrary/>
-			</attributes>
-		</publishEvent>
+		<property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
+		<property expression="$ctx:mediationConfig//data_publishing_enabled" name="dataPublishingEnabled" scope="default" type="STRING"/>
+
+		<filter regex="^(?i)(true|false)$" source="$ctx:dataPublishingEnabled">
+			<then/>
+			<else>
+				<property value="false" name="dataPublishingEnabled" scope="default" type="STRING"/>
+			</else>
+		</filter>
+
+		<filter regex="^(?i)(true)$" source="get-property('dataPublishingEnabled')">
+			<then>
+				<log level="custom">
+					<property name="status" value="publishing response data"/>
+				</log>
+				<property expression="synapse:get-property('SYSTEM_TIME')"
+						  name="RESPONSE_TIME" scope="default" type="STRING"/>
+				<property expression="json-eval($.)" name="JSON_BODY"
+						  scope="default" type="STRING"/>
+				<script language="js"><![CDATA[var diff = mc.getProperty('RESPONSE_TIME') - mc.getProperty('REQUEST_TIME');
+						mc.setProperty('SERVICE_TIME', diff);]]></script>
+				<publishEvent>
+					<eventSink>GatewayAnalyticsEvent</eventSink>
+					<streamName>org.wso2telco.analytics.hub.stream.responseStatistics</streamName>
+					<streamVersion>1.0.0</streamVersion>
+					<attributes>
+						<meta>
+							<attribute defaultValue="" name="clientType" type="STRING" value="NOT-REQUIRED"/>
+						</meta>
+						<correlation/>
+						<payload>
+							<attribute defaultValue="" expression="$ctx:CONSUMER_KEY"
+									   name="consumerKey" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:CONTEXT"
+									   name="context" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:VERSION"
+									   name="apiVersion" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:API_NAME"
+									   name="api" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:RESOURCE"
+									   name="resourcePath" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:HTTP_METHOD"
+									   name="method" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:VERSION"
+									   name="version" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:RESPONSE_TIME"
+									   name="responseTime" type="LONG"/>
+							<attribute defaultValue="" name="serviceTime" type="LONG" value="860"/>
+							<attribute defaultValue="" expression="$ctx:USER_ID"
+									   name="serviceProvider" type="STRING"/>
+							<attribute defaultValue="" name="tenantDomain" type="STRING" value="carbon.super"/>
+							<attribute defaultValue="" expression="$ctx:HOST_NAME"
+									   name="hostName" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:API_PUBLISHER"
+									   name="apiPublisher" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:APPLICATION_NAME"
+									   name="applicationName" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:REQUEST_ID"
+									   name="requestId" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:OPERATOR_ID"
+									   name="operatorId" type="STRING"/>
+							<attribute defaultValue="" expression="$axis2:HTTP_SC"
+									   name="apiPublisher" type="STRING"/>
+							<attribute defaultValue=""
+									   expression="fn:normalize-space($func:msisdn)" name="msisdn" type="STRING"/>
+							<attribute defaultValue=""
+									   expression="fn:normalize-space($func:direction)"
+									   name="direction" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:JSON_BODY"
+									   name="jsonBody" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:USER_ID"
+									   name="serviceProviderId" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:USER_ID"
+									   name="spUserId" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:CONSUMER_KEY"
+									   name="spConsumerKey" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:OPERATOR_NAME"
+									   name="operatorName" type="STRING"/>
+							<attribute defaultValue="" expression="$ctx:API_PUBLISHER"
+									   name="apiPublisherID" type="STRING"/>
+							<attribute defaultValue="" value="NOT-REQUIRED"
+									   name="apiID" type="STRING"/>
+							<attribute defaultValue="" name="department" type="STRING" value="NOT-REQUIRED"/>
+							<attribute defaultValue="" expression="$ctx:APPLICATION_ID"
+									   name="applicationId" type="STRING"/>
+						</payload>
+						<arbitrary/>
+					</attributes>
+				</publishEvent>
+			</then>
+		</filter>
 	</sequence>
 </template>

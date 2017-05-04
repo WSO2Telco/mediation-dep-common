@@ -19,4 +19,5 @@
 		<mncLength>2</mncLength>
 		<imsiLength>15</imsiLength>
 	</validationConfig>
+	<data_publishing_enabled>false</data_publishing_enabled>
 </mediationConfig>
