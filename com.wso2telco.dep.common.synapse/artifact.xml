@@ -98,4 +98,10 @@
     <artifact name="com.wso2telco.dep.common.operator.endpoint.retriever.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.0.0-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.operator.endpoint.retriever.Sequence.xml</file>
     </artifact>
+    <artifact name="com.wso2telco.dep.common.main.request.datapublisher.Template" groupId="com.wso2telco.dep.common.template" version="2.0.0-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/com.wso2telco.dep.common.main.request.datapublisher.Template.xml</file>
+    </artifact>
+    <artifact name="com.wso2telco.dep.common.main.response.datapublisher.Template" groupId="com.wso2telco.dep.common.template" version="2.0.0-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/com.wso2telco.dep.common.main.response.datapublisher.Template.xml</file>
+    </artifact>
 </artifacts>
