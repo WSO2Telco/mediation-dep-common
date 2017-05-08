@@ -18,7 +18,7 @@
   <properties>
     <!-- WSO2.Telco dependencies -->
     <com.wso2telco.core.version>2.0.22-SNAPSHOT</com.wso2telco.core.version>
-    <com.wso2telco.dep.version>2.1.6-SNAPSHOT</com.wso2telco.dep.version>
+    <com.wso2telco.dep.version>2.1.8-SNAPSHOT</com.wso2telco.dep.version>
     <!-- other dependencies -->
     <commons-codec.version>1.4.0.wso2v1</commons-codec.version>
     <apache.httpcomponents.wso2.version>4.3.3.wso2v1</apache.httpcomponents.wso2.version>
