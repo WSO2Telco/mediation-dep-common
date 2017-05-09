@@ -13,7 +13,7 @@
 			</else>
 		</filter>
 
-		<filter regex="^(?i)(true)$" source="get-property('dataPublishingEnabled')">
+		<filter regex="^(?i)(true)$" source="$ctx:dataPublishingEnabled">
 			<then>
 				<log level="custom">
 					<property name="status" value="publishing response data"/>
