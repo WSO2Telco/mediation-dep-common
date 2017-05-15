@@ -20,7 +20,7 @@ public class APIService {
 	}
 
 	public Integer storeServiceProviderNotifyURLService(String apiName,
-			String notifyURL, String serviceProvider, String clientCorrelator, String operatorName)
+			String notifyURL, String serviceProvider, String clientCorrelator, String operatorName, String consumerKey)
 			throws Exception {
 
 		Integer newId = 0;
@@ -28,7 +28,7 @@ public class APIService {
 		try {
 
 			newId = apiDAO.insertServiceProviderNotifyURL(apiName, notifyURL,
-					serviceProvider, clientCorrelator, operatorName);
+					serviceProvider, clientCorrelator, operatorName, consumerKey);
 		} catch (Exception e) {
 
 			throw e;

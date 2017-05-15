@@ -2,6 +2,7 @@ package com.wso2telco.dep.common.mediation;
 
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
+
 import com.wso2telco.dep.common.mediation.service.APIService;
 
 public class NotificationURLModifyMediator extends AbstractMediator {
@@ -30,10 +31,11 @@ public class NotificationURLModifyMediator extends AbstractMediator {
 					.getProperty("NOTIFICATION_URL");
 			String operatorName = (String) synContext.getProperty("OPERATOR_NAME");
 			String serviceProvider = (String) synContext.getProperty("USER_ID");
+			String consumerKey = (String) synContext.getProperty("CONSUMER_KEY");
 
 			APIService apiService = new APIService();
 			id = apiService.storeServiceProviderNotifyURLService(apiName,
-					spNotifyURL, serviceProvider, clientCorrelator, operatorName);
+					spNotifyURL, serviceProvider, clientCorrelator, operatorName, consumerKey);
 			generatedNotifyURL = notificationURL + "/" + id;
 
 			synContext.setProperty("generatedNotifyURL", generatedNotifyURL);

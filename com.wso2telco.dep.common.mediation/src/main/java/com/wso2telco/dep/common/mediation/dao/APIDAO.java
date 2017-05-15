@@ -18,7 +18,7 @@ public class APIDAO {
 	private final Log log = LogFactory.getLog(APIDAO.class);
 
 	public Integer insertServiceProviderNotifyURL(String apiName,
-			String notifyURL, String serviceProvider, String clientCorrelator, String operatorName)
+			String notifyURL, String serviceProvider, String clientCorrelator, String operatorName, String consumerKey)
 			throws SQLException, Exception {
 
 		Connection con = null;
@@ -37,8 +37,8 @@ public class APIDAO {
 			StringBuilder insertQueryString = new StringBuilder("INSERT INTO ");
 			insertQueryString.append(DatabaseTables.NOTIFICATION_URLS);
 			insertQueryString
-					.append(" (apiname, notifyurl, serviceprovider, clientCorrelator, operatorName) ");
-			insertQueryString.append("VALUES (?, ?, ?, ?, ?)");
+					.append(" (apiname, notifyurl, serviceprovider, clientCorrelator, operatorName, consumerkey) ");
+			insertQueryString.append("VALUES (?, ?, ?, ?, ?, ?)");
 
 			ps = con.prepareStatement(insertQueryString.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -48,6 +48,7 @@ public class APIDAO {
 			ps.setString(3, serviceProvider);
 			ps.setString(4, clientCorrelator);
 			ps.setString(5, operatorName);
+			ps.setString(6, consumerKey);
 
 			log.debug("sql query in insertServiceProviderNotifyURL : " + ps);
 
