@@ -13,7 +13,7 @@
 			</else>
 		</filter>
 
-		<filter regex="^(?i)(true)$" source="get-property('dataPublishingEnabled')">
+		<filter regex="^(?i)(true)$" source="$ctx:dataPublishingEnabled">
 			<then>
 				<log level="custom">
 					<property value="Publishing Request Data" name="STATUS"/>
@@ -37,6 +37,7 @@
 						</meta>
 						<correlation/>
 						<payload>
+
 							<attribute defaultValue="" expression="$ctx:CONSUMER_KEY" name="consumerKey" type="STRING"/>
 							<attribute defaultValue="" expression="$ctx:CONTEXT" name="context" type="STRING"/>
 							<attribute defaultValue="" expression="$ctx:VERSION" name="apiVersion" type="STRING"/>
@@ -46,6 +47,7 @@
 							<attribute defaultValue="" expression="$ctx:VERSION" name="version" type="STRING"/>
 							<attribute defaultValue="" expression="get-property('REQUEST_TIME')" name="requestTime" type="LONG"/>
 							<attribute defaultValue="" expression="$ctx:USER_ID" name="serviceProvider" type="STRING"/>
+
 							<attribute defaultValue="" name="tenantDomain" type="STRING" value="carbon.super"/>
 							<attribute defaultValue="" expression="$ctx:HOST_NAME" name="hostName" type="STRING"/>
 							<attribute defaultValue="" expression="$ctx:API_PUBLISHER" name="apiPublisher" type="STRING"/>
