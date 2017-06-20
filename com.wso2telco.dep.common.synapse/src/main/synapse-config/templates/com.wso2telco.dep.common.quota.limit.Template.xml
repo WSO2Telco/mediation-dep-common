@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template name="com.wso2telco.dep.common.quota.limit.Template" xmlns="http://ws.apache.org/ns/synapse">
+  <parameter name="operator"/>
+  <sequence>
+    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
+    <property expression="$ctx:mediationConfig//quota_limit_enabled" name="quotaLimitEnabled" scope="default" type="STRING"/>
+    <filter regex="^(?i)(true|false)$" source="$ctx:quotaLimitEnabled">
+      <then/>
+      <else>
+        <property name="quotaLimitEnabled" scope="default" type="STRING" value="false"/>
+      </else>
+    </filter>
+    <filter regex="^(?i)(true)$" source="$ctx:quotaLimitEnabled">
+      <then>
+      <property expression="fn:normalize-space($func:operator)" name="operator" type="STRING"/>
+        <log level="custom">
+          <property expression="$ctx:APPLICATION_ID" name="###XXX_APPLICATION_ID_INFO###"/>
+          <property expression="$ctx:APPLICATION_NAME" name="###XXX_APPLICATION_NAME_INFO###"/>
+          <property expression="$ctx:API_ID" name="###XXX_API_ID_INFO###"/>
+          <property expression="$ctx:API_NAME" name="###XXX_API_NAME_INFO###"/>
+          <property expression="$ctx:HTTP_METHOD" name="###XXX_HTTP_METHOD_INFO###"/>
+          <property expression="$ctx:USER_ID" name="###XXX_USER_ID_INFO###"/>
+        </log>
+        <class name="com.wso2telco.dep.common.mediation.quota.limit.QuotaLimitHandler">
+          <property name="operator" value="nb"/>
+        </class>
+      </then>
+      <else/>
+    </filter>
+  </sequence>
+</template>

@@ -157,5 +157,28 @@ public class APIService {
 		return apiDAO.checkWhiteListed(MSISDN, applicationId, subscriptionId,
 				apiId);
 	}
+	
+	public Integer checkQuotaNBLimit(String serviceProvider, String application, String apiName, String operatorName)throws Exception{
+		Integer spQuotaLimit=null;
+		try {
+ 			spQuotaLimit=apiDAO.checkQuotaLimit(serviceProvider, application, apiName, operatorName);
+ 		} catch (Exception e) {
+ 			throw e;
+ 		}
+ 		
+ 		return spQuotaLimit;
+ 	}
+
+	public Integer currentQuotaLimit(String serviceProvider,String application, String apiName, String operatorName) throws Exception {
+		Integer currentQuotaLimit=null;
+		try {
+			currentQuotaLimit=apiDAO.currentQuotaLimit(serviceProvider, application, apiName, operatorName);
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}
+ 		
+ 		return currentQuotaLimit;
+	}
+ 	
 
 }

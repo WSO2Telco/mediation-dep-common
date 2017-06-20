@@ -16,7 +16,7 @@
   <properties>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.main.property.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.main.property.Sequence>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.lengthValidator.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.lengthValidator.Template>
-    <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,service/rule=aar,synapse/message-store=xml,event/stream=json,service/meta=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,wso2/gadget=dar,synapse/api=xml,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
+    <artifact.types>jaggery/app=zip,service/rule=aar,lib/library/bundle=jar,event/receiver=xml,synapse/message-processors=xml,synapse/endpointTemplate=xml,synapse/message-store=xml,synapse/proxy-service=xml,event/execution-plan=siddhiql,carbon/application=car,registry/resource=zip,lib/dataservice/validator=jar,synapse/endpoint=xml,web/application=war,synapse/inbound-endpoint=xml,synapse/sequence=xml,synapse/configuration=xml,lib/registry/handlers=jar,synapse/task=xml,service/meta=xml,webapp/jaxws=war,synapse/api=xml,synapse/lib=zip,bpel/workflow=zip,lib/registry/filter=jar,service/dataservice=dbs,event/publisher=xml,synapse/local-entry=xml,synapse/priority-executor=xml,synapse/event-source=xml,synapse/template=xml,event/stream=json,lib/carbon/ui=jar,service/axis2=aar,synapse/sequenceTemplate=xml,wso2/gadget=dar,lib/synapse/mediator=jar</artifact.types>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.token.pool.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.token.pool.retriever.Sequence>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.main.request.datapublisher.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.main.request.datapublisher.Template>
     <com.wso2telco.dep.common.endpoint_._com.wso2telco.dep.common.token.pool.service.Endpoint>capp/EnterpriseServiceBus</com.wso2telco.dep.common.endpoint_._com.wso2telco.dep.common.token.pool.service.Endpoint>
@@ -42,6 +42,7 @@
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.main.request.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.main.request.Sequence>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.response.exceptions.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.response.exceptions.Sequence>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.notification.url.modify.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.notification.url.modify.Sequence>
+    <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.quota.limit.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.quota.limit.Template>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.default.token.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.default.token.retriever.Sequence>
     <com.wso2telco.dep.common.template_._mediation.common.doubleGEZeroValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.doubleGEZeroValidation.Template>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.response.unexpectedError.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.response.unexpectedError.Sequence>
@@ -275,6 +276,12 @@
     <dependency>
       <groupId>com.wso2telco.dep.common.template</groupId>
       <artifactId>com.wso2telco.dep.common.main.response.datapublisher.Template</artifactId>
+      <version>2.1.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.template</groupId>
+      <artifactId>com.wso2telco.dep.common.quota.limit.Template</artifactId>
       <version>2.1.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
