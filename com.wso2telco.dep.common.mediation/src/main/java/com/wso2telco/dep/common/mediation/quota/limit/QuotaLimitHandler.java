@@ -33,7 +33,6 @@ public class QuotaLimitHandler extends AbstractMediator {
     private String application = null;
     private String apiName = null;
     private String operatorName = null;
-    private QuotaLimits quotaLimits = getQuotaLimitsObj();
     
     public boolean mediate(MessageContext messageContext) {
     	
@@ -63,10 +62,10 @@ public class QuotaLimitHandler extends AbstractMediator {
 		}
 
         try {
-            Integer spQuotaLimit=apiService.checkQuotaNBLimit(serviceProvider,application,apiName,operatorName);
+            QuotaLimits QuotaLimit=apiService.checkQuotaNBLimit(serviceProvider,application,apiName,operatorName);
             
             Integer currentQuotaLimit=apiService.currentQuotaLimit(serviceProvider,application,apiName,operatorName);
-            if (spQuotaLimit<=currentQuotaLimit) {
+            if (QuotaLimit.getApiLimit()<=currentQuotaLimit) {
                 setErrorInContext(
                 		messageContext,
                         "POL1005",
@@ -76,9 +75,9 @@ public class QuotaLimitHandler extends AbstractMediator {
                         "POLICY_EXCEPTION");
                 messageContext.setProperty("INTERNAL_ERROR", "true");
 			}
-            messageContext.setProperty("spLimit",quotaLimits.getSpLimit());
-            messageContext.setProperty("appLimit",quotaLimits.getAppLimit());
-            messageContext.setProperty("apiLimit",quotaLimits.getApiLimit());
+            messageContext.setProperty("spLimit",QuotaLimit.getSpLimit());
+            messageContext.setProperty("appLimit",QuotaLimit.getAppLimit());
+            messageContext.setProperty("apiLimit",QuotaLimit.getApiLimit());
 
 
         } catch (Exception e) {

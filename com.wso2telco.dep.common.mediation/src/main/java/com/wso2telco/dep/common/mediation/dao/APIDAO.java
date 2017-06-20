@@ -510,7 +510,7 @@ public class APIDAO {
 		return false;
 	}
 
-	public void checkQuotaLimit(String serviceProvider, String application, String apiName, String operatorName) {
+	public QuotaLimits checkQuotaLimit(String serviceProvider, String application, String apiName, String operatorName) {
 
 		QuotaLimits quotaLimits = QuotaLimits.getQuotaLimitsObj();
 
@@ -528,6 +528,8 @@ public class APIDAO {
 
 			apiLimit(serviceProvider, application, apiName, operatorName, quotaLimits);
 		}
+
+		return quotaLimits;
 
 	}
 
@@ -664,4 +666,58 @@ public class APIDAO {
 		}
 	}
 
+	public Integer currentQuotaLimit(String serviceProvider,String application, String apiName, String operatorName) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		Integer currentQuotaLimit=null;
+
+		try {
+			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_RATE_DB);
+			StringBuilder queryBuilder = new StringBuilder();
+			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE SERVICEPROVIDER = ?");
+			if (operatorName != null) {
+				queryBuilder.append(" AND  OPERATORNAME = ?");
+			} else {
+				queryBuilder.append(" AND  OPERATORNAME is null");
+			}
+
+			if (application != null) {
+				queryBuilder.append(" AND  APPLICATIONID = ?");
+			} else {
+				queryBuilder.append(" AND  APPLICATIONID is null");
+			}
+
+			if (apiName != null) {
+				queryBuilder.append(" AND  api = ?");
+			} else {
+				queryBuilder.append(" AND  api is null");
+			}
+
+			queryBuilder.append(" group by api");
+			preparedStatement = connection.prepareStatement(queryBuilder.toString());
+			preparedStatement.setString(1, serviceProvider.toLowerCase());
+
+			if (operatorName != null) {
+				preparedStatement.setString(2, operatorName.toLowerCase());
+				preparedStatement.setString(3, application.toLowerCase());
+				preparedStatement.setString(4, apiName.toLowerCase());
+			}else {
+				preparedStatement.setString(2, application.toLowerCase());
+				preparedStatement.setString(3, apiName.toLowerCase());
+
+			}
+
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
+			}
+		} catch (Exception e) {
+			log.error("Error occurred while retrieving quota limit in SP :", e);
+		} finally {
+			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
+		}
+		return currentQuotaLimit;
+	}
 }

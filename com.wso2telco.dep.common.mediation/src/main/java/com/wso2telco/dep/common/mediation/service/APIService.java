@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.wso2telco.dep.common.mediation.quota.limit.QuotaLimits;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -157,17 +158,6 @@ public class APIService {
 		return apiDAO.checkWhiteListed(MSISDN, applicationId, subscriptionId,
 				apiId);
 	}
-	
-	public Integer checkQuotaNBLimit(String serviceProvider, String application, String apiName, String operatorName)throws Exception{
-		Integer spQuotaLimit=null;
-		try {
- 			spQuotaLimit=apiDAO.checkQuotaLimit(serviceProvider, application, apiName, operatorName);
- 		} catch (Exception e) {
- 			throw e;
- 		}
- 		
- 		return spQuotaLimit;
- 	}
 
 	public Integer currentQuotaLimit(String serviceProvider,String application, String apiName, String operatorName) throws Exception {
 		Integer currentQuotaLimit=null;
@@ -181,10 +171,10 @@ public class APIService {
 	}
  	
 
-	public void checkQuotaNBLimit(String serviceProvider, String application, String apiName, String operatorName)throws Exception{
+	public QuotaLimits checkQuotaNBLimit(String serviceProvider, String application, String apiName, String operatorName)throws Exception{
 
 		try {
-			apiDAO.checkQuotaLimit(serviceProvider, application, apiName, operatorName);
+			 return apiDAO.checkQuotaLimit(serviceProvider, application, apiName, operatorName);
 		} catch (Exception e) {
 			throw e;
 		}
