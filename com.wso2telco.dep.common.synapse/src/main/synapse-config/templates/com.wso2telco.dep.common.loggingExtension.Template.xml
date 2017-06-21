@@ -13,6 +13,16 @@
         		<property value="false" name="payloadLoggingEnabled" scope="default" type="STRING"/>
         	</else>
         </filter>
+
+        <property expression="$ctx:mediationConfig//logging_extension_enabled" name="loggingExtensionEnabled" scope="default" type="STRING"/>
+        <property expression="fn:normalize-space($ctx:loggingExtensionEnabled)" name="loggingExtensionEnabled" scope="default" type="STRING"/>
+
+        <filter regex="^(?i)(true|false)$" source="$ctx:loggingExtensionEnabled">
+            <then/>
+            <else>
+                <property value="false" name="loggingExtensionEnabled" scope="default" type="STRING"/>
+            </else>
+        </filter>
         
         <filter xpath="boolean($ctx:REQUEST_ID)">
         	<then>
@@ -22,69 +32,74 @@
         		<property expression="$trp:REQUEST_ID" name="requestIdForLogging" scope="default" type="STRING"/>
         	</else>
         </filter>
-        
-        <switch source="$ctx:direction">
-            <case regex="REQUESTIN">
-                <property expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] >>>>> API Request id ', $ctx:requestIdForLogging)" name="requestDetails" scope="default" type="STRING"/>
-                <log level="custom">
-                    <property expression="get-property('requestDetails')" name="###REQUEST_INFO###"/>
-                </log>
-                <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
-                    <then>
+
+        <filter regex="^(?i)(true)$" source="get-property('loggingExtensionEnabled')">
+            <then>
+                <switch source="$ctx:direction">
+                    <case regex="REQUESTIN">
+                        <property expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] >>>>> API Request id ', $ctx:requestIdForLogging)" name="requestDetails" scope="default" type="STRING"/>
                         <log level="custom">
-                            <property expression="json-eval($.)" name="###REQUEST_INFO### >>>>> reqBody In:"/>
+                            <property expression="get-property('requestDetails')" name="###REQUEST_INFO###"/>
                         </log>
-                    </then>
-                    <else/>
-                </filter>
-            </case>
-            <case regex="REQUESTOUT">
-                <property expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] >>>>> API Request id ', $ctx:requestIdForLogging)" name="requestDetails" scope="default" type="STRING"/>
-                <log level="custom">
-                    <property expression="get-property('requestDetails')" name="###REQUEST_INFO###"/>
-                </log>
-                <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
-                    <then>
+                        <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
+                            <then>
+                                <log level="custom">
+                                    <property expression="json-eval($.)" name="###REQUEST_INFO### >>>>> reqBody In:"/>
+                                </log>
+                            </then>
+                            <else/>
+                        </filter>
+                    </case>
+                    <case regex="REQUESTOUT">
+                        <property expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] >>>>> API Request id ', $ctx:requestIdForLogging)" name="requestDetails" scope="default" type="STRING"/>
                         <log level="custom">
-                            <property expression="json-eval($.)" name="###REQUEST_INFO### >>>>> reqBody Out:"/>
+                            <property expression="get-property('requestDetails')" name="###REQUEST_INFO###"/>
                         </log>
-                    </then>
-                    <else/>
-                </filter>
-            </case>
-            <case regex="RESPONSEIN">
-                <property expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] &lt;&lt;&lt;&lt;&lt; API Request id ', $ctx:requestIdForLogging)" name="requestDetails" scope="default" type="STRING"/>
-                <log level="custom">
-                    <property expression="get-property('requestDetails')" name="###RESPONSE_INFO###"/>
-                </log>
-                <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
-                    <then>
+                        <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
+                            <then>
+                                <log level="custom">
+                                    <property expression="json-eval($.)" name="###REQUEST_INFO### >>>>> reqBody Out:"/>
+                                </log>
+                            </then>
+                            <else/>
+                        </filter>
+                    </case>
+                    <case regex="RESPONSEIN">
+                        <property expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] &lt;&lt;&lt;&lt;&lt; API Request id ', $ctx:requestIdForLogging)" name="requestDetails" scope="default" type="STRING"/>
                         <log level="custom">
-                            <property expression="json-eval($.)" name="###RESPONSE_INFO### &lt;&lt;&lt;&lt;&lt; respBody In:"/>
+                            <property expression="get-property('requestDetails')" name="###RESPONSE_INFO###"/>
                         </log>
-                    </then>
-                    <else/>
-                </filter>
-            </case>
-            <case regex="RESPONSEOUT">
-                <property expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] &lt;&lt;&lt;&lt;&lt; API Request id ', $ctx:requestIdForLogging)" name="requestDetails" scope="default" type="STRING"/>
-                <log level="custom">
-                    <property expression="get-property('requestDetails')" name="###RESPONSE_INFO###"/>
-                </log>
-                <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
-                    <then>
+                        <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
+                            <then>
+                                <log level="custom">
+                                    <property expression="json-eval($.)" name="###RESPONSE_INFO### &lt;&lt;&lt;&lt;&lt; respBody In:"/>
+                                </log>
+                            </then>
+                            <else/>
+                        </filter>
+                    </case>
+                    <case regex="RESPONSEOUT">
+                        <property expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] &lt;&lt;&lt;&lt;&lt; API Request id ', $ctx:requestIdForLogging)" name="requestDetails" scope="default" type="STRING"/>
                         <log level="custom">
-                            <property expression="json-eval($.)" name="###RESPONSE_INFO### &lt;&lt;&lt;&lt;&lt; respBody Out:"/>
+                            <property expression="get-property('requestDetails')" name="###RESPONSE_INFO###"/>
                         </log>
-                    </then>
-                    <else/>
-                </filter>
-            </case>
-            <default>
-                <log category="ERROR" description="" level="custom">
-                    <property name="Log Extension Sequence" expression="fn:concat('Invalid Direction for request/response details logging. Direction: ', $ctx:direction)"/>
-                </log>
-            </default>
-        </switch>
+                        <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
+                            <then>
+                                <log level="custom">
+                                    <property expression="json-eval($.)" name="###RESPONSE_INFO### &lt;&lt;&lt;&lt;&lt; respBody Out:"/>
+                                </log>
+                            </then>
+                            <else/>
+                        </filter>
+                    </case>
+                    <default>
+                        <log category="ERROR" description="" level="custom">
+                            <property name="Log Extension Sequence" expression="fn:concat('Invalid Direction for request/response details logging. Direction: ', $ctx:direction)"/>
+                        </log>
+                    </default>
+                </switch>
+            </then>
+            <else/>
+        </filter>
     </sequence>
 </template>
