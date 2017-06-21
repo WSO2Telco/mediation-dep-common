@@ -12,18 +12,20 @@
     </filter>
     <filter regex="^(?i)(true)$" source="$ctx:quotaLimitEnabled">
       <then>
+      
+      
       <property expression="fn:normalize-space($func:operator)" name="operator" type="STRING"/>
-        <log level="custom">
-          <property expression="$ctx:APPLICATION_ID" name="###XXX_APPLICATION_ID_INFO###"/>
-          <property expression="$ctx:APPLICATION_NAME" name="###XXX_APPLICATION_NAME_INFO###"/>
-          <property expression="$ctx:API_ID" name="###XXX_API_ID_INFO###"/>
-          <property expression="$ctx:API_NAME" name="###XXX_API_NAME_INFO###"/>
-          <property expression="$ctx:HTTP_METHOD" name="###XXX_HTTP_METHOD_INFO###"/>
-          <property expression="$ctx:USER_ID" name="###XXX_USER_ID_INFO###"/>
-        </log>
-        <class name="com.wso2telco.dep.common.mediation.quota.limit.QuotaLimitHandler">
+        <class name="com.wso2telco.dep.common.mediation.quota.limit.QuotaLimitHandlerMediator">
           <property name="operator" value="nb"/>
         </class>
+        
+		<filter regex="true" source="get-property('INTERNAL_ERROR')">
+			<then>
+				<sequence key="com.wso2telco.dep.common.response.exceptions.Sequence" />
+			</then>
+			<else />
+		</filter>
+		
       </then>
       <else/>
     </filter>

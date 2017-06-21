@@ -4,7 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.wso2telco.dep.common.mediation.quota.limit.CurrentQuotaLimit;
 import com.wso2telco.dep.common.mediation.quota.limit.QuotaLimits;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -159,8 +161,8 @@ public class APIService {
 				apiId);
 	}
 
-	public Integer currentQuotaLimit(String serviceProvider,String application, String apiName, String operatorName) throws Exception {
-		Integer currentQuotaLimit=null;
+	public CurrentQuotaLimit currentQuotaLimit(String serviceProvider,String application, String apiName, String operatorName) throws Exception {
+		CurrentQuotaLimit currentQuotaLimit=null;
 		try {
 			currentQuotaLimit=apiDAO.currentQuotaLimit(serviceProvider, application, apiName, operatorName);
  		} catch (Exception e) {
