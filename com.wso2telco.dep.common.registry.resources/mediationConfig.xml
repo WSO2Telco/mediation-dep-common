@@ -12,6 +12,7 @@
 	<msisdn_regex>^((((tel:){1}(\+){0,1})|((tel:){0,1}(\+){1}))([a-zA-Z0-9]+))$</msisdn_regex>	
 	<!-- This is to take the numeric value out by dropping the prefix. please change it to the regex group which identifies the number -->
 	<msisdn_regex_num_grp>9</msisdn_regex_num_grp>
+	<logging_extension_enabled>false</logging_extension_enabled>
 	<payload_logging_enabled>false</payload_logging_enabled>
 	<validationConfig>
 		<requestIdentifierLength>6</requestIdentifierLength>
