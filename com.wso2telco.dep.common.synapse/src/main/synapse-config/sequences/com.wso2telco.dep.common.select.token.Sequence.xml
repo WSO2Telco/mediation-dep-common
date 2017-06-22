@@ -29,12 +29,8 @@
   <property expression="get-property('INCOMING_HTTP_METHOD')"
         name="HTTP_METHOD" scope="axis2" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
   <!-- set original request body -->
-  <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
-    <property name="script" value="
-        var payload = mc.getProperty('INCOMING_REQUEST_BODY');
-        mc.setPayloadJSON(payload);
-    "/>
-  </class>
+  <script language="js"><![CDATA[var payload = mc.getProperty("INCOMING_REQUEST_BODY");
+    mc.setPayloadJSON(payload);]]></script>
   <!-- set rest url postfix -->
   <property xmlns:ns="http://org.apache.synapse/xsd" name="REST_URL_POSTFIX" 
     expression="get-property('INCOMING_RESOURCE')" scope="axis2" type="STRING"/>   

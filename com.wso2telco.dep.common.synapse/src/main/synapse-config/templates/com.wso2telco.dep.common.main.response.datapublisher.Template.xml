@@ -20,22 +20,22 @@
 				</log>
 
 				<!-- Generate API_ID from context and version -->
-				<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
-					<property name="script" value="
+				<script language="js">
+					<![CDATA[
 						var contextVersion = mc.getProperty('API_VERSION');
 						var generated_api_version = contextVersion.replace(':', '_');
 						mc.setProperty('GENERATED_API_ID', generated_api_version);
-					"/>
-				</class>
+					]]>
+				</script>
 
 				<property expression="synapse:get-property('SYSTEM_TIME')" name="RESPONSE_TIME" scope="default" type="STRING"/>
 				<property expression="json-eval($.)" name="JSON_BODY" scope="default" type="STRING"/>
-				<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
-					<property name="script" value="
-						var diff = mc.getProperty('RESPONSE_TIME') - mc.getProperty('REQUEST_TIME');
-						mc.setProperty('SERVICE_TIME', diff);
-					"/>
-				</class>
+				<script language="js">
+					<![CDATA[
+							var diff = mc.getProperty('RESPONSE_TIME') - mc.getProperty('REQUEST_TIME');
+							mc.setProperty('SERVICE_TIME', diff);
+					]]>
+				</script>
 				
 				<publishEvent>
 					<eventSink>GatewayAnalyticsEvent</eventSink>
