@@ -1,4 +1,4 @@
-package com.wso2telco.dep.common.mediation.quota.limit;
+package com.wso2telco.dep.common.mediation.quotalimit;
 
 public class Base64Coder {
 

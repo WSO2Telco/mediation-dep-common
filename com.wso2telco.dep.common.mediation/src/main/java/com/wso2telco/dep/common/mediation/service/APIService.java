@@ -4,8 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.wso2telco.dep.common.mediation.quota.limit.CurrentQuotaLimit;
-import com.wso2telco.dep.common.mediation.quota.limit.QuotaLimits;
+import com.wso2telco.dep.common.mediation.quotalimit.QuotaLimits;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

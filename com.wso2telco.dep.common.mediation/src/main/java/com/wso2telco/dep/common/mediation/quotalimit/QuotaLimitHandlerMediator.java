@@ -1,4 +1,4 @@
-package com.wso2telco.dep.common.mediation.quota.limit;
+package com.wso2telco.dep.common.mediation.quotalimit;
 
 import java.util.Iterator;
 import java.util.Map;

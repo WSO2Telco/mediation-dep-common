@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.dep.common.mediation.quota.limit;
+package com.wso2telco.dep.common.mediation.quotalimit;
 
 
 public class QuotaLimits {

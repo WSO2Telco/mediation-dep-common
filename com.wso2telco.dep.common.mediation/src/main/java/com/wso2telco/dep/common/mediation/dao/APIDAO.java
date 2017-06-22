@@ -12,8 +12,7 @@ import java.util.Map;
 
 import com.wso2telco.core.dbutils.DbUtils;
 import com.wso2telco.core.dbutils.util.DataSourceNames;
-import com.wso2telco.dep.common.mediation.quota.limit.CurrentQuotaLimit;
-import com.wso2telco.dep.common.mediation.quota.limit.QuotaLimits;
+import com.wso2telco.dep.common.mediation.quotalimit.QuotaLimits;
 import com.wso2telco.dep.common.mediation.util.DatabaseTables;
 
 import org.apache.commons.logging.Log;
