@@ -15,7 +15,7 @@
       
       
       <property expression="fn:normalize-space($func:operator)" name="operator" type="STRING"/>
-        <class name="com.wso2telco.dep.common.mediation.quota.limit.QuotaLimitHandlerMediator">
+        <class name="QuotaLimitHandlerMediator">
           <property name="operator" value="nb"/>
         </class>
         
