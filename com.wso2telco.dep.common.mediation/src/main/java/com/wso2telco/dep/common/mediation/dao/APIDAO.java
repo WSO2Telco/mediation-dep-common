@@ -673,7 +673,7 @@ public class APIDAO {
 	@SuppressWarnings("null")
 	public CurrentQuotaLimit currentQuotaLimit(String sp,String app, String api, String operatorName) {
 		
-		CurrentQuotaLimit currentQuotaLimit=null;
+		CurrentQuotaLimit currentQuotaLimit=new CurrentQuotaLimit();
 		
 		if (sp!=null && app!=null && api!=null) {
 			currentQuotaLimit.setApiQuotaLimit(groupByApi(sp,app, api, operatorName));
