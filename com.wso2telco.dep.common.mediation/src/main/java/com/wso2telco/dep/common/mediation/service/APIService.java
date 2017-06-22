@@ -161,8 +161,8 @@ public class APIService {
 				apiId);
 	}
 
-	public CurrentQuotaLimit currentQuotaLimit(String serviceProvider,String application, String apiName, String operatorName) throws Exception {
-		CurrentQuotaLimit currentQuotaLimit=null;
+	public QuotaLimits currentQuotaLimit(String serviceProvider,String application, String apiName, String operatorName) throws Exception {
+		QuotaLimits currentQuotaLimit=null;
 		try {
 			currentQuotaLimit=apiDAO.currentQuotaLimit(serviceProvider, application, apiName, operatorName);
  		} catch (Exception e) {
@@ -173,7 +173,7 @@ public class APIService {
 	}
  	
 
-	public QuotaLimits checkQuotaNBLimit(String serviceProvider, String application, String apiName, String operatorName)throws Exception{
+	public QuotaLimits checkQuotaLimit(String serviceProvider, String application, String apiName, String operatorName)throws Exception{
 
 		try {
 			 return apiDAO.checkQuotaLimit(serviceProvider, application, apiName, operatorName);

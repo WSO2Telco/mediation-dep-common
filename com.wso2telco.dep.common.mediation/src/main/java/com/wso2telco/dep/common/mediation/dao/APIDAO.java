@@ -671,18 +671,18 @@ public class APIDAO {
 	//======================
 	
 	@SuppressWarnings("null")
-	public CurrentQuotaLimit currentQuotaLimit(String sp,String app, String api, String operatorName) {
+	public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName) {
 		
-		CurrentQuotaLimit currentQuotaLimit=new CurrentQuotaLimit();
+		QuotaLimits currentQuotaLimit=new QuotaLimits();
 		
 		if (sp!=null && app!=null && api!=null) {
-			currentQuotaLimit.setApiQuotaLimit(groupByApi(sp,app, api, operatorName));
+			currentQuotaLimit.setApiLimit(groupByApi(sp,app, api, operatorName));
 		}
 		if (sp!=null && app!=null && api==null){
-			currentQuotaLimit.setAppQuotaLimit(groupByApplication(sp,app,operatorName));
+			currentQuotaLimit.setAppLimit(groupByApplication(sp,app,operatorName));
 		}
 		if (sp!=null && app==null && api==null) {
-			currentQuotaLimit.setSpQuotaLimit(groupBySp(sp,operatorName));
+			currentQuotaLimit.setSpLimit(groupBySp(sp,operatorName));
 		}
 		return currentQuotaLimit;		
 	}
