@@ -19,13 +19,12 @@
 					<property value="Publishing Request Data" name="STATUS"/>					
 				</log>
 				<!-- Generate API_ID from context and version -->
-				<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
-					<property name="script" value="
-						var contextVersion = mc.getProperty('API_VERSION');
-						var generated_api_version = contextVersion.replace(':', '_');
-						mc.setProperty('GENERATED_API_ID', generated_api_version);
-					"/>
-				</class>
+				<script language="js"><![CDATA[
+					var contextVersion = mc.getProperty('API_VERSION');
+					var generated_api_version = contextVersion.replace(':', '_');
+					mc.setProperty('GENERATED_API_ID', generated_api_version);
+					]]>
+				</script>
 				<property expression="synapse:get-property('SYSTEM_TIME')" name="REQUEST_TIME" scope="default" type="STRING"/>
 				<property expression="json-eval($.)" name="JSON_BODY" scope="default" type="STRING"/>
 				<publishEvent>
