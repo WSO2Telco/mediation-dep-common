@@ -1,5 +1,6 @@
 package com.wso2telco.dep.common.mediation.quota.limit;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.axis2.AxisFault;
@@ -96,15 +97,17 @@ public class QuotaLimitHandlerMediator extends AbstractMediator {
 				String[] jwttoken = jwtparam.split("\\.");
 				String jwtbody = Base64Coder.decodeString(jwttoken[1]);
 				JSONObject jwtobj = new JSONObject(jwtbody);
-				String claimaggr = jwtobj.getString("http://wso2.org/claims/role");
-				if (claimaggr != null) {
-					String[] allowedRoles = claimaggr.split(",");
+				Iterator<String> keys = jwtobj.keys();
+				while( keys.hasNext() ) {
+					String key = (String)keys.next();
+					String[] allowedRoles = jwtobj.get(key).toString().split(",");
 					for (int i = 0; i < allowedRoles.length; i++) {
 						if (allowedRoles[i].contains(AttributeName.QUOTA_ENABLER)) {
 							quotaEnabler = true;
 							break;
 						}
 					}
+					break;
 				}
 			}
 		} catch (Exception e) {
