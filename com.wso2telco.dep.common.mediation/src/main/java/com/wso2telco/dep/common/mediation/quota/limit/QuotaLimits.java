@@ -22,11 +22,6 @@ public class QuotaLimits {
     private int appLimit;
     private int apiLimit;
 
-    public static QuotaLimits getQuotaLimitsObj(){
-
-        return new QuotaLimits();
-    }
-
     public int getSpLimit() {
         return spLimit;
     }

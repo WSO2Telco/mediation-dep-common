@@ -514,31 +514,32 @@ public class APIDAO {
 
 	public QuotaLimits checkQuotaLimit(String serviceProvider, String application, String apiName, String operatorName) {
 
-		QuotaLimits quotaLimits = QuotaLimits.getQuotaLimitsObj();
+		QuotaLimits quotaLimits = new QuotaLimits();
 
 		if (serviceProvider != null) {
 
-			spLimit(serviceProvider, operatorName, quotaLimits);
+			quotaLimits.setSpLimit(spLimit(serviceProvider, operatorName));
 		}
 
 		if (serviceProvider != null && application != null) {
 
-			applicationLimit(serviceProvider, application, operatorName, quotaLimits);
+			quotaLimits.setAppLimit(applicationLimit(serviceProvider, application, operatorName));
 		}
 
 		if (serviceProvider != null && application != null && apiName != null) {
 
-			apiLimit(serviceProvider, application, apiName, operatorName, quotaLimits);
+			quotaLimits.setApiLimit(apiLimit(serviceProvider, application, apiName, operatorName));
 		}
 
 		return quotaLimits;
 
 	}
 
-	private void apiLimit(String serviceProvider, String application, String apiName, String operatorName, QuotaLimits quotaLimits) {
+	private int apiLimit(String serviceProvider, String application, String apiName, String operatorName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		int apiLimit = 0;
 
 		try {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
@@ -568,7 +569,7 @@ public class APIDAO {
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				quotaLimits.setApiLimit(Integer.parseInt(resultSet.getString("quota_limit")));
+				apiLimit = Integer.parseInt(resultSet.getString("quota_limit"));
 			}
 		} catch (Exception e) {
 			log.error("Error occurred while retrieving quota limit in API :", e);
@@ -577,12 +578,14 @@ public class APIDAO {
 
 			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
 		}
+		return apiLimit;
 	}
 
-	private void applicationLimit(String serviceProvider, String application, String operatorName, QuotaLimits quotaLimits) {
+	private int applicationLimit(String serviceProvider, String application, String operatorName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		int applicationLimit = 0;
 
 		try {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
@@ -613,7 +616,7 @@ public class APIDAO {
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				quotaLimits.setAppLimit(Integer.parseInt(resultSet.getString("quota_limit")));
+				applicationLimit =  Integer.parseInt(resultSet.getString("quota_limit"));
 			}
 		} catch (Exception e) {
 			log.error("Error occurred while retrieving quota limit in APP :", e);
@@ -622,12 +625,14 @@ public class APIDAO {
 
 			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
 		}
+		return applicationLimit;
 	}
 
-	private void spLimit(String serviceProvider, String operatorName, QuotaLimits quotaLimits) {
+	private int spLimit(String serviceProvider, String operatorName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		int spLimit = 0;
 
 		try {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
@@ -657,7 +662,7 @@ public class APIDAO {
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				quotaLimits.setSpLimit(Integer.parseInt(resultSet.getString("quota_limit")));
+				spLimit = Integer.parseInt(resultSet.getString("quota_limit"));
 			}
 		} catch (Exception e) {
 			log.error("Error occurred while retrieving quota limit in SP :", e);
@@ -666,9 +671,9 @@ public class APIDAO {
 
 			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
 		}
+		return spLimit;
 	}
-	
-	//======================
+
 	
 	@SuppressWarnings("null")
 	public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName) {

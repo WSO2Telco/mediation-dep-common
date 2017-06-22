@@ -59,7 +59,7 @@ public class QuotaLimitHandlerMediator extends AbstractMediator {
 				try {
 		            QuotaLimits QuotaLimit=apiService.checkQuotaLimit(serviceProvider,application,apiName,operatorName);
 		            QuotaLimits currentQuotaLimit=apiService.currentQuotaLimit(serviceProvider,application,apiName,operatorName);
-		            
+
 		            if (QuotaLimit.getAppLimit()<=currentQuotaLimit.getAppLimit()) {
 		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Application has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
 		                messageContext.setProperty("INTERNAL_ERROR", "true");
@@ -68,17 +68,12 @@ public class QuotaLimitHandlerMediator extends AbstractMediator {
 		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
 		                messageContext.setProperty("INTERNAL_ERROR", "true");
 					}
-		            
+
 		            if (QuotaLimit.getApiLimit()<=currentQuotaLimit.getApiLimit()) {
 		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this API has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
 		                messageContext.setProperty("INTERNAL_ERROR", "true");
 					}
-		            
 
-		            messageContext.setProperty("spLimit",QuotaLimit.getSpLimit());
-		            messageContext.setProperty("appLimit",QuotaLimit.getAppLimit());
-		            messageContext.setProperty("apiLimit",QuotaLimit.getApiLimit());
-		
 		        } catch (Exception e) {
 		            log.error("Error occurred while calling QuotaLimitCheckMediator" ,e);
 		            setErrorInContext(messageContext,"SVC0001","A service error occurred. Error code is %1","An internal service error has occured. Please try again later.","500", "SERVICE_EXCEPTION");
