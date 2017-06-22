@@ -668,7 +668,7 @@ public class APIDAO {
 		}
 	}
 	
-	//======================PRIYANKA_06608
+	//======================
 	
 	@SuppressWarnings("null")
 	public CurrentQuotaLimit currentQuotaLimit(String sp,String app, String api, String operatorName) {
