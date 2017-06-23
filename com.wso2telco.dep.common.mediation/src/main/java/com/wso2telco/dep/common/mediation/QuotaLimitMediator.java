@@ -42,7 +42,7 @@ public class QuotaLimitMediator extends AbstractMediator {
 			if (direction.equalsIgnoreCase("nb")) {
 				operatorName =null;
 			}else if (direction.equalsIgnoreCase("sb")) {
-				operatorName=(String)messageContext.getProperty("OPERATOR_ID");			
+				operatorName=(String)messageContext.getProperty("OPERATOR_NAME");			
 			}
 			
 			serviceProvider=(String)messageContext.getProperty("USER_ID");
