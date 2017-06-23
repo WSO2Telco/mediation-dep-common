@@ -12,9 +12,8 @@
     </filter>
     <filter regex="^(?i)(true)$" source="$ctx:quotaLimitEnabled">
       <then>
-      <property expression="fn:normalize-space($func:direction)" name="direction" type="STRING"/>
-        <class name="com.wso2telco.dep.common.mediation.quotalimit.QuotaLimitMediator">
-          <!--property name="direction" value="nb"/-->
+      	<property expression="$func:direction" name="direction" type="STRING"/>
+        <class name="com.wso2telco.dep.common.mediation.QuotaLimitMediator">
         </class>
         <filter regex="true" source="get-property('INTERNAL_ERROR')">
 			<then>

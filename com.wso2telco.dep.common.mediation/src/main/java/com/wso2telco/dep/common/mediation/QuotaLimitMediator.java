@@ -20,18 +20,7 @@ import com.wso2telco.dep.common.mediation.util.AttributeName;
 public class QuotaLimitMediator extends AbstractMediator {
 
 	private static Log log = LogFactory.getLog(QuotaLimitMediator.class);
-	
-	private String direction;
-	
-	public String getDirection() {
-		return direction;
-	}
-
-	public void setDirection(String direction) {
-		this.direction = direction;
-	}
-	
-    
+	    
     public boolean mediate(MessageContext messageContext) {
         
     	String serviceProvider = null;
@@ -40,13 +29,15 @@ public class QuotaLimitMediator extends AbstractMediator {
         String operatorName = null;
     	boolean isQuotaEnabled = false;
     	
+    	String direction=null;
+    	
     	try {
     		isQuotaEnabled = isQuotaEnabler(messageContext);
 		} catch (AxisFault ex) {
 			log.error(ex);
 		}
-    	
-		if (isQuotaEnabled) {
+    	direction=messageContext.getProperty("direction").toString();
+    	if (isQuotaEnabled) {
 		
 			if (direction.equalsIgnoreCase("nb")) {
 				operatorName =null;
