@@ -1,4 +1,4 @@
-package com.wso2telco.dep.common.mediation.quotalimit;
+package com.wso2telco.dep.common.mediation;
 
 import java.util.Base64;
 import java.util.Iterator;
@@ -12,12 +12,13 @@ import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 import org.json.JSONObject;
 
+import com.wso2telco.dep.common.mediation.quotalimit.QuotaLimits;
 import com.wso2telco.dep.common.mediation.service.APIService;
 import com.wso2telco.dep.common.mediation.util.AttributeName;
 
-public class QuotaLimitHandlerMediator extends AbstractMediator {
+public class QuotaLimitMediator extends AbstractMediator {
 
-	private static Log log = LogFactory.getLog(QuotaLimitHandlerMediator.class);
+	private static Log log = LogFactory.getLog(QuotaLimitMediator.class);
 	
 	private String operator;
 	
@@ -36,14 +37,14 @@ public class QuotaLimitHandlerMediator extends AbstractMediator {
     
     public boolean mediate(MessageContext messageContext) {
     
-    	boolean isQuotaEnabler = false;
+    	boolean isQuotaEnabled = false;
     	try {
-    		isQuotaEnabler = isQuotaEnabler(messageContext);
+    		isQuotaEnabled = isQuotaEnabler(messageContext);
 		} catch (AxisFault ex) {
 			log.error(ex);
 		}
     	
-		if (isQuotaEnabler) {
+		if (isQuotaEnabled) {
 		
 			if (operator.equalsIgnoreCase("nb")) {
 				operatorName =null;
@@ -58,27 +59,24 @@ public class QuotaLimitHandlerMediator extends AbstractMediator {
 			APIService apiService = new APIService();
 	    	
 				try {
-		            QuotaLimits QuotaLimit=apiService.checkQuotaLimit(serviceProvider,application,apiName,operatorName);
+		            QuotaLimits quotaLimit=apiService.checkQuotaLimit(serviceProvider,application,apiName,operatorName);
 		            QuotaLimits currentQuotaLimit=apiService.currentQuotaLimit(serviceProvider,application,apiName,operatorName);
 
-		            if (QuotaLimit.getAppLimit()<=currentQuotaLimit.getAppLimit()) {
-		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Application has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
-		                messageContext.setProperty("INTERNAL_ERROR", "true");
+		            if (quotaLimit.getSpLimit()<=currentQuotaLimit.getSpLimit()) {
+		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded (Current limit : "+currentQuotaLimit.getSpLimit()+")","QuotaLimit","400","POLICY_EXCEPTION");
 					}
-		            if (QuotaLimit.getSpLimit()<=currentQuotaLimit.getSpLimit()) {
-		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
-		                messageContext.setProperty("INTERNAL_ERROR", "true");
+		            
+		            if (quotaLimit.getAppLimit()<=currentQuotaLimit.getAppLimit()) {
+		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Application has been exceeded (Current limit : "+currentQuotaLimit.getAppLimit()+")","QuotaLimit","400","POLICY_EXCEPTION");
 					}
-
-		            if (QuotaLimit.getApiLimit()<=currentQuotaLimit.getApiLimit()) {
-		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this API has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
-		                messageContext.setProperty("INTERNAL_ERROR", "true");
+		            
+		            if (quotaLimit.getApiLimit()<=currentQuotaLimit.getApiLimit()) {
+		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this API has been exceeded (Current limit : "+currentQuotaLimit.getApiLimit()+")","QuotaLimit","400","POLICY_EXCEPTION");
 					}
 
 		        } catch (Exception e) {
 		            log.error("Error occurred while calling QuotaLimitCheckMediator" ,e);
 		            setErrorInContext(messageContext,"SVC0001","A service error occurred. Error code is %1","An internal service error has occured. Please try again later.","500", "SERVICE_EXCEPTION");
-		            messageContext.setProperty("INTERNAL_ERROR", "true");
 		        }
 			}
 		
