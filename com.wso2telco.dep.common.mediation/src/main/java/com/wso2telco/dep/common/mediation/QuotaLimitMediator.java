@@ -21,24 +21,25 @@ public class QuotaLimitMediator extends AbstractMediator {
 
 	private static Log log = LogFactory.getLog(QuotaLimitMediator.class);
 	
-	private String operator;
+	private String direction;
 	
-	public String getOperator() {
-		return operator;
+	public String getDirection() {
+		return direction;
 	}
 
-	public void setOperator(String operator) {
-		this.operator = operator;
+	public void setDirection(String direction) {
+		this.direction = direction;
 	}
 	
-    private String serviceProvider = null;
-    private String application = null;
-    private String apiName = null;
-    private String operatorName = null;
     
     public boolean mediate(MessageContext messageContext) {
-    
+        
+    	String serviceProvider = null;
+        String application = null;
+        String apiName = null;
+        String operatorName = null;
     	boolean isQuotaEnabled = false;
+    	
     	try {
     		isQuotaEnabled = isQuotaEnabler(messageContext);
 		} catch (AxisFault ex) {
@@ -47,9 +48,9 @@ public class QuotaLimitMediator extends AbstractMediator {
     	
 		if (isQuotaEnabled) {
 		
-			if (operator.equalsIgnoreCase("nb")) {
+			if (direction.equalsIgnoreCase("nb")) {
 				operatorName =null;
-			}else if (operator.equalsIgnoreCase("sb")) {
+			}else if (direction.equalsIgnoreCase("sb")) {
 				operatorName=(String)messageContext.getProperty("OPERATOR_ID");			
 			}
 			
@@ -85,7 +86,7 @@ public class QuotaLimitMediator extends AbstractMediator {
     }
     
 	
-    public static boolean isQuotaEnabler(MessageContext context) throws AxisFault {
+    private boolean isQuotaEnabler(MessageContext context) throws AxisFault {
     	   boolean quotaEnabler = false;
     	   try {
     	      org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) context).getAxis2MessageContext();
@@ -93,6 +94,12 @@ public class QuotaLimitMediator extends AbstractMediator {
     	      if (headers != null && headers instanceof Map) {
     	         Map headersMap = (Map) headers;
     	         String jwtparam = (String) headersMap.get("x-jwt-assertion");
+    	         
+    	         if (jwtparam.isEmpty()) {
+    	        	 setErrorInContext(context,"SVC0001","A service error occurred. Error code is %1","An internal service error has occured. Please try again later.","500", "SERVICE_EXCEPTION");
+    	        	 return false;
+				}
+    	         
     	         String[] jwttoken = jwtparam.split("\\.");
     	         byte[] valueDecoded= Base64.getDecoder().decode(jwttoken[1]);
     	         String jwtbody = new String(valueDecoded, StandardCharsets.UTF_8);

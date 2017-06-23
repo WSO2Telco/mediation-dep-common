@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template name="com.wso2telco.dep.common.quota.limit.Template" xmlns="http://ws.apache.org/ns/synapse">
-  <parameter name="operator"/>
+  <parameter name="direction"/>
   <sequence>
     <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
     <property expression="$ctx:mediationConfig//quota_limit_enabled" name="quotaLimitEnabled" scope="default" type="STRING"/>
@@ -12,9 +12,9 @@
     </filter>
     <filter regex="^(?i)(true)$" source="$ctx:quotaLimitEnabled">
       <then>
-      <property expression="fn:normalize-space($func:operator)" name="operator" type="STRING"/>
+      <property expression="fn:normalize-space($func:direction)" name="direction" type="STRING"/>
         <class name="com.wso2telco.dep.common.mediation.quotalimit.QuotaLimitMediator">
-          <property name="operator" value="nb"/>
+          <!--property name="direction" value="nb"/-->
         </class>
         <filter regex="true" source="get-property('INTERNAL_ERROR')">
 			<then>
