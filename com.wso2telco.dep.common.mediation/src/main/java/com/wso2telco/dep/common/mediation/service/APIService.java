@@ -153,29 +153,63 @@ public class APIService {
 		return String.valueOf(apiDAO.getSubscriptionId(apiId, applicationId));
 	}
 
-	public boolean isWhiteListed(String MSISDN, String applicationId,
-			String subscriptionId, String apiId) throws Exception {
+	public boolean isWhiteListed(String MSISDN, String applicationId,String subscriptionId, String apiId) throws Exception {
 		MSISDN = "tel3A+" + MSISDN;
-		return apiDAO.checkWhiteListed(MSISDN, applicationId, subscriptionId,
-				apiId);
+		return apiDAO.checkWhiteListed(MSISDN, applicationId, subscriptionId,apiId);
 	}
 
-	public QuotaLimits currentQuotaLimit(String serviceProvider,String application, String apiName, String operatorName) throws Exception {
-		QuotaLimits currentQuotaLimit=null;
+	public Integer groupByApi(String sp, String app, String api, String operatorName) throws Exception {
+		Integer currentQuotaLimit=null;
 		try {
-			currentQuotaLimit=apiDAO.currentQuotaLimit(serviceProvider, application, apiName, operatorName);
+			currentQuotaLimit=apiDAO.groupByApi(sp, app, api, operatorName);
  		} catch (Exception e) {
  			e.printStackTrace();
  		}
  		
  		return currentQuotaLimit;
 	}
- 	
 
-	public QuotaLimits checkQuotaLimit(String serviceProvider, String application, String apiName, String operatorName)throws Exception{
-
+	public Integer groupByApplication(String sp, String app, String operatorName)throws Exception {
+		Integer currentQuotaLimit=null;
 		try {
-			 return apiDAO.checkQuotaLimit(serviceProvider, application, apiName, operatorName);
+			currentQuotaLimit=apiDAO.groupByApp(sp, app, operatorName);
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}
+ 		
+ 		return currentQuotaLimit;
+	}
+
+	public Integer groupBySp(String sp, String operatorName) throws Exception {
+		Integer currentQuotaLimit=null;
+		try {
+			currentQuotaLimit=apiDAO.groupBySp(sp, operatorName);
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}
+ 		
+ 		return currentQuotaLimit;
+	}
+
+	public int spLimit(String serviceProvider, String operatorName)  throws Exception{
+		try {
+			 return apiDAO.spLimit(serviceProvider, operatorName);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	public int applicationLimit(String serviceProvider, String application,String operatorName) throws Exception {
+		try {
+			 return apiDAO.applicationLimit(serviceProvider, application, operatorName);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	public int apiLimit(String serviceProvider, String application,String apiName, String operatorName)  throws Exception{
+		try {
+			 return apiDAO.apiLimit(serviceProvider, application, apiName, operatorName);
 		} catch (Exception e) {
 			throw e;
 		}

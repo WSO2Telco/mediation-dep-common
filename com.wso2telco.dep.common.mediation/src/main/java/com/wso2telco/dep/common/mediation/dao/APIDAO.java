@@ -511,30 +511,9 @@ public class APIDAO {
 		return false;
 	}
 
-	public QuotaLimits checkQuotaLimit(String serviceProvider, String application, String apiName, String operatorName) {
 
-		QuotaLimits quotaLimits = new QuotaLimits();
 
-		if (serviceProvider != null) {
-
-			quotaLimits.setSpLimit(spLimit(serviceProvider, operatorName));
-		}
-
-		if (serviceProvider != null && application != null) {
-
-			quotaLimits.setAppLimit(applicationLimit(serviceProvider, application, operatorName));
-		}
-
-		if (serviceProvider != null && application != null && apiName != null) {
-
-			quotaLimits.setApiLimit(apiLimit(serviceProvider, application, apiName, operatorName));
-		}
-
-		return quotaLimits;
-
-	}
-
-	private int apiLimit(String serviceProvider, String application, String apiName, String operatorName) {
+	public int apiLimit(String serviceProvider, String application, String apiName, String operatorName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -580,7 +559,7 @@ public class APIDAO {
 		return apiLimit;
 	}
 
-	private int applicationLimit(String serviceProvider, String application, String operatorName) {
+	public int applicationLimit(String serviceProvider, String application, String operatorName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -627,7 +606,7 @@ public class APIDAO {
 		return applicationLimit;
 	}
 
-	private int spLimit(String serviceProvider, String operatorName) {
+	public int spLimit(String serviceProvider, String operatorName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -674,24 +653,9 @@ public class APIDAO {
 	}
 
 	
-	@SuppressWarnings("null")
-	public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName) {
-		
-		QuotaLimits currentQuotaLimit=new QuotaLimits();
-		
-		if (sp!=null && app!=null && api!=null) {
-			currentQuotaLimit.setApiLimit(groupByApi(sp,app, api, operatorName));
-		}
-		if (sp!=null && app!=null && api==null){
-			currentQuotaLimit.setAppLimit(groupByApplication(sp,app,operatorName));
-		}
-		if (sp!=null && app==null && api==null) {
-			currentQuotaLimit.setSpLimit(groupBySp(sp,operatorName));
-		}
-		return currentQuotaLimit;		
-	}
 
-	private int groupByApi(String sp,String app, String api, String operatorName){
+
+	public int groupByApi(String sp,String app, String api, String operatorName){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -731,7 +695,8 @@ public class APIDAO {
 		}
 		return currentQuotaLimit;
 	}	
-	private int groupByApplication(String sp,String app, String operatorName){
+	
+	public int groupByApp(String sp,String app, String operatorName){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -770,7 +735,7 @@ public class APIDAO {
 		return currentQuotaLimit;
 	}
 
-	private int groupBySp(String sp,String operatorName){
+	public int groupBySp(String sp,String operatorName){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

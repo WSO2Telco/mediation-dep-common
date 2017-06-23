@@ -59,8 +59,8 @@ public class QuotaLimitMediator extends AbstractMediator {
 			APIService apiService = new APIService();
 	    	
 				try {
-		            QuotaLimits quotaLimit=apiService.checkQuotaLimit(serviceProvider,application,apiName,operatorName);
-		            QuotaLimits currentQuotaLimit=apiService.currentQuotaLimit(serviceProvider,application,apiName,operatorName);
+		            QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName);
+		            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName);
 
 		            if (quotaLimit.getSpLimit()<=currentQuotaLimit.getSpLimit()) {
 		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded (Current limit : "+currentQuotaLimit.getSpLimit()+")","QuotaLimit","400","POLICY_EXCEPTION");
@@ -121,6 +121,45 @@ public class QuotaLimitMediator extends AbstractMediator {
 
 		return quotaEnabler;
 	}    
+	
+	@SuppressWarnings("null")
+	public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName) throws Exception {
+		
+		QuotaLimits currentQuotaLimit=new QuotaLimits();
+		APIService apiService = new APIService();
+		
+		if (sp!=null && app!=null && api!=null) {
+			currentQuotaLimit.setApiLimit(apiService.groupByApi(sp,app, api, operatorName));
+		}
+		if (sp!=null && app!=null && api==null){
+			currentQuotaLimit.setAppLimit(apiService.groupByApplication(sp,app,operatorName));
+		}
+		if (sp!=null && app==null && api==null) {
+			currentQuotaLimit.setSpLimit(apiService.groupBySp(sp,operatorName));
+		}
+		return currentQuotaLimit;		
+	}
+	
+	public QuotaLimits checkQuotaLimit(String serviceProvider, String application, String apiName, String operatorName) throws Exception {
+
+		APIService apiService = new APIService();
+		QuotaLimits quotaLimits = new QuotaLimits();
+
+		if (serviceProvider != null) {
+			quotaLimits.setSpLimit(apiService.spLimit(serviceProvider, operatorName));
+		}
+
+		if (serviceProvider != null && application != null) {
+			quotaLimits.setAppLimit(apiService.applicationLimit(serviceProvider, application, operatorName));
+		}
+
+		if (serviceProvider != null && application != null && apiName != null) {
+			quotaLimits.setApiLimit(apiService.apiLimit(serviceProvider, application, apiName, operatorName));
+		}
+
+		return quotaLimits;
+
+	}
 	
     private void setErrorInContext(MessageContext synContext, String messageId,String errorText, String errorVariable, String httpStatusCode,String exceptionType) {
         synContext.setProperty("messageId", messageId);
