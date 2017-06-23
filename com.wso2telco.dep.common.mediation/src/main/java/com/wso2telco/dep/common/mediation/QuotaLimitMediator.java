@@ -118,7 +118,7 @@ public class QuotaLimitMediator extends AbstractMediator {
     	         }
     	      }
     	   } catch (Exception e) {
-    	      log.error("Error retrive quotaEnabler",e);
+    	      log.error("Error retrieve quotaEnabler",e);
     	   }
 
     	   return quotaEnabler;
