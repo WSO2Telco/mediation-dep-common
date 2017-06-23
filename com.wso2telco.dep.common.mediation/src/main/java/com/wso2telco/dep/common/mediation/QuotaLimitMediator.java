@@ -83,44 +83,38 @@ public class QuotaLimitMediator extends AbstractMediator {
         return true;
     }
     
-	@SuppressWarnings("rawtypes")
-	public static boolean isQuotaEnabler(MessageContext context) throws AxisFault {
-		boolean quotaEnabler = false;
-		try {
-			org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) context).getAxis2MessageContext();
-			Object headers = axis2MessageContext.getProperty(org.apache.axis2.context.MessageContext.TRANSPORT_HEADERS);
-			if (headers != null && headers instanceof Map) {
-				Map headersMap = (Map) headers;
-				String jwtparam = (String) headersMap.get("x-jwt-assertion");
-				
-				String[] jwttoken = jwtparam.split("\\.");
-				byte[] valueDecoded= Base64.decodeBase64(jwttoken[1].getBytes());
-				String jwtbody = new String(valueDecoded);
-				JSONObject jwtobj = new JSONObject(jwtbody);
-				
-				/**String[] jwttoken = jwtparam.split("\\.");
-				String jwtbody = Base64Coder.decodeString(jwttoken[1]);
-				JSONObject jwtobj = new JSONObject(jwtbody);*/
-				
-				Iterator<String> keys = jwtobj.keys();
-				while( keys.hasNext() ) {
-					String key = (String)keys.next();
-					String[] allowedRoles = jwtobj.get(key).toString().split(",");
-					for (int i = 0; i < allowedRoles.length; i++) {
-						if (allowedRoles[i].contains(AttributeName.QUOTA_ENABLER)) {
-							quotaEnabler = true;
-							break;
-						}
-					}
-					break;
-				}
-			}
-		} catch (Exception e) {
-			log.error("Error retrive quotaEnabler");
-		}
+	
+    public static boolean isQuotaEnabler(MessageContext context) throws AxisFault {
+    	   boolean quotaEnabler = false;
+    	   try {
+    	      org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) context).getAxis2MessageContext();
+    	      Object headers = axis2MessageContext.getProperty(org.apache.axis2.context.MessageContext.TRANSPORT_HEADERS);
+    	      if (headers != null && headers instanceof Map) {
+    	         Map headersMap = (Map) headers;
+    	         String jwtparam = (String) headersMap.get("x-jwt-assertion");
+    	         String[] jwttoken = jwtparam.split("\\.");
+    	         byte[] valueDecoded= Base64.decodeBase64(jwttoken[1].getBytes());
+    	         String jwtbody = new String(valueDecoded);
+    	         JSONObject jwtobj = new JSONObject(jwtbody);
+    	         Iterator<String> keys = jwtobj.keys();
+    	         while( keys.hasNext() ) {
+    	            String key = (String)keys.next();
+    	            String[] allowedRoles = jwtobj.get(key).toString().split(",");
+    	            for (int i = 0; i < allowedRoles.length; i++) {
+    	               if (allowedRoles[i].contains(AttributeName.QUOTA_ENABLER)) {
+    	                  quotaEnabler = true;
+    	                  break;
+    	               }
+    	            }
+    	            break;
+    	         }
+    	      }
+    	   } catch (Exception e) {
+    	      log.error("Error retrive quotaEnabler",e);
+    	   }
 
-		return quotaEnabler;
-	}    
+    	   return quotaEnabler;
+    	}
 	
 	@SuppressWarnings("null")
 	public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName) throws Exception {
