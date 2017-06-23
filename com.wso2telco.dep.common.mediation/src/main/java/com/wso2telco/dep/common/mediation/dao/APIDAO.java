@@ -691,7 +691,7 @@ public class APIDAO {
 		return currentQuotaLimit;		
 	}
 
-	private Integer groupByApi(String sp,String app, String api, String operatorName){
+	private int groupByApi(String sp,String app, String api, String operatorName){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -716,7 +716,7 @@ public class APIDAO {
 			preparedStatement.setString(3, api);
 
 			if (operatorName != null) {
-				preparedStatement.setString(4, operatorName.toLowerCase());
+				preparedStatement.setString(4, operatorName.toUpperCase());
 			}
 			
 			resultSet = preparedStatement.executeQuery();
@@ -731,7 +731,7 @@ public class APIDAO {
 		}
 		return currentQuotaLimit;
 	}	
-	private Integer groupByApplication(String sp,String app, String operatorName){
+	private int groupByApplication(String sp,String app, String operatorName){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -754,7 +754,7 @@ public class APIDAO {
 			preparedStatement.setString(2, app);
 
 			if (operatorName != null) {
-				preparedStatement.setString(3, operatorName.toLowerCase());
+				preparedStatement.setString(3, operatorName.toUpperCase());
 			}
 			
 			resultSet = preparedStatement.executeQuery();
@@ -770,7 +770,7 @@ public class APIDAO {
 		return currentQuotaLimit;
 	}
 
-	private Integer groupBySp(String sp,String operatorName){
+	private int groupBySp(String sp,String operatorName){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -792,7 +792,7 @@ public class APIDAO {
 			preparedStatement.setString(1, sp.toLowerCase());
 
 			if (operatorName != null) {
-				preparedStatement.setString(2, operatorName.toLowerCase());
+				preparedStatement.setString(2, operatorName.toUpperCase());
 			}
 			
 			resultSet = preparedStatement.executeQuery();

@@ -1,5 +1,6 @@
 package com.wso2telco.dep.common.mediation.quotalimit;
 
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -93,9 +94,16 @@ public class QuotaLimitHandlerMediator extends AbstractMediator {
 			if (headers != null && headers instanceof Map) {
 				Map headersMap = (Map) headers;
 				String jwtparam = (String) headersMap.get("x-jwt-assertion");
+				
 				String[] jwttoken = jwtparam.split("\\.");
-				String jwtbody = Base64Coder.decodeString(jwttoken[1]);
+				byte[] valueDecoded= Base64.decodeBase64(jwttoken[1].getBytes());
+				String jwtbody = new String(valueDecoded);
 				JSONObject jwtobj = new JSONObject(jwtbody);
+				
+				/**String[] jwttoken = jwtparam.split("\\.");
+				String jwtbody = Base64Coder.decodeString(jwttoken[1]);
+				JSONObject jwtobj = new JSONObject(jwtbody);*/
+				
 				Iterator<String> keys = jwtobj.keys();
 				while( keys.hasNext() ) {
 					String key = (String)keys.next();
