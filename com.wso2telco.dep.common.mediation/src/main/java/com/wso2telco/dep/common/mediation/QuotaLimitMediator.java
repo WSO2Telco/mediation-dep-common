@@ -65,20 +65,20 @@ public class QuotaLimitMediator extends AbstractMediator {
 					Integer spLimit=currentQuotaLimit.getSpLimit();
 		            if (quotaLimit.getSpLimit()!=null && spLimit!=null) {
 					    if (quotaLimit.getSpLimit()<=spLimit) {	
-					        setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded (Current limit : "+spLimit+")","QuotaLimit","400","POLICY_EXCEPTION");
+					        setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
 						}	
 					}
 		            
 		            Integer appLimit=currentQuotaLimit.getAppLimit();
 		            if (quotaLimit.getAppLimit()!=null && appLimit!=null){
 			            if (quotaLimit.getAppLimit()<=appLimit) {
-			                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Application has been exceeded (Current limit : "+appLimit+")","QuotaLimit","400","POLICY_EXCEPTION");
+			                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Application has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
 						}
 		            }
 		            Integer apiLimit=currentQuotaLimit.getApiLimit();
 		            if (quotaLimit.getApiLimit()!=null && apiLimit!=null){
 			            if (quotaLimit.getApiLimit()<=apiLimit) {
-			                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this API has been exceeded (Current limit : "+apiLimit+")","QuotaLimit","400","POLICY_EXCEPTION");
+			                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this API has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
 						}
 		            }
 
