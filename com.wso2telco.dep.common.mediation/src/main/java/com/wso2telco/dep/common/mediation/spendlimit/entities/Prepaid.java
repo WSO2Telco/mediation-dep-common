@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,40 +18,27 @@ package com.wso2telco.dep.common.mediation.spendlimit.entities;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "Application")
-public class Application {
+@XmlRootElement(name = "Prepaid")
+public class Prepaid {
 
-    private String applicationName;
-    private String consumerKey;
+    private String DayAmount;
+    private String MonthAmount;
 
-    public Application() {
+    public String getDayAmount() {
+        return DayAmount;
     }
 
-    private Application(String applicationName, String consumerKey) {
-        this.applicationName = applicationName;
-        this.consumerKey = consumerKey;
+    @XmlElement(name = "DayAmount")
+    public void setDayAmount(String dayAmount) {
+        DayAmount = dayAmount;
     }
 
-    public String getApplicationName() {
-        return applicationName;
+    public String getMonthAmount() {
+        return MonthAmount;
     }
 
-    @XmlElement(name = "ApplicationName")
-    public void setApplicationName(String applicationName) {
-        this.applicationName = applicationName;
+    @XmlElement(name = "MonthAmount")
+    public void setMonthAmount(String monthAmount) {
+        MonthAmount = monthAmount;
     }
-
-    public String getConsumerKey() {
-        return consumerKey;
-    }
-
-    @XmlElement(name = "ConsumerKey")
-    public void setConsumerKey(String consumerKey) {
-        this.consumerKey = consumerKey;
-    }
-
-    public Application clone() {
-        return new Application(this.applicationName, this.consumerKey);
-    }
-
 }

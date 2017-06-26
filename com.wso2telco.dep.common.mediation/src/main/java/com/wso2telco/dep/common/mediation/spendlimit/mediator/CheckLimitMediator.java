@@ -71,8 +71,23 @@ public class CheckLimitMediator extends AbstractMediator {
             throws DBUtilException {
         try {
             GroupDTO groupDTO = groupEventUnmarshaller.getGroupDTO(operator, consumerKey);
-            Double groupdailyLimit = Double.parseDouble(groupDTO.getDayAmount());
-            Double groupMonlthlyLimit = Double.parseDouble(groupDTO.getMonthAmount());
+
+            Double groupdailyLimit = null;
+            Double groupMonlthlyLimit = null;
+
+            if(mc.getProperty("userpackagetype").toString().toLowerCase().equals("prepaid")){
+
+                groupdailyLimit = Double.parseDouble(groupDTO.getPrepaid().getDayAmount());
+                groupMonlthlyLimit = Double.parseDouble(groupDTO.getPrepaid().getMonthAmount());
+            }
+
+            if(mc.getProperty("userpackagetype").toString().toLowerCase().equals("postpaid")){
+
+                groupdailyLimit = Double.parseDouble(groupDTO.getPostpaid().getDayAmount());
+                groupMonlthlyLimit = Double.parseDouble(groupDTO.getPostpaid().getMonthAmount());
+            }
+
+
             SpendLimitDAO daySpendLimitObj = null;
             SpendLimitDAO monthSpendLimitObj = null;
 

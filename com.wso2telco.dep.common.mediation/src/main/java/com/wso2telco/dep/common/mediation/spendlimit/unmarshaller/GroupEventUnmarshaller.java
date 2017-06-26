@@ -23,7 +23,6 @@ import org.apache.commons.logging.LogFactory;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.util.*;
 
@@ -61,11 +60,15 @@ public class GroupEventUnmarshaller {
         for (Iterator iterator = groupList.getGroupList().iterator(); iterator.hasNext(); ) {
             Group group = (Group) iterator.next();
             GroupDTO gpDTO = new GroupDTO();
-            gpDTO.setDayAmount(group.getDayAmount());
+
+            gpDTO.setPrepaid(group.getPrepaid());
+
             gpDTO.setGroupName(group.getGroupName());
-            gpDTO.setMonthAmount(group.getMonthAmount());
+
+            gpDTO.setPostpaid(group.getPostpaid());
+
             gpDTO.setOperator(group.getOperator());
-            gpDTO.setUserInfoEnabled(group.getUserInfoEnabled());
+            gpDTO.setCustomerInfoEnabled(group.getCustomerInfoEnabled());
 
             operatorGP.put(group.getOperator(), gpDTO);
 

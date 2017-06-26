@@ -12,6 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.wso2telco.core.dbutils.DbUtils;
+import com.wso2telco.core.dbutils.util.DataSourceNames;
+import com.wso2telco.dep.common.mediation.spendlimit.entities.MessageDTO;
+import com.wso2telco.dep.common.mediation.spendlimit.entities.SpendChargeDTO;
+import com.wso2telco.dep.common.mediation.util.DatabaseTables;
+
 public class APIDAO {
 
     private final Log log = LogFactory.getLog(APIDAO.class);
@@ -584,7 +590,7 @@ public class APIDAO {
 
                 preparedStatement.setString(4, operatorName.toLowerCase());
             }
-            log.debug("apiLimit ==========================>"+preparedStatement.toString());
+            log.debug("apiLimit query :: "+preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -631,7 +637,7 @@ public class APIDAO {
 
                 preparedStatement.setString(3, operatorName.toLowerCase());
             }
-            log.debug("applicationLimit ==========================>"+preparedStatement.toString());
+            log.debug("applicationLimit query :: "+preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -677,7 +683,7 @@ public class APIDAO {
 
                 preparedStatement.setString(2, operatorName.toLowerCase());
             }
-            log.debug("spLimit ==========================>"+preparedStatement.toString());
+            log.debug("spLimit query :: "+preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -720,7 +726,7 @@ public class APIDAO {
             if (operatorName != null) {
                 preparedStatement.setString(4, operatorName.toUpperCase());
             }
-            log.debug("group by API ==========================>"+preparedStatement.toString());
+            log.debug("group by API query :: "+preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
@@ -759,7 +765,7 @@ public class APIDAO {
             if (operatorName != null) {
                 preparedStatement.setString(3, operatorName.toUpperCase());
             }
-            log.debug("group by APPLICATIONID ==========================>"+preparedStatement.toString());
+            log.debug("group by APPLICATIONID query :: "+preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
@@ -797,7 +803,7 @@ public class APIDAO {
             if (operatorName != null) {
                 preparedStatement.setString(2, operatorName.toUpperCase());
             }
-            log.debug("group by SERVICEPROVIDER ==========================>"+preparedStatement.toString());
+            log.debug("group by SERVICEPROVIDER query :: "+preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
@@ -809,5 +815,117 @@ public class APIDAO {
             DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
         }
         return currentQuotaLimit;
+    }
+
+    public void publishMessage(MessageDTO messageDAO) throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            con = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
+
+            String sql = "INSERT INTO mdtrequestmessage ("
+                    + "msgtypeId,"
+                    + "mdtrequestId,"
+                    + "internalclientrefcode,"
+                    + "message,"
+                    + "clientrefcode,"
+                    + "clientrefval,"
+                    + "reportedtime"
+                    + ") "
+                    + "VALUES (?,?,?,?,?,?,?) ";
+
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, messageDAO.getMsgId());
+            ps.setString(2, messageDAO.getMdtrequestId());
+            ps.setString(3, messageDAO.getClienString());
+            ps.setString(4, messageDAO.getMessage());
+            ps.setString(5, messageDAO.getRefcode().getRefCode());
+            ps.setString(6, messageDAO.getRefval());
+            ps.setLong(7, messageDAO.getReportedTime());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            DbUtils.handleException("Error while inserting data into messat table", e);
+        } finally {
+            DbUtils.closeAllConnections(ps, con, rs);
+        }
+    }
+
+    public void persistSpendCharge(SpendChargeDTO spendChargeDTO) throws Exception{
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        ResultSet rs = null;
+
+        try {
+            con = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
+
+            String sql = "INSERT INTO spendlimitdata ("
+                    + "msgtype,"
+                    + "groupName,"
+                    + "consumerKey,"
+                    + "operatorId,"
+                    + "msisdn,amount,"
+                    + "currentDateTime, "
+                    + "effectiveTime"
+                    + ") "
+                    + "VALUES (?,?,?,?,?,?,?,?) ";
+
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,spendChargeDTO.getMessageType());
+            ps.setString(2, spendChargeDTO.getGroupName());
+            ps.setString(3, spendChargeDTO.getConsumerKey());
+            ps.setString(4, spendChargeDTO.getOperatorId());
+            ps.setString(5, spendChargeDTO.getMsisdn());
+            ps.setDouble(6, spendChargeDTO.getAmount());
+            ps.setLong(7, spendChargeDTO.getCurrentTime());
+            ps.setLong(8, spendChargeDTO.getOrginalTime());
+
+            ps.executeUpdate();
+
+        }catch (Exception e){
+            DbUtils.handleException("Error while inserting data into spendlimitdata table", e);
+        } finally {
+            DbUtils.closeAllConnections(ps,con,rs);
+        }
+    }
+
+    public String getRefundDetails(int messageDid, String orginalServerReferanceCode) throws Exception{
+        Connection  con = null;
+        PreparedStatement  ps = null;
+        ResultSet rs = null;
+        String internalclientrefcode = null;
+
+        try {
+
+            con = DbUtils.getDBConnection();
+
+            if (con == null) {
+                throw new Exception("Connection not found");
+            }
+
+
+            String sql = "select internalclientrefcode from mdtrequestmessage where  clientrefval=? and msgtypeId=? ";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, orginalServerReferanceCode);
+            ps.setInt(2, messageDid);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                internalclientrefcode =  rs.getString("internalclientrefcode");
+            }
+
+        } catch (SQLException e) {
+            DbUtils.handleException("Error occurred while getting payment Details", e);
+
+        } finally {
+            DbUtils.closeAllConnections(ps, con, rs);
+        }
+        return internalclientrefcode;
+
     }
 }

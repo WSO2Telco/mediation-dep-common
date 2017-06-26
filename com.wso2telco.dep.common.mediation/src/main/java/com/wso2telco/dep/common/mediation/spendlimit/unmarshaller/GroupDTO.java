@@ -16,6 +16,9 @@
 package com.wso2telco.dep.common.mediation.spendlimit.unmarshaller;
 
 
+import com.wso2telco.dep.common.mediation.spendlimit.entities.Postpaid;
+import com.wso2telco.dep.common.mediation.spendlimit.entities.Prepaid;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,21 +26,21 @@ public class GroupDTO {
 
     private String groupName;
     private String operator;
-    private String dayAmount;
-    private String monthAmount;
-    private String userInfoEnabled;
+    private Prepaid prepaid;
+    private Postpaid postpaid;
+    private String customerInfoEnabled;
     private List<ServiceProviderDTO> serviceProviderList = new ArrayList<ServiceProviderDTO>();
 
     GroupDTO() {
 
     }
 
-    private GroupDTO(String groupName, String operator, String dayAmount, String monthAmount, String useInfoEnabled) {
+    private GroupDTO(String groupName, String operator, Prepaid prepaid, Postpaid postpaid, String customerInfoEnabled) {
         this.groupName = groupName;
         this.operator = operator;
-        this.dayAmount = dayAmount;
-        this.monthAmount = monthAmount;
-        this.userInfoEnabled = useInfoEnabled;
+        this.prepaid = prepaid;
+        this.postpaid = postpaid;
+        this.customerInfoEnabled = customerInfoEnabled;
     }
 
     public String getGroupName() {
@@ -56,28 +59,28 @@ public class GroupDTO {
         this.operator = operator;
     }
 
-    public String getDayAmount() {
-        return dayAmount;
+    public Prepaid getPrepaid() {
+        return prepaid;
     }
 
-    public void setDayAmount(String dayAmount) {
-        this.dayAmount = dayAmount;
+    public void setPrepaid(Prepaid prepaid) {
+        this.prepaid = prepaid;
     }
 
-    public String getMonthAmount() {
-        return monthAmount;
+    public Postpaid getPostpaid() {
+        return postpaid;
     }
 
-    public void setMonthAmount(String monthAmount) {
-        this.monthAmount = monthAmount;
+    public void setPostpaid(Postpaid postpaid) {
+        this.postpaid = postpaid;
     }
 
-    public String getUserInfoEnabled() {
-        return userInfoEnabled;
+    public String getCustomerInfoEnabled() {
+        return customerInfoEnabled;
     }
 
-    public void setUserInfoEnabled(String userInfoEnabled) {
-        this.userInfoEnabled = userInfoEnabled;
+    public void setCustomerInfoEnabled(String customerInfoEnabled) {
+        this.customerInfoEnabled = customerInfoEnabled;
     }
 
     public List<ServiceProviderDTO> getServiceProviderList() {
@@ -92,6 +95,6 @@ public class GroupDTO {
 
 
     public GroupDTO clone() {
-        return new GroupDTO(this.groupName, this.operator, this.dayAmount, this.monthAmount, this.userInfoEnabled);
+        return new GroupDTO(this.groupName, this.operator, this.prepaid, this.postpaid, this.customerInfoEnabled);
     }
 }

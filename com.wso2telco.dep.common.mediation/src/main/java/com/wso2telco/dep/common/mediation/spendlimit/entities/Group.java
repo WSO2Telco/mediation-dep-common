@@ -25,10 +25,13 @@ public class Group {
 
     private String groupName;
     private String operator;
-    private String dayAmount;
-    private String monthAmount;
-    private String userInfoEnabled;
+    private Prepaid prepaid;
+    private Postpaid postpaid;
+    private String customerInfoEnabled;
     private List<ServiceProvider> serviceProviderList;
+
+    public Group() {
+    }
 
     public String getGroupName() {
         return groupName;
@@ -48,31 +51,32 @@ public class Group {
         this.operator = operator;
     }
 
-    public String getDayAmount() {
-        return dayAmount;
+
+    public Prepaid getPrepaid() {
+        return prepaid;
     }
 
-    @XmlElement(name = "DayAmount")
-    public void setDayAmount(String dayAmount) {
-        this.dayAmount = dayAmount;
+    @XmlElement(name = "Prepaid")
+    public void setPrepaid(Prepaid prepaid) {
+        this.prepaid = prepaid;
     }
 
-    public String getMonthAmount() {
-        return monthAmount;
+    public Postpaid getPostpaid() {
+        return postpaid;
     }
 
-    @XmlElement(name = "MonthAmount")
-    public void setMonthAmount(String monthAmount) {
-        this.monthAmount = monthAmount;
+    @XmlElement(name = "Postpaid")
+    public void setPostpaid(Postpaid postpaid) {
+        this.postpaid = postpaid;
     }
 
-    public String getUserInfoEnabled() {
-        return userInfoEnabled;
+    public String getCustomerInfoEnabled() {
+        return customerInfoEnabled;
     }
 
-    @XmlElement(name = "IsUserInfoEnabled")
-    public void setUserInfoEnabled(String userInfoEnabled) {
-        this.userInfoEnabled = userInfoEnabled;
+    @XmlElement(name = "IsCustomerInfoEnabled")
+    public void setCustomerInfoEnabled(String customerInfoEnabled) {
+        this.customerInfoEnabled = customerInfoEnabled;
     }
 
     public List<ServiceProvider> getServiceProviderList() {

@@ -25,6 +25,9 @@ public class ServiceProvider {
     private String spName;
     private List<Application> applicationList;
 
+    public ServiceProvider() {
+    }
+
     public String getSpName() {
         return spName;
     }

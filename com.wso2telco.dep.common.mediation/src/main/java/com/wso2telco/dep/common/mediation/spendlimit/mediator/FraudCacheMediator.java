@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,11 +21,8 @@ import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
 
-/**
- * This mediator is used to insert a key-value pair in Redis with a ttl.
- */
+public class FraudCacheMediator extends AbstractMediator {
 
-public class PackageTypeCacheMediator extends AbstractMediator {
 
     // Default ttl value is set to 6 hours for all operators
     private static final int DEFAULT_TTL = 21600;
@@ -33,9 +30,21 @@ public class PackageTypeCacheMediator extends AbstractMediator {
 
     public boolean mediate(MessageContext messageContext) {
 
+        int hitCount = 0;
+
+        try{
+
+            hitCount = Integer.parseInt(RedisClient.getKey("fraud-"+messageContext.getProperty("MSISDN").toString()))+1;
+
+        }catch (Exception e){
+
+            hitCount = hitCount +1;
+        }
+
+
         try {
-            RedisClient.setKey(messageContext.getProperty("MSISDN").toString(), messageContext
-                    .getProperty("userpackagetype").toString(), getValidTtl(messageContext.getProperty("ttl")
+
+            RedisClient.setKey("fraud-" + messageContext.getProperty("MSISDN").toString(), String.valueOf(hitCount), getValidTtl(messageContext.getProperty("fraudTtl")
                     .toString()));
 
         } catch (Exception ex) {
@@ -72,4 +81,3 @@ public class PackageTypeCacheMediator extends AbstractMediator {
         return DEFAULT_TTL;
     }
 }
-

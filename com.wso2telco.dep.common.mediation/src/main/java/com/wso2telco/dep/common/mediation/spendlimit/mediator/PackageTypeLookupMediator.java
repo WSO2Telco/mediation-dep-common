@@ -27,8 +27,7 @@ public class PackageTypeLookupMediator extends AbstractMediator {
         try {
 
             // Assign the fetched value to a messageContext property
-            messageContext.setProperty("userpackagetype", RedisClient.getKey(messageContext.getProperty("uri.var" +
-                    ".userAddress").toString()));
+            messageContext.setProperty("userpackagetype", RedisClient.getKey(messageContext.getProperty("MSISDN").toString()));
 
         } catch (Exception ex) {
             log.error("Error while retrieving key:" + ex.getMessage());

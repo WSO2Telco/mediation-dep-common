@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.dep.common.mediation.spendlimit.entities;
+package com.wso2telco.dep.common.mediation.spendlimit.mediator;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
 
-@XmlRootElement(name = "GroupList")
-public class GroupList {
+import com.wso2telco.redis.RedisClient;
+import org.apache.synapse.MessageContext;
+import org.apache.synapse.mediators.AbstractMediator;
 
-    List<Group> groupList;
+public class FraudCacheLookupMediator extends AbstractMediator {
 
-    public GroupList() {
-    }
+    public boolean mediate(MessageContext messageContext) {
 
-    public List<Group> getGroupList() {
-        return groupList;
-    }
+        try {
 
-    @XmlElement(name = "Group")
-    public void setGroupList(List<Group> groupList) {
-        this.groupList = groupList;
+            // Assign the fetched value to a messageContext property
+            messageContext.setProperty("fraudValue", RedisClient.getKey("fraud-"+messageContext.getProperty("MSISDN").toString()));
+
+        } catch (Exception ex) {
+            log.error("Error while retrieving key:" + ex.getMessage());
+        }
+
+        return true;
     }
 }

@@ -23,7 +23,7 @@ import org.apache.synapse.mediators.AbstractMediator;
 
 import static com.wso2telco.dep.common.mediation.spendlimit.mediator.CheckLimitMediator.loadGroupEventUnmashaller;
 
-public class UserInfoMediator extends AbstractMediator {
+public class CustomerInfoMediator extends AbstractMediator {
 
     public boolean mediate(MessageContext messageContext) {
 
@@ -31,7 +31,7 @@ public class UserInfoMediator extends AbstractMediator {
             String operatorName = messageContext.getProperty("OPERATOR_NAME").toString();
             String consumerKey = messageContext.getProperty("CONSUMER_KEY").toString();
             String spendLimitConfig = messageContext.getProperty("spendLimitConfig").toString();
-            messageContext.setProperty("userInfoEnabled", getGroupUserInfo(operatorName, consumerKey,
+            messageContext.setProperty("customerInfoEnabled", getGroupCustomerInfo(operatorName, consumerKey,
                     spendLimitConfig));
         } catch (Exception e) {
             setErrorInContext(
@@ -46,13 +46,13 @@ public class UserInfoMediator extends AbstractMediator {
     }
 
 
-    private String getGroupUserInfo(String operatorName, String consumerKey, String config) throws
+    private String getGroupCustomerInfo(String operatorName, String consumerKey, String config) throws
             OperatorNotInListException {
         GroupEventUnmarshaller unmarshaller = loadGroupEventUnmashaller(config);
 
         GroupDTO operatorGroup = unmarshaller.getGroupDTO(operatorName, consumerKey);
 
-        return operatorGroup.getUserInfoEnabled();
+        return operatorGroup.getCustomerInfoEnabled();
     }
 
     private void setErrorInContext(MessageContext synContext, String messageId,
