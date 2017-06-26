@@ -18,31 +18,31 @@ package com.wso2telco.dep.common.mediation.quotalimit;
 
 public class QuotaLimits {
 
-    private int spLimit;
-    private int appLimit;
-    private int apiLimit;
+    private Integer spLimit;
+    private Integer appLimit;
+    private Integer apiLimit;
 
-    public int getSpLimit() {
+    public Integer getSpLimit() {
         return spLimit;
     }
 
-    public void setSpLimit(int spLimit) {
+    public void setSpLimit(Integer spLimit) {
         this.spLimit = spLimit;
     }
 
-    public int getAppLimit() {
+    public Integer getAppLimit() {
         return appLimit;
     }
 
-    public void setAppLimit(int appLimit) {
+    public void setAppLimit(Integer appLimit) {
         this.appLimit = appLimit;
     }
 
-    public int getApiLimit() {
+    public Integer getApiLimit() {
         return apiLimit;
     }
 
-    public void setApiLimit(int apiLimit) {
+    public void setApiLimit(Integer apiLimit) {
         this.apiLimit = apiLimit;
     }
 }
