@@ -21,4 +21,5 @@
 		<imsiLength>15</imsiLength>
 	</validationConfig>
 	<data_publishing_enabled>false</data_publishing_enabled>
+	<quota_limit_enabled>true</quota_limit_enabled>
 </mediationConfig>

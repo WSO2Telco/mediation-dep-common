@@ -13,5 +13,8 @@ public class DatabaseTables {
 	public static final String AM_SUBSCRIPTION = "AM_SUBSCRIPTION";
 	public static final String AM_APPLICATION = "AM_APPLICATION";
 	public static final String SUBSCRIPTION_WHITELIST = "subscription_WhiteList";
+	public static final String SP_QUOTA_LIMIT = "sp_quota_limit";
+	public static final String CURRENT_QUOTA_LIMIT = "billingaccumelator";
+
 
 }
