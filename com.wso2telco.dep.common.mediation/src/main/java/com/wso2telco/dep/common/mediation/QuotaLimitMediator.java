@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.axis2.AxisFault;
@@ -14,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.wso2telco.dep.common.mediation.quotalimit.QuotaLimits;
@@ -92,7 +94,8 @@ public class QuotaLimitMediator extends AbstractMediator {
     }
     
 	
-    private boolean isQuotaEnabler(MessageContext context) throws AxisFault {
+    @SuppressWarnings("unchecked")
+	private boolean isQuotaEnabler(MessageContext context) throws AxisFault {
     	   boolean quotaEnabler = false;
     	   try {
     	      org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) context).getAxis2MessageContext();
@@ -110,22 +113,19 @@ public class QuotaLimitMediator extends AbstractMediator {
     	         byte[] valueDecoded= Base64.getDecoder().decode(jwttoken[1]);
     	         String jwtbody = new String(valueDecoded, StandardCharsets.UTF_8);
     	         JSONObject jwtobj = new JSONObject(jwtbody);
-    	         Iterator<String> keys = jwtobj.keys();
-    	         String roleClaim=jwtobj.get("http://wso2.org/claims/role").toString();
-    	         if( keys.hasNext() && roleClaim!=null) {
-    	            String[] allowedRoles = roleClaim.split(",");
-    	            for (int i = 0; i < allowedRoles.length; i++) {
-    	               if (allowedRoles[i].contains(AttributeName.QUOTA_ENABLER)) {
+    	         JSONArray roleClaims = (JSONArray) jwtobj.get("http://wso2.org/claims/role");
+    	         if(roleClaims != null) {
+    	            for (int i = 0; i < roleClaims.length(); i++) {
+    	            	String roleClaim = (String) roleClaims.get(i);
+    	               if (roleClaim.contains(AttributeName.QUOTA_ENABLER)) {
     	                  quotaEnabler = true;
     	                  break;
     	               }
     	            }
-    	         }else{
-    	        	 setErrorInContext(context,"SVC0001","A service error occurred. Error code is %1","Please check the quota enabler role.","500", "SERVICE_EXCEPTION");
     	         }
     	      }
     	   } catch (Exception e) {
-    	      log.error("Error retrieve quotaEnabler",e);
+    	      log.error("Error retrieve quotaEnabler", e);
     	   }
 
     	   return quotaEnabler;
