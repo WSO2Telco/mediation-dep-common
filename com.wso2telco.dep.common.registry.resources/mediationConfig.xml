@@ -19,4 +19,5 @@
 	</validationConfig>
 	<data_publishing_enabled>false</data_publishing_enabled>
 	<quota_limit_enabled>false</quota_limit_enabled>
+	<spend_limit_enabled>true</spend_limit_enabled>
 </mediationConfig>
