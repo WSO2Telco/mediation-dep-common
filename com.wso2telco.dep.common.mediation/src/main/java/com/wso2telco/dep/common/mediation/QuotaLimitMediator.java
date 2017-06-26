@@ -2,7 +2,9 @@ package com.wso2telco.dep.common.mediation;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -49,14 +51,17 @@ public class QuotaLimitMediator extends AbstractMediator {
 			serviceProvider=(String)messageContext.getProperty("USER_ID");
 			application=(String)messageContext.getProperty("APPLICATION_ID");
 			apiName=(String)messageContext.getProperty("API_NAME");
-			Date sysDate=new Date();
-			
+			Date date = new Date();
+			Calendar calendar = new GregorianCalendar();
+			calendar.setTime(date);
+			int year = calendar.get(Calendar.YEAR);
+			int month = calendar.get(Calendar.MONTH) + 1;
 			
 			APIService apiService = new APIService();
 	    	
 				try {
-		            QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName,sysDate.getYear(),sysDate.getMonth());
-		            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,sysDate.getYear(),sysDate.getMonth());
+		            QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName,year,month);
+		            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,year,month);
 					
 		            if (quotaLimit.getSpLimit()!=null && currentQuotaLimit.getSpLimit()!=null) {
 					    if (quotaLimit.getSpLimit()<=currentQuotaLimit.getSpLimit()) {
