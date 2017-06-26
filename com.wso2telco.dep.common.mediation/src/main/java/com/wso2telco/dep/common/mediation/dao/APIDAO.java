@@ -513,7 +513,7 @@ public class APIDAO {
 
 
 
-	public Integer apiLimit(String serviceProvider, String application, String apiName, String operatorName) {
+	public Integer apiLimit(String serviceProvider, String application, String apiName, String operatorName, Integer year, Integer month) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -559,7 +559,7 @@ public class APIDAO {
 		return apiLimit;
 	}
 
-	public Integer applicationLimit(String serviceProvider, String application, String operatorName) {
+	public Integer applicationLimit(String serviceProvider, String application, String operatorName, Integer year, Integer month) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -606,7 +606,7 @@ public class APIDAO {
 		return applicationLimit;
 	}
 
-	public Integer spLimit(String serviceProvider, String operatorName) {
+	public Integer spLimit(String serviceProvider, String operatorName, Integer year, Integer month) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -655,7 +655,7 @@ public class APIDAO {
 	
 
 
-	public Integer groupByApi(String sp,String app, String api, String operatorName){
+	public Integer groupByApi(String sp,String app, String api, String operatorName, int year, int month){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -664,7 +664,7 @@ public class APIDAO {
 		try {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_RATE_DB);
 			StringBuilder queryBuilder = new StringBuilder();
-			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE SERVICEPROVIDER = ? AND APPLICATIONID = ? AND API = ? ");
+			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE year='"+year+"' AND month='"+month+"' AND SERVICEPROVIDER = ? AND APPLICATIONID = ? AND API = ? ");
 			
 			if (operatorName != null) {
 				queryBuilder.append(" AND  OPERATORNAME = ?");
@@ -697,7 +697,7 @@ public class APIDAO {
 		return currentQuotaLimit;
 	}	
 	
-	public Integer groupByApp(String sp,String app, String operatorName){
+	public Integer groupByApp(String sp,String app, String operatorName, int year, int month){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -706,7 +706,7 @@ public class APIDAO {
 		try {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_RATE_DB);
 			StringBuilder queryBuilder = new StringBuilder();
-			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE SERVICEPROVIDER = ? AND APPLICATIONID = ? ");
+			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE year='"+year+"' AND month='"+month+"' AND SERVICEPROVIDER = ? AND APPLICATIONID = ? ");
 			
 			if (operatorName != null) {
 				queryBuilder.append(" AND  OPERATORNAME = ?");
@@ -736,7 +736,7 @@ public class APIDAO {
 		return currentQuotaLimit;
 	}
 
-	public Integer groupBySp(String sp,String operatorName){
+	public Integer groupBySp(String sp,String operatorName, int year, int month){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -745,7 +745,7 @@ public class APIDAO {
 		try {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_RATE_DB);
 			StringBuilder queryBuilder = new StringBuilder();
-			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE SERVICEPROVIDER = ?");
+			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE year='"+year+"' AND month='"+month+"' AND SERVICEPROVIDER = ?");
 			
 			if (operatorName != null) {
 				queryBuilder.append(" AND  OPERATORNAME = ?");

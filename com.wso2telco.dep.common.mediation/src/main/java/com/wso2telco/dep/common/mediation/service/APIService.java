@@ -158,10 +158,10 @@ public class APIService {
 		return apiDAO.checkWhiteListed(MSISDN, applicationId, subscriptionId,apiId);
 	}
 
-	public Integer groupByApi(String sp, String app, String api, String operatorName) throws Exception {
+	public Integer groupByApi(String sp, String app, String api, String operatorName, int year, int month) throws Exception {
 		Integer currentQuotaLimit=null;
 		try {
-			currentQuotaLimit=apiDAO.groupByApi(sp, app, api, operatorName);
+			currentQuotaLimit=apiDAO.groupByApi(sp, app, api, operatorName,year,month);
  		} catch (Exception e) {
  			e.printStackTrace();
  		}
@@ -169,10 +169,10 @@ public class APIService {
  		return currentQuotaLimit;
 	}
 
-	public Integer groupByApplication(String sp, String app, String operatorName)throws Exception {
+	public Integer groupByApplication(String sp, String app, String operatorName, int year, int month)throws Exception {
 		Integer currentQuotaLimit=null;
 		try {
-			currentQuotaLimit=apiDAO.groupByApp(sp, app, operatorName);
+			currentQuotaLimit=apiDAO.groupByApp(sp, app, operatorName,year,month);
  		} catch (Exception e) {
  			e.printStackTrace();
  		}
@@ -180,10 +180,10 @@ public class APIService {
  		return currentQuotaLimit;
 	}
 
-	public Integer groupBySp(String sp, String operatorName) throws Exception {
+	public Integer groupBySp(String sp, String operatorName, int year, int month) throws Exception {
 		Integer currentQuotaLimit=null;
 		try {
-			currentQuotaLimit=apiDAO.groupBySp(sp, operatorName);
+			currentQuotaLimit=apiDAO.groupBySp(sp, operatorName,year,month);
  		} catch (Exception e) {
  			e.printStackTrace();
  		}
@@ -191,25 +191,25 @@ public class APIService {
  		return currentQuotaLimit;
 	}
 
-	public Integer spLimit(String serviceProvider, String operatorName)  throws Exception{
+	public Integer spLimit(String serviceProvider, String operatorName,Integer year,Integer month)  throws Exception{
 		try {
-			 return apiDAO.spLimit(serviceProvider, operatorName);
+			 return apiDAO.spLimit(serviceProvider, operatorName,year,month);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	public Integer applicationLimit(String serviceProvider, String application,String operatorName) throws Exception {
+	public Integer applicationLimit(String serviceProvider, String application,String operatorName,Integer year,Integer month) throws Exception {
 		try {
-			 return apiDAO.applicationLimit(serviceProvider, application, operatorName);
+			 return apiDAO.applicationLimit(serviceProvider, application, operatorName,year,month);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	public Integer apiLimit(String serviceProvider, String application,String apiName, String operatorName)  throws Exception{
+	public Integer apiLimit(String serviceProvider, String application,String apiName, String operatorName,Integer year,Integer month)  throws Exception{
 		try {
-			 return apiDAO.apiLimit(serviceProvider, application, apiName, operatorName);
+			 return apiDAO.apiLimit(serviceProvider, application, apiName, operatorName,year,month);
 		} catch (Exception e) {
 			throw e;
 		}

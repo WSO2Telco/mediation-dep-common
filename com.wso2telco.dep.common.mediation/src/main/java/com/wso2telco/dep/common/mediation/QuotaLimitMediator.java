@@ -2,6 +2,7 @@ package com.wso2telco.dep.common.mediation;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -48,12 +49,14 @@ public class QuotaLimitMediator extends AbstractMediator {
 			serviceProvider=(String)messageContext.getProperty("USER_ID");
 			application=(String)messageContext.getProperty("APPLICATION_ID");
 			apiName=(String)messageContext.getProperty("API_NAME");
+			Date sysDate=new Date();
+			
 			
 			APIService apiService = new APIService();
 	    	
 				try {
-		            QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName);
-		            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName);
+		            QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName,sysDate.getYear(),sysDate.getMonth());
+		            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,sysDate.getYear(),sysDate.getMonth());
 					
 		            if (quotaLimit.getSpLimit()!=null && currentQuotaLimit.getSpLimit()!=null) {
 					    if (quotaLimit.getSpLimit()<=currentQuotaLimit.getSpLimit()) {
@@ -123,38 +126,38 @@ public class QuotaLimitMediator extends AbstractMediator {
     	}
 	
 	@SuppressWarnings("null")
-	public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName) throws Exception {
+	public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName, int year, int month) throws Exception {
 		
 		QuotaLimits currentQuotaLimit=new QuotaLimits();
 		APIService apiService = new APIService();
 		
 		if (sp!=null && app!=null && api!=null) {
-			currentQuotaLimit.setApiLimit(apiService.groupByApi(sp,app, api, operatorName));
+			currentQuotaLimit.setApiLimit(apiService.groupByApi(sp,app, api, operatorName,year,month));
 		}
 		if (sp!=null && app!=null && api==null){
-			currentQuotaLimit.setAppLimit(apiService.groupByApplication(sp,app,operatorName));
+			currentQuotaLimit.setAppLimit(apiService.groupByApplication(sp,app,operatorName,year,month));
 		}
 		if (sp!=null && app==null && api==null) {
-			currentQuotaLimit.setSpLimit(apiService.groupBySp(sp,operatorName));
+			currentQuotaLimit.setSpLimit(apiService.groupBySp(sp,operatorName,year,month));
 		}
 		return currentQuotaLimit;		
 	}
 	
-	public QuotaLimits checkQuotaLimit(String serviceProvider, String application, String apiName, String operatorName) throws Exception {
+	public QuotaLimits checkQuotaLimit(String serviceProvider, String application, String apiName, String operatorName,Integer year,Integer month) throws Exception {
 
 		APIService apiService = new APIService();
 		QuotaLimits quotaLimits = new QuotaLimits();
 
 		if (serviceProvider != null) {
-			quotaLimits.setSpLimit(apiService.spLimit(serviceProvider, operatorName));
+			quotaLimits.setSpLimit(apiService.spLimit(serviceProvider, operatorName,year,month));
 		}
 
 		if (serviceProvider != null && application != null) {
-			quotaLimits.setAppLimit(apiService.applicationLimit(serviceProvider, application, operatorName));
+			quotaLimits.setAppLimit(apiService.applicationLimit(serviceProvider, application, operatorName,year,month));
 		}
 
 		if (serviceProvider != null && application != null && apiName != null) {
-			quotaLimits.setApiLimit(apiService.apiLimit(serviceProvider, application, apiName, operatorName));
+			quotaLimits.setApiLimit(apiService.apiLimit(serviceProvider, application, apiName, operatorName,year,month));
 		}
 
 		return quotaLimits;
