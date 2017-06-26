@@ -513,7 +513,7 @@ public class APIDAO {
 
 
 
-	public int apiLimit(String serviceProvider, String application, String apiName, String operatorName) {
+	public Integer apiLimit(String serviceProvider, String application, String apiName, String operatorName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -559,7 +559,7 @@ public class APIDAO {
 		return apiLimit;
 	}
 
-	public int applicationLimit(String serviceProvider, String application, String operatorName) {
+	public Integer applicationLimit(String serviceProvider, String application, String operatorName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -606,7 +606,7 @@ public class APIDAO {
 		return applicationLimit;
 	}
 
-	public int spLimit(String serviceProvider, String operatorName) {
+	public Integer spLimit(String serviceProvider, String operatorName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -655,7 +655,7 @@ public class APIDAO {
 	
 
 
-	public int groupByApi(String sp,String app, String api, String operatorName){
+	public Integer groupByApi(String sp,String app, String api, String operatorName){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -696,7 +696,7 @@ public class APIDAO {
 		return currentQuotaLimit;
 	}	
 	
-	public int groupByApp(String sp,String app, String operatorName){
+	public Integer groupByApp(String sp,String app, String operatorName){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -735,7 +735,7 @@ public class APIDAO {
 		return currentQuotaLimit;
 	}
 
-	public int groupBySp(String sp,String operatorName){
+	public Integer groupBySp(String sp,String operatorName){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

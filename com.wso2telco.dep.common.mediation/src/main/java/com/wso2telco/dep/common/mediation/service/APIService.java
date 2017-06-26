@@ -191,7 +191,7 @@ public class APIService {
  		return currentQuotaLimit;
 	}
 
-	public int spLimit(String serviceProvider, String operatorName)  throws Exception{
+	public Integer spLimit(String serviceProvider, String operatorName)  throws Exception{
 		try {
 			 return apiDAO.spLimit(serviceProvider, operatorName);
 		} catch (Exception e) {
@@ -199,7 +199,7 @@ public class APIService {
 		}
 	}
 
-	public int applicationLimit(String serviceProvider, String application,String operatorName) throws Exception {
+	public Integer applicationLimit(String serviceProvider, String application,String operatorName) throws Exception {
 		try {
 			 return apiDAO.applicationLimit(serviceProvider, application, operatorName);
 		} catch (Exception e) {
@@ -207,7 +207,7 @@ public class APIService {
 		}
 	}
 
-	public int apiLimit(String serviceProvider, String application,String apiName, String operatorName)  throws Exception{
+	public Integer apiLimit(String serviceProvider, String application,String apiName, String operatorName)  throws Exception{
 		try {
 			 return apiDAO.apiLimit(serviceProvider, application, apiName, operatorName);
 		} catch (Exception e) {
