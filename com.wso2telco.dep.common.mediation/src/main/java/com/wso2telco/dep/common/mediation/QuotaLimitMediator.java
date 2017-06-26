@@ -54,18 +54,24 @@ public class QuotaLimitMediator extends AbstractMediator {
 				try {
 		            QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName);
 		            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName);
+					
+		            if (quotaLimit.getSpLimit()!=null && currentQuotaLimit.getSpLimit()!=null) {
+					    if (quotaLimit.getSpLimit()<=currentQuotaLimit.getSpLimit()) {
+					        setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded (Current limit : "+currentQuotaLimit.getSpLimit()+")","QuotaLimit","400","POLICY_EXCEPTION");
+						}	
+					}
 
-		            if (quotaLimit.getSpLimit()<=currentQuotaLimit.getSpLimit()) {
-		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded (Current limit : "+currentQuotaLimit.getSpLimit()+")","QuotaLimit","400","POLICY_EXCEPTION");
-					}
+		            if (quotaLimit.getAppLimit()!=null && currentQuotaLimit.getAppLimit()!=null){
+			            if (quotaLimit.getAppLimit()<=currentQuotaLimit.getAppLimit()) {
+			                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Application has been exceeded (Current limit : "+currentQuotaLimit.getAppLimit()+")","QuotaLimit","400","POLICY_EXCEPTION");
+						}
+		            }
 		            
-		            if (quotaLimit.getAppLimit()<=currentQuotaLimit.getAppLimit()) {
-		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Application has been exceeded (Current limit : "+currentQuotaLimit.getAppLimit()+")","QuotaLimit","400","POLICY_EXCEPTION");
-					}
-		            
-		            if (quotaLimit.getApiLimit()<=currentQuotaLimit.getApiLimit()) {
-		                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this API has been exceeded (Current limit : "+currentQuotaLimit.getApiLimit()+")","QuotaLimit","400","POLICY_EXCEPTION");
-					}
+		            if (quotaLimit.getApiLimit()!=null && currentQuotaLimit.getApiLimit()!=null){
+			            if (quotaLimit.getApiLimit()<=currentQuotaLimit.getApiLimit()) {
+			                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this API has been exceeded (Current limit : "+currentQuotaLimit.getApiLimit()+")","QuotaLimit","400","POLICY_EXCEPTION");
+						}
+		            }
 
 		        } catch (Exception e) {
 		            log.error("Error occurred while calling QuotaLimitCheckMediator" ,e);
@@ -96,16 +102,17 @@ public class QuotaLimitMediator extends AbstractMediator {
     	         String jwtbody = new String(valueDecoded, StandardCharsets.UTF_8);
     	         JSONObject jwtobj = new JSONObject(jwtbody);
     	         Iterator<String> keys = jwtobj.keys();
-    	         while( keys.hasNext() ) {
-    	            String key = (String)keys.next();
-    	            String[] allowedRoles = jwtobj.get(key).toString().split(",");
+    	         String roleClaim=jwtobj.get("http://wso2.org/claims/role").toString();
+    	         if( keys.hasNext() && roleClaim!=null) {
+    	            String[] allowedRoles = roleClaim.split(",");
     	            for (int i = 0; i < allowedRoles.length; i++) {
     	               if (allowedRoles[i].contains(AttributeName.QUOTA_ENABLER)) {
     	                  quotaEnabler = true;
     	                  break;
     	               }
     	            }
-    	            break;
+    	         }else{
+    	        	 setErrorInContext(context,"SVC0001","A service error occurred. Error code is %1","Please check the quota enabler role.","500", "SERVICE_EXCEPTION");
     	         }
     	      }
     	   } catch (Exception e) {

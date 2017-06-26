@@ -541,7 +541,7 @@ public class APIDAO {
 
 			if (operatorName != null) {
 
-				preparedStatement.setString(3, operatorName.toLowerCase());
+				preparedStatement.setString(4, operatorName.toLowerCase());
 			}
 
 			resultSet = preparedStatement.executeQuery();
@@ -687,6 +687,7 @@ public class APIDAO {
 			while (resultSet.next()) {
 				currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
 			}
+			currentQuotaLimit = (currentQuotaLimit!=null) ? (currentQuotaLimit) : (0);
 			
 		} catch (Exception e) {
 			log.error("Error occurred while retrieving quota limit in SP :", e);
@@ -726,7 +727,7 @@ public class APIDAO {
 			while (resultSet.next()) {
 				currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
 			}
-			
+			currentQuotaLimit = (currentQuotaLimit!=null) ? (currentQuotaLimit) : (0);
 		} catch (Exception e) {
 			log.error("Error occurred while retrieving quota limit in SP :", e);
 		} finally {
@@ -764,7 +765,7 @@ public class APIDAO {
 			while (resultSet.next()) {
 				currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
 			}
-			
+			currentQuotaLimit = (currentQuotaLimit!=null) ? (currentQuotaLimit) : (0);
 		} catch (Exception e) {
 			log.error("Error occurred while retrieving quota limit in SP :", e);
 		} finally {
