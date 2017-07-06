@@ -517,7 +517,7 @@ public class APIDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		int apiLimit = 0;
+		Integer apiLimit = null;
 
 		try {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
@@ -563,7 +563,7 @@ public class APIDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		int applicationLimit = 0;
+		Integer applicationLimit = null;
 
 		try {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
@@ -610,7 +610,7 @@ public class APIDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		int spLimit = 0;
+		Integer spLimit = null;
 
 		try {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
@@ -687,8 +687,7 @@ public class APIDAO {
 			while (resultSet.next()) {
 				currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
 			}
-			currentQuotaLimit = (currentQuotaLimit!=null) ? (currentQuotaLimit) : (0);
-			
+
 		} catch (Exception e) {
 			log.error("Error occurred while retrieving quota limit in SP :", e);
 		} finally {
@@ -727,7 +726,7 @@ public class APIDAO {
 			while (resultSet.next()) {
 				currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
 			}
-			currentQuotaLimit = (currentQuotaLimit!=null) ? (currentQuotaLimit) : (0);
+
 		} catch (Exception e) {
 			log.error("Error occurred while retrieving quota limit in SP :", e);
 		} finally {
@@ -765,7 +764,7 @@ public class APIDAO {
 			while (resultSet.next()) {
 				currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
 			}
-			currentQuotaLimit = (currentQuotaLimit!=null) ? (currentQuotaLimit) : (0);
+
 		} catch (Exception e) {
 			log.error("Error occurred while retrieving quota limit in SP :", e);
 		} finally {
