@@ -543,7 +543,7 @@ public class APIDAO {
 
 				preparedStatement.setString(4, operatorName.toLowerCase());
 			}
-
+			log.debug("apiLimit ==========================>"+preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
@@ -590,7 +590,7 @@ public class APIDAO {
 
 				preparedStatement.setString(3, operatorName.toLowerCase());
 			}
-
+			log.debug("applicationLimit ==========================>"+preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
@@ -636,7 +636,7 @@ public class APIDAO {
 
 				preparedStatement.setString(2, operatorName.toLowerCase());
 			}
-
+			log.debug("spLimit ==========================>"+preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
@@ -682,7 +682,7 @@ public class APIDAO {
 			if (operatorName != null) {
 				preparedStatement.setString(4, operatorName.toUpperCase());
 			}
-			
+			log.debug("group by API ==========================>"+preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
@@ -721,7 +721,7 @@ public class APIDAO {
 			if (operatorName != null) {
 				preparedStatement.setString(3, operatorName.toUpperCase());
 			}
-			
+			log.debug("group by APPLICATIONID ==========================>"+preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
@@ -759,7 +759,7 @@ public class APIDAO {
 			if (operatorName != null) {
 				preparedStatement.setString(2, operatorName.toUpperCase());
 			}
-			
+			log.debug("group by SERVICEPROVIDER ==========================>"+preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));

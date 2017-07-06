@@ -63,7 +63,7 @@ public class QuotaLimitMediator extends AbstractMediator {
 	    	
 				try {
 		            QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName,year,month);
-		            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,year,month);
+		            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,year,month,quotaLimit);
 					Integer spLimit=currentQuotaLimit.getSpLimit();
 		            if (quotaLimit.getSpLimit()!=null && spLimit!=null) {
 					    if (quotaLimit.getSpLimit()<=spLimit) {	
@@ -132,18 +132,18 @@ public class QuotaLimitMediator extends AbstractMediator {
     	}
 	
 	@SuppressWarnings("null")
-	public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName, int year, int month) throws Exception {
+	public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName, int year, int month, QuotaLimits quotaLimits) throws Exception {
 		
 		QuotaLimits currentQuotaLimit=new QuotaLimits();
 		APIService apiService = new APIService();
 		
-		if (sp!=null && app!=null && api!=null) {
+		if (quotaLimits.getApiLimit() != null) {
 			currentQuotaLimit.setApiLimit(apiService.groupByApi(sp,app, api, operatorName,year,month));
 		}
-		if (sp!=null && app!=null && api==null){
+		if (quotaLimits.getAppLimit() !=null){
 			currentQuotaLimit.setAppLimit(apiService.groupByApplication(sp,app,operatorName,year,month));
 		}
-		if (sp!=null && app==null && api==null) {
+		if (quotaLimits.getSpLimit() !=null) {
 			currentQuotaLimit.setSpLimit(apiService.groupBySp(sp,operatorName,year,month));
 		}
 		return currentQuotaLimit;		
