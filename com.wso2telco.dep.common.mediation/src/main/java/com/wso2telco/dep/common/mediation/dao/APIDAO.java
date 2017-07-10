@@ -667,9 +667,9 @@ public class APIDAO {
 			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE year='"+year+"' AND month='"+month+"' AND SERVICEPROVIDER = ? AND APPLICATIONID = ? AND API = ? ");
 			
 			if (operatorName != null) {
-				queryBuilder.append(" AND  OPERATORNAME = ?");
+				queryBuilder.append(" AND  DIRECTION = 'sb' ");
 			} else {
-				queryBuilder.append(" AND  OPERATORNAME is null");
+				queryBuilder.append(" AND  DIRECTION = 'nb' ");
 			}
 
 			queryBuilder.append(" group by API");
@@ -679,9 +679,9 @@ public class APIDAO {
 			preparedStatement.setString(2, app);
 			preparedStatement.setString(3, api);
 
-			if (operatorName != null) {
+			/*if (operatorName != null) {
 				preparedStatement.setString(4, operatorName.toUpperCase());
-			}
+			}*/
 			log.debug("group by API ==========================>"+preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -708,9 +708,9 @@ public class APIDAO {
 			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE year='"+year+"' AND month='"+month+"' AND SERVICEPROVIDER = ? AND APPLICATIONID = ? ");
 			
 			if (operatorName != null) {
-				queryBuilder.append(" AND  OPERATORNAME = ?");
+				queryBuilder.append(" AND  DIRECTION = 'sb' ");
 			} else {
-				queryBuilder.append(" AND  OPERATORNAME is null");
+				queryBuilder.append(" AND  DIRECTION = 'nb' ");
 			}
 
 			queryBuilder.append(" group by APPLICATIONID");
@@ -718,9 +718,9 @@ public class APIDAO {
 			preparedStatement.setString(1, sp.toLowerCase());
 			preparedStatement.setString(2, app);
 
-			if (operatorName != null) {
+			/*if (operatorName != null) {
 				preparedStatement.setString(3, operatorName.toUpperCase());
-			}
+			}*/
 			log.debug("group by APPLICATIONID ==========================>"+preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -747,18 +747,18 @@ public class APIDAO {
 			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE year='"+year+"' AND month='"+month+"' AND SERVICEPROVIDER = ?");
 			
 			if (operatorName != null) {
-				queryBuilder.append(" AND  OPERATORNAME = ?");
+				queryBuilder.append(" AND  DIRECTION = 'sb' ");
 			} else {
-				queryBuilder.append(" AND  OPERATORNAME is null");
+				queryBuilder.append(" AND  DIRECTION = 'nb' ");
 			}
 
 			queryBuilder.append(" group by SERVICEPROVIDER");
 			preparedStatement = connection.prepareStatement(queryBuilder.toString());
 			preparedStatement.setString(1, sp.toLowerCase());
 
-			if (operatorName != null) {
+			/*if (operatorName != null) {
 				preparedStatement.setString(2, operatorName.toUpperCase());
-			}
+			}*/
 			log.debug("group by SERVICEPROVIDER ==========================>"+preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
