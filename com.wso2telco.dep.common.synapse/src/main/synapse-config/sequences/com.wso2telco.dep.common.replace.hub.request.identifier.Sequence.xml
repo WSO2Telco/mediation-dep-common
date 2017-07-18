@@ -2,10 +2,14 @@
 <sequence
   name="com.wso2telco.dep.common.replace.hub.request.identifier.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-  <script language="js"><![CDATA[var requestIdentifier = mc.getProperty("requestIdentifier");
-		var gatewayResourcePath = String(mc.getProperty("GATEWAY_RESOURCE_PATH"));
-		var replaceValue = "requestIdentifier=";
-		replaceValue = replaceValue.concat(requestIdentifier);		 
-		var changedGatewayResourcePath = gatewayResourcePath.replace(new RegExp('(requestIdentifier=)[^\&]+'), replaceValue);
-		mc.setProperty("GATEWAY_RESOURCE_PATH", changedGatewayResourcePath);]]></script>
+  <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+    <property name="script" value="
+      var requestIdentifier = mc.getProperty('requestIdentifier');
+      var gatewayResourcePath = String(mc.getProperty('GATEWAY_RESOURCE_PATH'));
+      var replaceValue = 'requestIdentifier=';
+      replaceValue = replaceValue.concat(requestIdentifier);
+      var changedGatewayResourcePath = gatewayResourcePath.replace(new RegExp('(requestIdentifier=)[^\&amp;]+'), replaceValue);
+      mc.setProperty('GATEWAY_RESOURCE_PATH', changedGatewayResourcePath);
+    "/>
+  </class>
 </sequence>
