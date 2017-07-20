@@ -9,7 +9,7 @@
     <with-param name="direction" value="sb"/>
   </call-template>
   <!-- publishing data -->
-  <call-template target="com.wso2telco.dep.common.main.request.datapublisher.Template">
+  <call-template target="com.wso2telco.dep.common.requestPublisher.Template">
     <with-param name="msisdn" value="{$ctx:MSISDN}"/>
     <with-param name="direction" value="sb"/>
   </call-template>
@@ -25,7 +25,7 @@
       <with-param name="direction" value="RESPONSEIN"/>
   </call-template>
   <!-- publishing data -->
-  <call-template target="com.wso2telco.dep.common.main.response.datapublisher.Template">
+  <call-template target="com.wso2telco.dep.common.responsePublisher.Template">
     <with-param name="msisdn" value="{$ctx:MSISDN}"/>
     <with-param name="direction" value="sb"/>
   </call-template>

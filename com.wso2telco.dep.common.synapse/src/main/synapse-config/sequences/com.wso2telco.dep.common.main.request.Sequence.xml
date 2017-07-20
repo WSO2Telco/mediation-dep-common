@@ -13,7 +13,7 @@
   </call-template>
 
   <!-- data publishing -->
-  <call-template target="com.wso2telco.dep.common.main.request.datapublisher.Template">
+  <call-template target="com.wso2telco.dep.common.requestPublisher.Template">
     <with-param name="msisdn" value="{$ctx:MSISDN}"/>
     <with-param name="direction" value="nb"/>
   </call-template>

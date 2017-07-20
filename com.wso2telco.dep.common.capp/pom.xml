@@ -20,7 +20,9 @@
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.token.pool.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.token.pool.retriever.Sequence>
     <com.wso2telco.dep.common.endpoint_._com.wso2telco.dep.common.token.pool.service.Endpoint>capp/EnterpriseServiceBus</com.wso2telco.dep.common.endpoint_._com.wso2telco.dep.common.token.pool.service.Endpoint>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.select.token.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.select.token.Sequence>
+    <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.requestPublisher.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.requestPublisher.Template>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.call.endpoint.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.call.endpoint.Sequence>
+    <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.responsePublisher.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.responsePublisher.Template>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.requestIdentifier.generator.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.requestIdentifier.generator.Template>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.operator.endpoint.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.operator.endpoint.retriever.Sequence>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.default.token.refresh.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.default.token.refresh.Sequence>
@@ -296,6 +298,18 @@
     <dependency>
       <groupId>com.wso2telco.dep.common.sequence</groupId>
       <artifactId>com.wso2telco.dep.common.call.blocking.endpoint.Sequence</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.template</groupId>
+      <artifactId>com.wso2telco.dep.common.requestPublisher.Template</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.template</groupId>
+      <artifactId>com.wso2telco.dep.common.responsePublisher.Template</artifactId>
       <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
