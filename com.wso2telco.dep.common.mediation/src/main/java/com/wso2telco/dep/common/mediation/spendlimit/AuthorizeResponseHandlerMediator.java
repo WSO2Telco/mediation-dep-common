@@ -61,13 +61,11 @@ public class AuthorizeResponseHandlerMediator extends AbstractMediator {
                 messageContext.getProperty(MSISDNConstants.USER_MSISDN));
 
         boolean isPaymentReq = false;
-        String paymentType=null;
         JSONObject paymentRes = null;
 
         //noinspection Since15
         if (retStr != null && !retStr.isEmpty()) {
 
-            JSONObject exception = null;
             JSONObject response = null;
             try {
                 response  = new JSONObject(retStr);
@@ -75,33 +73,9 @@ public class AuthorizeResponseHandlerMediator extends AbstractMediator {
                 messageContext.setProperty(DataPublisherConstants.CHARGE_AMOUNT,paymentRes.optJSONObject("paymentAmount").optJSONObject("chargingInformation").opt("amount"));
                 
                 if (paymentRes != null) {
-                    if (paymentRes.has("serverReferenceCode")) {
-                        messageContext.setProperty(DataPublisherConstants.OPERATOR_REF,
-                                paymentRes.optString("serverReferenceCode"));
-                    } else if (paymentRes.has("originalServerReferenceCode")) {
-                        messageContext.setProperty(DataPublisherConstants.OPERATOR_REF,
-                                paymentRes.optString("originalServerReferenceCode"));
-                    }
                     isPaymentReq = true;
                 }
 
-                exception = response.optJSONObject("requestError");
-                if (exception != null) {
-                    JSONObject exception_body = exception.optJSONObject("serviceException");
-                    if (exception_body == null) {
-                        exception_body = exception.optJSONObject("policyException");
-                    }
-
-                    if (exception_body != null) {
-                        log.info("exception id: " + exception_body.optString("messageId"));
-                        log.info("exception message: " + exception_body.optString("text"));
-                        messageContext.setProperty(DataPublisherConstants.EXCEPTION_ID,
-                                exception_body.optString("messageId"));
-                        messageContext.setProperty(DataPublisherConstants.EXCEPTION_MESSAGE,
-                                exception_body.optString("text"));
-                        messageContext.setProperty(DataPublisherConstants.RESPONSE, "1");
-                    }
-                }
             } catch (JSONException e) {
                 log.error("Error in converting response to json. " + e.getMessage(), e);
             }
