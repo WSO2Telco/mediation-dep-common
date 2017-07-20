@@ -5,6 +5,15 @@
     expression="fn:concat('Bearer ',get-property('ACCESS_TOKEN'))"
     name="Authorization" scope="transport" type="STRING"/>
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+  <!-- quota limit calculations -->
+  <call-template target="com.wso2telco.dep.common.quota.limit.Template">
+    <with-param name="direction" value="sb"/>
+  </call-template>
+  <!-- publishing data -->
+  <call-template target="com.wso2telco.dep.common.main.request.datapublisher.Template">
+    <with-param name="msisdn" value="{$ctx:MSISDN}"/>
+    <with-param name="direction" value="sb"/>
+  </call-template>
   <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
       <with-param name="direction" value="REQUESTOUT"/>
   </call-template>
@@ -15,5 +24,10 @@
   </call>
   <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
       <with-param name="direction" value="RESPONSEIN"/>
+  </call-template>
+  <!-- publishing data -->
+  <call-template target="com.wso2telco.dep.common.main.response.datapublisher.Template">
+    <with-param name="msisdn" value="{$ctx:MSISDN}"/>
+    <with-param name="direction" value="sb"/>
   </call-template>
 </sequence>
