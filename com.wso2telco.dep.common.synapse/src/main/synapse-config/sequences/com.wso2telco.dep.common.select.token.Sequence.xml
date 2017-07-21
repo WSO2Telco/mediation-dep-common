@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.common.select.token.Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-  <property
-    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
-    name="mediationConfig" scope="default" type="OM"/>
+  <!-- copy incoming http method -->
+  <property expression="get-property('HTTP_METHOD')"
+            name="INCOMING_HTTP_METHOD" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <!-- copy original request body -->
+  <property expression="json-eval($.)" name="INCOMING_REQUEST_BODY" scope="default" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <!-- copy incoming resource -->
+  <property expression="get-property('RESOURCE')"
+            name="INCOMING_RESOURCE" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <!-- remove rest url postfix -->
+  <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
   <property expression="$ctx:mediationConfig//tokenPoolService/enable"
-    name="TOKEN_POOL_SERVICE_ENABLED" scope="default" type="STRING"/>
+            name="TOKEN_POOL_SERVICE_ENABLED" scope="default" type="STRING"/>
   <filter regex="true" source="get-property('TOKEN_POOL_SERVICE_ENABLED')">
     <then>
       <property expression="$ctx:mediationConfig//tokenPoolService/url"
-        name="TOKEN_POOL_SERVICE_URL" scope="default" type="STRING"/>
+                name="TOKEN_POOL_SERVICE_URL" scope="default" type="STRING"/>
       <sequence key="com.wso2telco.dep.common.token.pool.retriever.Sequence"/>
     </then>
     <else>
       <sequence key="com.wso2telco.dep.common.default.token.retriever.Sequence"/>
     </else>
   </filter>
+  <!-- set http method to incoming http method -->
+  <property expression="get-property('INCOMING_HTTP_METHOD')"
+            name="HTTP_METHOD" scope="axis2" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <!-- set original request body -->
+  <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+    <property name="script" value="
+        var payload = mc.getProperty('INCOMING_REQUEST_BODY');
+        mc.setPayloadJSON(payload);
+    "/>
+  </class>
+  <!-- set rest url postfix -->
+  <property name="REST_URL_POSTFIX"
+            expression="get-property('INCOMING_RESOURCE')" scope="axis2" type="STRING"/>
 </sequence>

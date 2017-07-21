@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template name="com.wso2telco.dep.common.quotaLimit.Template" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="direction"/>
+    <parameter name="skipErrorSeq"/>
+    <sequence>
+        <property expression="$ctx:mediationConfig//quota_limit_enabled" name="quotaLimitEnabled" scope="default" type="STRING"/>
+        <filter regex="^(?i)(true|false)$" source="$ctx:quotaLimitEnabled">
+            <then/>
+            <else>
+                <property name="quotaLimitEnabled" scope="default" type="STRING" value="false"/>
+            </else>
+        </filter>
+        <filter regex="^(?i)(true)$" source="$ctx:quotaLimitEnabled">
+            <then>
+                <property expression="$func:direction" name="direction" type="STRING"/>
+                <class name="com.wso2telco.dep.common.mediation.QuotaLimitMediator"/>
+                <!-- go to error sequence when necessary -->
+                <filter regex="true" source="$func:skipErrorSeq">
+                    <then/>
+                    <else >
+                        <filter regex="true" source="get-property('INTERNAL_ERROR')">
+                            <then>
+                                <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence" />
+                            </then>
+                            <else />
+                        </filter>
+                    </else>
+                </filter>
+            </then>
+            <else/>
+        </filter>
+    </sequence>
+</template>

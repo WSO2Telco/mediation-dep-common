@@ -41,5 +41,10 @@
   <call-template target="com.wso2telco.dep.common.loggingExtension.Template">
       <with-param name="direction" value="RESPONSEOUT"/>
   </call-template>
+  <!-- data publishing -->
+  <call-template target="com.wso2telco.dep.common.responsePublisher.Template">
+      <with-param name="msisdn" value="{$ctx:MSISDN}"/>
+      <with-param name="direction" value="nb"/>
+  </call-template>
   <respond/>
 </sequence>

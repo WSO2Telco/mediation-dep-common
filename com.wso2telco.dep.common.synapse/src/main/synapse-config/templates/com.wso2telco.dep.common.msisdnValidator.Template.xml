@@ -7,22 +7,21 @@
   <!-- In case of validating an array use a for each mediator in your sequence and call this template with each of the msisdn array element.
     Specify paramArray just to create the message body of the error response -->
   <sequence>
-    <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
     <property expression="$ctx:mediationConfig//msisdn_regex" name="msisdnRegex" scope="default" type="STRING"/>
     <property expression="$ctx:mediationConfig//msisdn_regex_num_grp" name="msisdnRegexGroup" scope="default" type="STRING"/>
     <property expression="$func:paramValue" name="paramValue" scope="default" type="STRING"/>
     <property expression="$trp:APPLICATION_ID" name="api.ut.application.id" scope="default" type="STRING"/>
-    
-    <script language="js">
-    	<![CDATA[
-    		var isValidMsisdn = false;
-	    	var paramValue = mc.getProperty("paramValue");
-			var regExp = new RegExp(mc.getProperty("msisdnRegex"));
-				
-			var isValidMsisdn = regExp.test(paramValue);
-			mc.setProperty("isValidMsisdn", isValidMsisdn);
-		]]>
-	</script>
+
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+      <property name="script" value="
+        var isValidMsisdn = false;
+        var paramValue = mc.getProperty('paramValue');
+        var regExp = new RegExp(mc.getProperty('msisdnRegex'));
+
+        var isValidMsisdn = regExp.test(paramValue);
+        mc.setProperty('isValidMsisdn', isValidMsisdn);
+      "/>
+    </class>
 	
     <filter regex="^false$" source="$ctx:isValidMsisdn">
       <then>
