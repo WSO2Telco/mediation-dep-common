@@ -8,7 +8,7 @@
   <sequence key="com.wso2telco.dep.common.main.property.Sequence"/>
 
   <!-- quota limit calculations -->
-  <call-template target="com.wso2telco.dep.common.quota.limit.Template">
+  <call-template target="com.wso2telco.dep.common.quotaLimit.Template">
     <with-param name="direction" value="nb"/>
   </call-template>
 

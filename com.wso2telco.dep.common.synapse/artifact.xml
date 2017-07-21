@@ -122,4 +122,7 @@
     <artifact name="com.wso2telco.dep.common.responsePublisher.Template" groupId="com.wso2telco.dep.common.template" version="3.0.0-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/templates/com.wso2telco.dep.common.responsePublisher.Template.xml</file>
     </artifact>
+    <artifact name="com.wso2telco.dep.common.quotaLimit.Template" groupId="com.wso2telco.dep.common.template" version="3.0.0-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/com.wso2telco.dep.common.quotaLimit.Template.xml</file>
+    </artifact>
 </artifacts>

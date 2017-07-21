@@ -6,7 +6,7 @@
     name="Authorization" scope="transport" type="STRING"/>
   <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
   <!-- quota limit calculations -->
-  <call-template target="com.wso2telco.dep.common.quota.limit.Template">
+  <call-template target="com.wso2telco.dep.common.quotaLimit.Template">
     <with-param name="direction" value="sb"/>
   </call-template>
   <!-- publishing data -->

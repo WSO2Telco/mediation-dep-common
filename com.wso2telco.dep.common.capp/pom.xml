@@ -50,6 +50,7 @@
     <com.wso2telco.dep.common.template_._mediation.common.doubleGEZeroValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.doubleGEZeroValidation.Template>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.response.unexpectedError.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.response.unexpectedError.Sequence>
     <com.wso2telco.dep.common.resource_._mediationConfig_xml>capp/EnterpriseServiceBus</com.wso2telco.dep.common.resource_._mediationConfig_xml>
+    <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.quotaLimit.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.quotaLimit.Template>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.channelValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.channelValidation.Template>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.serviceCode.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.serviceCode.retriever.Sequence>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.call.blocking.endpoint.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.call.blocking.endpoint.Sequence>
@@ -310,6 +311,12 @@
     <dependency>
       <groupId>com.wso2telco.dep.common.template</groupId>
       <artifactId>com.wso2telco.dep.common.responsePublisher.Template</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.template</groupId>
+      <artifactId>com.wso2telco.dep.common.quotaLimit.Template</artifactId>
       <version>3.0.0-SNAPSHOT</version>
       <type>xml</type>
     </dependency>
