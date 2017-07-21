@@ -29,7 +29,6 @@
 	    			</else>
 	    		</filter>
 	    	
-				<property  expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>	
 	    		<property name="hubURLPrefix" expression="$ctx:mediationConfig//huburl" scope="default" type="STRING"/>
 	    		
 	    		<filter xpath="boolean($ctx:hubURLPrefix)">

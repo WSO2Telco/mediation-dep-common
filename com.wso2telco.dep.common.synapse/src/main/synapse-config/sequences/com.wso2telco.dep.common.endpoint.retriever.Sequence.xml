@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.common.endpoint.retriever.Sequence"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-  <property
-    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
-    name="mediationConfig" scope="default" type="OM"/>
   <property expression="$ctx:mediationConfig//searchOperatorOnHeader"
     name="SEARCH_OPERATOR_ON_HEADER" scope="default" type="STRING"/>
   <class name="com.wso2telco.dep.common.mediation.EndpointRetrieverMediator"/>

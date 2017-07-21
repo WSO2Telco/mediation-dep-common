@@ -10,9 +10,6 @@
             name="INCOMING_RESOURCE" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
   <!-- remove rest url postfix -->
   <property action="remove" name="REST_URL_POSTFIX" scope="axis2"/>
-  <property
-          expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
-          name="mediationConfig" scope="default" type="OM"/>
   <property expression="$ctx:mediationConfig//tokenPoolService/enable"
             name="TOKEN_POOL_SERVICE_ENABLED" scope="default" type="STRING"/>
   <filter regex="true" source="get-property('TOKEN_POOL_SERVICE_ENABLED')">

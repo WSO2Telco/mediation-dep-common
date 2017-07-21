@@ -3,7 +3,6 @@
     <parameter name="msisdn"/>
     <parameter name="direction"/>
     <sequence>
-        <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
         <property expression="$ctx:mediationConfig//data_publishing_enabled" name="dataPublishingEnabled" scope="default" type="STRING"/>
 
         <filter regex="^(?i)(true|false)$" source="$ctx:dataPublishingEnabled">

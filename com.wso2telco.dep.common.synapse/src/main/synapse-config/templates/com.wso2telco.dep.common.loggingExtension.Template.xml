@@ -2,7 +2,6 @@
 <template name="com.wso2telco.dep.common.loggingExtension.Template" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="direction"/>
     <sequence>
-        <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
         <property expression="$ctx:mediationConfig//payload_logging_enabled" name="payloadLoggingEnabled" scope="default" type="STRING"/>
         <property expression="fn:normalize-space($ctx:payloadLoggingEnabled)" name="payloadLoggingEnabled" scope="default" type="STRING"/>
         <property expression="fn:normalize-space($func:direction)" name="direction" scope="default" type="STRING"/>

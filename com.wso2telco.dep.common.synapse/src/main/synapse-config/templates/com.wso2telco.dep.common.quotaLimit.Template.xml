@@ -3,7 +3,6 @@
     <parameter name="direction"/>
     <parameter name="skipErrorSeq"/>
     <sequence>
-        <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')" name="mediationConfig" scope="default" type="OM"/>
         <property expression="$ctx:mediationConfig//quota_limit_enabled" name="quotaLimitEnabled" scope="default" type="STRING"/>
         <filter regex="^(?i)(true|false)$" source="$ctx:quotaLimitEnabled">
             <then/>
