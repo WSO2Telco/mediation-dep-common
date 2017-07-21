@@ -162,4 +162,61 @@ public class APIService {
 	public int executeCustomInsertQueryAndGetGeneratedPrimaryKey (String insertQuery) throws Exception {
 		return apiDAO.executeCustomInsertQueryAndGetGeneratedPrimaryKey(insertQuery);
 	}
+
+	public Integer groupByApi(String sp, String app, String api, String operatorName, int year, int month) throws Exception {
+		Integer currentQuotaLimit=null;
+		try {
+			currentQuotaLimit=apiDAO.groupByApi(sp, app, api, operatorName,year,month);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return currentQuotaLimit;
+	}
+
+	public Integer groupByApplication(String sp, String app, String operatorName, int year, int month)throws Exception {
+		Integer currentQuotaLimit=null;
+		try {
+			currentQuotaLimit=apiDAO.groupByApp(sp, app, operatorName,year,month);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return currentQuotaLimit;
+	}
+
+	public Integer groupBySp(String sp, String operatorName, int year, int month) throws Exception {
+		Integer currentQuotaLimit=null;
+		try {
+			currentQuotaLimit=apiDAO.groupBySp(sp, operatorName,year,month);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return currentQuotaLimit;
+	}
+
+	public Integer spLimit(String serviceProvider, String operatorName,Integer year,Integer month)  throws Exception{
+		try {
+			return apiDAO.spLimit(serviceProvider, operatorName,year,month);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	public Integer applicationLimit(String serviceProvider, String application,String operatorName,Integer year,Integer month) throws Exception {
+		try {
+			return apiDAO.applicationLimit(serviceProvider, application, operatorName,year,month);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	public Integer apiLimit(String serviceProvider, String application,String apiName, String operatorName,Integer year,Integer month)  throws Exception{
+		try {
+			return apiDAO.apiLimit(serviceProvider, application, apiName, operatorName,year,month);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 }

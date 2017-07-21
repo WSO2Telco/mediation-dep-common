@@ -38,6 +38,7 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 
 		MNCQueryClient mncQueryclient = new MNCQueryClient();
 		MSISDNUtil phoneUtil = new MSISDNUtil();
+		StringBuffer msisdn = new StringBuffer();
 
 		try {
 
@@ -54,41 +55,42 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 			String mcc = (String) synContext.getProperty("mcc");
 			String mnc = (String) synContext.getProperty("mnc");
 
-			/**
-			 * MSISDN provided at JSon body convert into Phone number object.
-			 */
-			MSISDN numberProto = phoneUtil.parse(requestMSISDN);
+			if (requestMSISDN != null && requestMSISDN.trim().length() > 0) {
+				/**
+				 * MSISDN provided at JSon body convert into Phone number object.
+				 */
+				MSISDN numberProto = phoneUtil.parse(requestMSISDN);
 
-			/**
-			 * obtain the country code form the phone number object
-			 */
-			int countryCode = numberProto.getCountryCode();
+				/**
+				 * obtain the country code form the phone number object
+				 */
+				int countryCode = numberProto.getCountryCode();
 
-			loadCountryCodeList(countryCodes);
+				loadCountryCodeList(countryCodes);
 
-			/**
-			 * if the country code within the header look up context , the
-			 * operator taken from the header object
-			 */
-			if (countryLookUpOnHeader.contains(String.valueOf(countryCode))) {
+				/**
+				 * if the country code within the header look up context , the
+				 * operator taken from the header object
+				 */
+				if (countryLookUpOnHeader.contains(String.valueOf(countryCode))) {
 
-				if (headerOperatorName != null
-						&& headerOperatorName.trim().length() > 0) {
+					if (headerOperatorName != null
+							&& headerOperatorName.trim().length() > 0) {
 
-					operator = headerOperatorName;
-					log.debug("operator pick from the Header : " + operator);
-				} else {
+						operator = headerOperatorName;
+						log.debug("operator pick from the Header : " + operator);
+					} else {
 
-					log.debug("the request doesnot obtain operator from the header");
+						log.debug("the request doesnot obtain operator from the header");
+					}
 				}
-			}
 
-			/**
-			 * build the MSISDN
-			 */
-			StringBuffer msisdn = new StringBuffer();
-			msisdn.append("+").append(numberProto.getCountryCode())
-					.append(numberProto.getNationalNumber());
+				/**
+				 * build the MSISDN
+				 */
+				msisdn.append("+").append(numberProto.getCountryCode())
+						.append(numberProto.getNationalNumber());
+			}
 
 			/**
 			 * if the operator still not selected the operator selection logic
@@ -98,6 +100,15 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 				
 				if (getNullOrTrimmedValue(mcc) != null && getNullOrTrimmedValue(mnc) != null) {
 					operator = OperatorDAO.getOperatorByMCCMNC(mcc, mnc);
+
+					if (operator == null) {
+						setErrorInContext(synContext, "SVC0001",
+								"A service error occurred. Error code is %1",
+								"No valid operator found for given MCC and MNC",
+								"400", "SERVICE_EXCEPTION");
+						synContext.setProperty("ENDPOINT_ERROR", "true");
+						return true;
+					}
 				} else {
 					log.debug("unable to obtain operator from the header and check for mcc_number_range table "
 							+ operator
@@ -117,6 +128,7 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 						"No valid operator found for given MSISDN", "400",
 						"SERVICE_EXCEPTION");
 				synContext.setProperty("ENDPOINT_ERROR", "true");
+				return true;
 			}
 
 			loadValidOperatorList(validOperatorList);
@@ -129,6 +141,7 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 						"SERVICE_EXCEPTION");
 				synContext.setProperty("ENDPOINT_ERROR", "true");
 				synContext.setProperty("ENDPOINT_NOT_PROVISIONED", "true");
+				return true;
 			}
 
 			OperatorEndPointDTO validOperatorendpoint = getValidEndpoints(
@@ -142,6 +155,7 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 						"SERVICE_EXCEPTION");
 				synContext.setProperty("ENDPOINT_ERROR", "true");
 				synContext.setProperty("ENDPOINT_NOT_PROVISIONED", "true");
+				return true;
 			}
 
 			String apiEndpoint = validOperatorendpoint.getEndpoint();
@@ -198,7 +212,7 @@ public class EndpointRetrieverMediator extends AbstractMediator {
 	 *
 	 * @param api
 	 *            the api
-	 * @param validoperator
+	 * @param validOperator
 	 *            the validOperator
 	 * @return the valid endpoints
 	 */

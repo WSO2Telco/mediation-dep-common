@@ -17,4 +17,5 @@ package com.wso2telco.dep.common.mediation.util;
 
 public class AttributeName {
 	public static final String SERVICE_NAME = "SERVICENAME";
+	public static final String QUOTA_ENABLER = "quotaEnabler";
 }
