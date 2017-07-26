@@ -223,16 +223,4 @@ public class APIService {
 			throw e;
 		}
 	}
-
-	public void publishMessage(final MessageDTO messageDTO) throws Exception {
-		apiDAO.publishMessage(messageDTO);
-	}
-
-	public void persistSpendDate(final SpendChargeDTO spendChargeDTO) throws Exception {
-		apiDAO.persistSpendCharge(spendChargeDTO);
-	}
-
-	public String getRefundDetails(int messageDid, String orginalServerReferanceCode) throws Exception {
-		return apiDAO.getRefundDetails(messageDid, orginalServerReferanceCode);
-	}
 }
