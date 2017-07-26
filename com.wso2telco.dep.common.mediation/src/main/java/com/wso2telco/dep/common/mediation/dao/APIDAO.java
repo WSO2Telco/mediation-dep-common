@@ -584,7 +584,7 @@ public class APIDAO {
 
                 preparedStatement.setString(4, operatorName.toLowerCase());
             }
-            log.debug("apiLimit ==========================>"+preparedStatement.toString());
+            log.debug("apiLimit query :: "+preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -631,7 +631,7 @@ public class APIDAO {
 
                 preparedStatement.setString(3, operatorName.toLowerCase());
             }
-            log.debug("applicationLimit ==========================>"+preparedStatement.toString());
+            log.debug("applicationLimit query :: "+preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -677,7 +677,7 @@ public class APIDAO {
 
                 preparedStatement.setString(2, operatorName.toLowerCase());
             }
-            log.debug("spLimit ==========================>"+preparedStatement.toString());
+            log.debug("spLimit query :: "+preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -720,7 +720,7 @@ public class APIDAO {
             if (operatorName != null) {
                 preparedStatement.setString(4, operatorName.toUpperCase());
             }
-            log.debug("group by API ==========================>"+preparedStatement.toString());
+            log.debug("group by API query :: "+preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
@@ -759,7 +759,7 @@ public class APIDAO {
             if (operatorName != null) {
                 preparedStatement.setString(3, operatorName.toUpperCase());
             }
-            log.debug("group by APPLICATIONID ==========================>"+preparedStatement.toString());
+            log.debug("group by APPLICATIONID query :: "+preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
@@ -797,7 +797,7 @@ public class APIDAO {
             if (operatorName != null) {
                 preparedStatement.setString(2, operatorName.toUpperCase());
             }
-            log.debug("group by SERVICEPROVIDER ==========================>"+preparedStatement.toString());
+            log.debug("group by SERVICEPROVIDER query :: "+preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 currentQuotaLimit=Integer.parseInt(resultSet.getString("QUOTA_COUNT"));
