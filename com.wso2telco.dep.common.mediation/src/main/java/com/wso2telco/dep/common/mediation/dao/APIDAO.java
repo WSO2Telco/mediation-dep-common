@@ -12,10 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.wso2telco.core.dbutils.DbUtils;
-import com.wso2telco.core.dbutils.util.DataSourceNames;
-import com.wso2telco.dep.common.mediation.util.DatabaseTables;
-
 public class APIDAO {
 
     private final Log log = LogFactory.getLog(APIDAO.class);
