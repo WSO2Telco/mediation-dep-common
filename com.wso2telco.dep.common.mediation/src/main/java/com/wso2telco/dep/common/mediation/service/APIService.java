@@ -3,11 +3,7 @@ package com.wso2telco.dep.common.mediation.service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import com.wso2telco.dep.common.mediation.spendlimit.entities.MessageDTO;
-import com.wso2telco.dep.common.mediation.spendlimit.entities.SpendChargeDTO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
