@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="com.wso2telco.dep.common.response.exceptions.Sequence"
-  onError="com.wso2telco.dep.common.response.unexpectedError.Sequence"
+  onError="fault"
   trace="disable" xmlns="http://ws.apache.org/ns/synapse">
   <switch source="$ctx:exceptionType">
     <case regex="^SERVICE_EXCEPTION$">
