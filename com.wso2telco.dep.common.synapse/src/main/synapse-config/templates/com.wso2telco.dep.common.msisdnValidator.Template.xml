@@ -13,17 +13,18 @@
     <property expression="$func:paramValue" name="paramValue" scope="default" type="STRING"/>
     <property expression="$trp:APPLICATION_ID" name="api.ut.application.id" scope="default" type="STRING"/>
 
-    <script language="js">
-    	<![CDATA[
-    		var isValidMsisdn = false;
-	    	var paramValue = mc.getProperty("paramValue");
-			var regExp = new RegExp(mc.getProperty("msisdnRegex"));
+    
+    <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+      <property name="script" value="
+            var isValidMsisdn = false;
+	    	var paramValue = mc.getProperty('paramValue');
+			var regExp = new RegExp(mc.getProperty('msisdnRegex'));
 
 			var isValidMsisdn = regExp.test(paramValue);
-			mc.setProperty("isValidMsisdn", isValidMsisdn);
-		]]>
-	</script>
-
+			mc.setProperty('isValidMsisdn', isValidMsisdn);
+      "/>
+    </class>
+	
     <filter regex="^false$" source="$ctx:isValidMsisdn">
       <then>
         <log category="ERROR" level="full">
