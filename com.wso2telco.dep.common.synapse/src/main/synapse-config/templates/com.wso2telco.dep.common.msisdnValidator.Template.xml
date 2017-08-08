@@ -3,7 +3,7 @@
   <parameter name="paramName"/>
   <parameter name="paramValue"/>
   <parameter name="paramArray"/>
-  
+
   <!-- In case of validating an array use a for each mediator in your sequence and call this template with each of the msisdn array element.
     Specify paramArray just to create the message body of the error response -->
   <sequence>
@@ -22,7 +22,7 @@
         mc.setProperty('isValidMsisdn', isValidMsisdn);
       "/>
     </class>
-	
+
     <filter regex="^false$" source="$ctx:isValidMsisdn">
       <then>
         <log category="ERROR" level="full">
@@ -31,7 +31,7 @@
         <property name="messageId" scope="default" type="STRING" value="SVC0004"/>
         <property expression="fn:concat($func:paramName, ' format invalid. %1')" name="errorText" scope="default" type="STRING"/>
         <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
-        
+
         <filter xpath="boolean($func:paramArray)">
           <then>
             <property expression="$func:paramArray" name="errorVariable" scope="default" type="STRING"/>
@@ -40,16 +40,25 @@
             <property expression="$func:paramValue" name="errorVariable" scope="default" type="STRING"/>
           </else>
         </filter>
-        
+
         <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
         <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
       </then>
       <else>
-      
+
+<!-- ######################################################################################################################################## -->
+        <filter regex="^true$" source="$trp:api.check.mandate">
+          <then>
+            <sequence key="com.wso2telco.dep.subscriptionapi.mandate.Sequence"/>
+          </then>
+          <else/>
+        </filter>
+<!-- ######################################################################################################################################## -->
+
         <filter regex="^true$" source="$trp:api.check.blacklist">
           <then>
             <class name="com.wso2telco.dep.common.mediation.MSISDNBlacklistMediator"/>
-            
+
             <filter regex="^true$" source="$ctx:INTERNAL_ERROR">
               <then>
                 <property expression="fn:concat($func:paramName, $ctx:mediationErrorText)" name="errorText" scope="default" type="STRING"/>
@@ -57,7 +66,7 @@
                 <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
               </then>
               <else>
-              
+
                 <filter regex="^true$" source="$ctx:BLACKLISTED_MSISDN">
                   <then>
                     <property expression="fn:concat($func:paramName, $ctx:mediationErrorText)" name="errorText" scope="default" type="STRING"/>
@@ -66,18 +75,18 @@
                   </then>
                   <else/>
                 </filter>
-                
+
               </else>
             </filter>
-            
+
           </then>
           <else/>
         </filter>
-        
+
         <filter regex="^true$" source="$trp:api.check.whitelist">
           <then>
             <class name="com.wso2telco.dep.common.mediation.MSISDNWhitelistMediator"/>
-            
+
             <filter regex="^true$" source="$ctx:INTERNAL_ERROR">
               <then>
                 <property expression="$ctx:messageId" name="messageId" scope="default" type="STRING"/>
@@ -86,7 +95,7 @@
                 <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
               </then>
               <else>
-                
+
                 <filter regex="^false$" source="$ctx:WHITELISTED_MSISDN">
                   <then>
                     <property expression="$ctx:messageId" name="messageId" scope="default" type="STRING"/>
@@ -96,16 +105,16 @@
                   </then>
                   <else/>
                 </filter>
-                
+
               </else>
             </filter>
-            
+
           </then>
           <else/>
         </filter>
-        
+
       </else>
     </filter>
-    
+
   </sequence>
 </template>
