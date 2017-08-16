@@ -40,7 +40,7 @@ public class APIService {
 	public boolean validatePurchaseCategoryCode(String purchaseCategoryCode)
 			throws Exception {
 
-		boolean isvalid = true;
+		boolean isvalid = false;
 
 		try {
 
@@ -48,7 +48,7 @@ public class APIService {
 
 			if (validCategoris.size() > 0) {
 
-				isvalid = false;
+
 				for (String category : validCategoris) {
 
 					if (category.equalsIgnoreCase(purchaseCategoryCode)) {
