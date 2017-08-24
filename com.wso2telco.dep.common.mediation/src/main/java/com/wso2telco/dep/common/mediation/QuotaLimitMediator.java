@@ -17,6 +17,7 @@ import org.apache.synapse.mediators.AbstractMediator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.wso2telco.dep.common.mediation.quotaLimit.InQuotaDateRange;
 import com.wso2telco.dep.common.mediation.quotaLimit.QuotaLimits;
 import com.wso2telco.dep.common.mediation.service.APIService;
 import com.wso2telco.dep.common.mediation.util.AttributeName;
@@ -58,10 +59,10 @@ public class QuotaLimitMediator extends AbstractMediator {
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH) + 1;
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String sqlDate = sdf.format(date);
-
-				if (!inQuotaDateRange(serviceProvider,application,apiName,operatorName,sqlDate)) {
+            InQuotaDateRange inQuotaDateRange=inQuotaDateRange(serviceProvider,application,apiName,operatorName,sqlDate);
+				if (!(inQuotaDateRange.getInApiQuotaDateRange()&&inQuotaDateRange.getInAppQuotaDateRange()&&inQuotaDateRange.getInApiQuotaDateRange())) {
 					return true;
 				}else {
 				    try {
@@ -175,11 +176,11 @@ public class QuotaLimitMediator extends AbstractMediator {
     }
 
 
-    private boolean inQuotaDateRange(String serviceProvider,String application, String apiName, String operatorName,String sqlDate)  {
-    	boolean inQuotaDateRange=false;
+    private InQuotaDateRange inQuotaDateRange(String serviceProvider,String application, String apiName, String operatorName,String sqlDate)  {
+    	InQuotaDateRange inQuotaDateRange=new InQuotaDateRange();
         if (serviceProvider != null) {
         	try {
-        		inQuotaDateRange=APIService.inQuotaDateRange(serviceProvider,operatorName,sqlDate);
+        		inQuotaDateRange.setInSpQuotaDateRange(APIService.inQuotaDateRange(serviceProvider,operatorName,sqlDate));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -187,7 +188,7 @@ public class QuotaLimitMediator extends AbstractMediator {
 
         if (serviceProvider != null && application != null) {
         	try {
-        		inQuotaDateRange=APIService.inQuotaDateRange(serviceProvider,application, operatorName,sqlDate);
+        		inQuotaDateRange.setInAppQuotaDateRange(APIService.inQuotaDateRange(serviceProvider,application, operatorName,sqlDate));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -195,7 +196,7 @@ public class QuotaLimitMediator extends AbstractMediator {
 
         if (serviceProvider != null && application != null && apiName != null) {
         	try {
-        		inQuotaDateRange=APIService.inQuotaDateRange(serviceProvider,application, apiName, operatorName,sqlDate);
+        		inQuotaDateRange.setInApiQuotaDateRange(APIService.inQuotaDateRange(serviceProvider,application, apiName, operatorName,sqlDate));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
