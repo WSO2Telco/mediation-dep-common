@@ -62,7 +62,7 @@ public class QuotaLimitMediator extends AbstractMediator {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String sqlDate = sdf.format(date);
             InQuotaDateRange inQuotaDateRange=inQuotaDateRange(serviceProvider,application,apiName,operatorName,sqlDate);
-				if (!(inQuotaDateRange.getInApiQuotaDateRange() || inQuotaDateRange.getInAppQuotaDateRange() || inQuotaDateRange.getInApiQuotaDateRange())) {
+				if (!(inQuotaDateRange.getInApiQuotaDateRange() || inQuotaDateRange.getInAppQuotaDateRange() || inQuotaDateRange.getInSpQuotaDateRange())) {
 					return true;
 				}else {
 				    try {
