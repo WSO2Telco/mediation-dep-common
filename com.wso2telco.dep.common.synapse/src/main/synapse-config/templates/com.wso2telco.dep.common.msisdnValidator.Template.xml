@@ -46,14 +46,6 @@
       </then>
       <else>
 
-<!-- ######################################################################################################################################## -->
-        <filter regex="^true$" source="$trp:api.check.mandate">
-          <then>
-            <sequence key="com.wso2telco.dep.subscriptionapi.mandate.Sequence"/>
-          </then>
-          <else/>
-        </filter>
-<!-- ######################################################################################################################################## -->
 
         <filter regex="^true$" source="$trp:api.check.blacklist">
           <then>
