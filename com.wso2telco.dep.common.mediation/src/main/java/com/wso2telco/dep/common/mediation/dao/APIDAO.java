@@ -812,7 +812,7 @@ public class APIDAO {
         return currentQuotaLimit;
     }
 
-	public static boolean inQuotaDateRange(String serviceProvider,String operatorName, String sqlDate) {
+	public static boolean inSPQuotaDateRange(String serviceProvider,String operatorName, String sqlDate) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -846,7 +846,7 @@ public class APIDAO {
 		return inQuotaDateRange;
 	}
 
-	public static boolean inQuotaDateRange(String serviceProvider,String application, String operatorName, String sqlDate) {
+	public static boolean inAPPQuotaDateRange(String serviceProvider,String application, String operatorName, String sqlDate) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -880,7 +880,7 @@ public class APIDAO {
 			}
 		return inQuotaDateRange;
 	}
-	public static boolean inQuotaDateRange(String serviceProvider,String application, String apiName, String operatorName,String sqlDate) {
+	public static boolean inAPIQuotaDateRange(String serviceProvider,String application, String apiName, String operatorName,String sqlDate) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
