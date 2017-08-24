@@ -12,7 +12,7 @@ import com.wso2telco.dep.common.mediation.dao.APIDAO;
 public class APIService {
 
 	APIDAO apiDAO;
-	
+
 	private final Log log = LogFactory.getLog(APIService.class);
 
 	{
@@ -100,7 +100,7 @@ public class APIService {
 			throw e;
 		}
 	}
-	
+
 	public String getAttributeValueForCode(String tableName, String operatorName, String attributeGroupCode,
 			String attributeCode) throws Exception {
 		String attributeValue = null;
@@ -158,7 +158,7 @@ public class APIService {
 	public List<Map<String, Object>> executeCustomSelectQuery(String selectQuery) throws Exception {
 		return apiDAO.executeCustomSelectQuery(selectQuery);
 	}
-	
+
 	public int executeCustomInsertQueryAndGetGeneratedPrimaryKey (String insertQuery) throws Exception {
 		return apiDAO.executeCustomInsertQueryAndGetGeneratedPrimaryKey(insertQuery);
 	}
@@ -219,4 +219,31 @@ public class APIService {
 			throw e;
 		}
 	}
+
+
+	public static boolean inQuotaDateRange(String serviceProvider,String operatorName, String sqlDate) throws Exception{
+		try {
+			return APIDAO.inQuotaDateRange(serviceProvider, operatorName,sqlDate);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	public static boolean inQuotaDateRange(String serviceProvider,String application, String operatorName, String sqlDate) throws Exception{
+		try {
+			return APIDAO.inQuotaDateRange(serviceProvider,application, operatorName,sqlDate);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	public static boolean inQuotaDateRange(String serviceProvider,String application, String apiName, String operatorName,String sqlDate) throws Exception{
+		try {
+			return APIDAO.inQuotaDateRange(serviceProvider,application, apiName, operatorName,sqlDate);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+
 }
