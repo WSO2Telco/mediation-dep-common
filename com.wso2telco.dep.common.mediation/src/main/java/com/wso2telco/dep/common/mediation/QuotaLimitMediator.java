@@ -1,6 +1,7 @@
 package com.wso2telco.dep.common.mediation;
 
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,43 +58,50 @@ public class QuotaLimitMediator extends AbstractMediator {
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH) + 1;
 
-            APIService apiService = new APIService();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String sqlDate = sdf.format(date);
 
-            try {
-                QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName,year,month);
-                QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,year,month,quotaLimit);
-                Integer spLimit=currentQuotaLimit.getSpLimit();
-                if (quotaLimit.getSpLimit()!=null && spLimit!=null) {
-                    if (quotaLimit.getSpLimit()<=spLimit) {
-                        setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
-                    }
-                }
+				if (!inQuotaDateRange(serviceProvider,application,apiName,operatorName,sqlDate)) {
+					return true;
+				}else {
+				    try {
+				        QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName,year,month);
+				        QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,year,month,quotaLimit);
+				        Integer spLimit=currentQuotaLimit.getSpLimit();
+				        if (quotaLimit.getSpLimit()!=null && spLimit!=null) {
+				            if (quotaLimit.getSpLimit()<=spLimit) {
+				                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
+				            }
+				        }
 
-                Integer appLimit=currentQuotaLimit.getAppLimit();
-                if (quotaLimit.getAppLimit()!=null && appLimit!=null){
-                    if (quotaLimit.getAppLimit()<=appLimit) {
-                        setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Application has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
-                    }
-                }
-                Integer apiLimit=currentQuotaLimit.getApiLimit();
-                if (quotaLimit.getApiLimit()!=null && apiLimit!=null){
-                    if (quotaLimit.getApiLimit()<=apiLimit) {
-                        setErrorInContext(messageContext,"POL1001","The %1 quota limit for this API has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
-                    }
-                }
+				        Integer appLimit=currentQuotaLimit.getAppLimit();
+				        if (quotaLimit.getAppLimit()!=null && appLimit!=null){
+				            if (quotaLimit.getAppLimit()<=appLimit) {
+				                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Application has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
+				            }
+				        }
+				        Integer apiLimit=currentQuotaLimit.getApiLimit();
+				        if (quotaLimit.getApiLimit()!=null && apiLimit!=null){
+				            if (quotaLimit.getApiLimit()<=apiLimit) {
+				                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this API has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
+				            }
+				        }
 
-            } catch (Exception e) {
-                log.error("Error occurred while calling QuotaLimitCheckMediator" ,e);
-                setErrorInContext(messageContext,"SVC0001","A service error occurred. Error code is %1","An internal service error has occured. Please try again later.","500", "SERVICE_EXCEPTION");
-            }
-        }
+				    } catch (Exception e) {
+				        log.error("Error occurred while calling QuotaLimitCheckMediator" ,e);
+				        setErrorInContext(messageContext,"SVC0001","A service error occurred. Error code is %1","An internal service error has occured. Please try again later.","500", "SERVICE_EXCEPTION");
+				    }
 
-        return true;
+				    return true;
+				}
+
+        }else {
+        	return true;
+		}
     }
 
-
-    @SuppressWarnings("unchecked")
-    private boolean isQuotaEnabler(MessageContext context) throws AxisFault {
+	@SuppressWarnings("rawtypes")
+	private boolean isQuotaEnabler(MessageContext context) throws AxisFault {
         boolean quotaEnabler = false;
         try {
             org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) context).getAxis2MessageContext();
@@ -129,7 +137,6 @@ public class QuotaLimitMediator extends AbstractMediator {
         return quotaEnabler;
     }
 
-    @SuppressWarnings("null")
     public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName, int year, int month, QuotaLimits quotaLimits) throws Exception {
 
         QuotaLimits currentQuotaLimit=new QuotaLimits();
@@ -165,8 +172,36 @@ public class QuotaLimitMediator extends AbstractMediator {
         }
 
         return quotaLimits;
-
     }
+
+
+    private boolean inQuotaDateRange(String serviceProvider,String application, String apiName, String operatorName,String sqlDate)  {
+    	boolean inQuotaDateRange=false;
+        if (serviceProvider != null) {
+        	try {
+        		inQuotaDateRange=APIService.inQuotaDateRange(serviceProvider,operatorName,sqlDate);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        }
+
+        if (serviceProvider != null && application != null) {
+        	try {
+        		inQuotaDateRange=APIService.inQuotaDateRange(serviceProvider,application, operatorName,sqlDate);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        }
+
+        if (serviceProvider != null && application != null && apiName != null) {
+        	try {
+        		inQuotaDateRange=APIService.inQuotaDateRange(serviceProvider,application, apiName, operatorName,sqlDate);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        }
+        return inQuotaDateRange;
+	}
 
     private void setErrorInContext(MessageContext synContext, String messageId,String errorText, String errorVariable, String httpStatusCode,String exceptionType) {
         synContext.setProperty("messageId", messageId);
