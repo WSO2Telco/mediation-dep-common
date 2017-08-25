@@ -5,8 +5,6 @@ import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.axis2.AxisFault;
@@ -25,17 +23,17 @@ import com.wso2telco.dep.common.mediation.util.AttributeName;
 public class QuotaLimitMediator extends AbstractMediator {
 
 	private static Log log = LogFactory.getLog(QuotaLimitMediator.class);
-	    
+
     public boolean mediate(MessageContext messageContext) {
-        
+
     	String serviceProvider = null;
         String application = null;
         String apiName = null;
         String operatorName = null;
     	boolean isQuotaEnabled = false;
-    	
+
     	String direction=null;
-    	
+
     	try {
     		isQuotaEnabled = isQuotaEnabler(messageContext);
 		} catch (AxisFault ex) {
@@ -43,13 +41,13 @@ public class QuotaLimitMediator extends AbstractMediator {
 		}
     	direction=messageContext.getProperty("direction").toString();
     	if (isQuotaEnabled) {
-		
+
 			if (direction.equalsIgnoreCase("nb")) {
 				operatorName =null;
 			}else if (direction.equalsIgnoreCase("sb")) {
-				operatorName=(String)messageContext.getProperty("OPERATOR_NAME");			
+				operatorName=(String)messageContext.getProperty("OPERATOR_NAME");
 			}
-			
+
 			serviceProvider=(String)messageContext.getProperty("USER_ID");
 			application=(String)messageContext.getProperty("APPLICATION_ID");
 			apiName=(String)messageContext.getProperty("API_NAME");
@@ -58,19 +56,19 @@ public class QuotaLimitMediator extends AbstractMediator {
 			calendar.setTime(date);
 			int year = calendar.get(Calendar.YEAR);
 			int month = calendar.get(Calendar.MONTH) + 1;
-			
+
 			APIService apiService = new APIService();
-	    	
+
 				try {
 		            QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName,year,month);
 		            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,year,month,quotaLimit);
 					Integer spLimit=currentQuotaLimit.getSpLimit();
 		            if (quotaLimit.getSpLimit()!=null && spLimit!=null) {
-					    if (quotaLimit.getSpLimit()<=spLimit) {	
+					    if (quotaLimit.getSpLimit()<=spLimit) {
 					        setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
-						}	
+						}
 					}
-		            
+
 		            Integer appLimit=currentQuotaLimit.getAppLimit();
 		            if (quotaLimit.getAppLimit()!=null && appLimit!=null){
 			            if (quotaLimit.getAppLimit()<=appLimit) {
@@ -89,11 +87,11 @@ public class QuotaLimitMediator extends AbstractMediator {
 		            setErrorInContext(messageContext,"SVC0001","A service error occurred. Error code is %1","An internal service error has occured. Please try again later.","500", "SERVICE_EXCEPTION");
 		        }
 			}
-		
+
         return true;
     }
-    
-	
+
+
     @SuppressWarnings("unchecked")
 	private boolean isQuotaEnabler(MessageContext context) throws AxisFault {
     	   boolean quotaEnabler = false;
@@ -103,12 +101,12 @@ public class QuotaLimitMediator extends AbstractMediator {
     	      if (headers != null && headers instanceof Map) {
     	         Map headersMap = (Map) headers;
     	         String jwtparam = (String) headersMap.get("x-jwt-assertion");
-    	         
+
     	         if (jwtparam.isEmpty()) {
     	        	 setErrorInContext(context,"SVC0001","A service error occurred. Error code is %1","An internal service error has occured. Please try again later.","500", "SERVICE_EXCEPTION");
     	        	 return false;
 				}
-    	         
+
     	         String[] jwttoken = jwtparam.split("\\.");
     	         byte[] valueDecoded= Base64.getDecoder().decode(jwttoken[1]);
     	         String jwtbody = new String(valueDecoded, StandardCharsets.UTF_8);
@@ -130,13 +128,13 @@ public class QuotaLimitMediator extends AbstractMediator {
 
     	   return quotaEnabler;
     	}
-	
+
 	@SuppressWarnings("null")
 	public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName, int year, int month, QuotaLimits quotaLimits) throws Exception {
-		
+
 		QuotaLimits currentQuotaLimit=new QuotaLimits();
 		APIService apiService = new APIService();
-		
+
 		if (quotaLimits.getApiLimit() != null) {
 			currentQuotaLimit.setApiLimit(apiService.groupByApi(sp,app, api, operatorName,year,month));
 		}
@@ -146,9 +144,9 @@ public class QuotaLimitMediator extends AbstractMediator {
 		if (quotaLimits.getSpLimit() !=null) {
 			currentQuotaLimit.setSpLimit(apiService.groupBySp(sp,operatorName,year,month));
 		}
-		return currentQuotaLimit;		
+		return currentQuotaLimit;
 	}
-	
+
 	public QuotaLimits checkQuotaLimit(String serviceProvider, String application, String apiName, String operatorName,Integer year,Integer month) throws Exception {
 
 		APIService apiService = new APIService();
@@ -169,7 +167,7 @@ public class QuotaLimitMediator extends AbstractMediator {
 		return quotaLimits;
 
 	}
-	
+
     private void setErrorInContext(MessageContext synContext, String messageId,String errorText, String errorVariable, String httpStatusCode,String exceptionType) {
         synContext.setProperty("messageId", messageId);
         synContext.setProperty("errorText", errorText);

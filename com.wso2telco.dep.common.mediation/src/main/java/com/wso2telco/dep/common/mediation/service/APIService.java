@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.wso2telco.dep.common.mediation.quotalimit.QuotaLimits;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -165,7 +163,7 @@ public class APIService {
  		} catch (Exception e) {
  			e.printStackTrace();
  		}
- 		
+
  		return currentQuotaLimit;
 	}
 
@@ -176,7 +174,7 @@ public class APIService {
  		} catch (Exception e) {
  			e.printStackTrace();
  		}
- 		
+
  		return currentQuotaLimit;
 	}
 
@@ -187,7 +185,7 @@ public class APIService {
  		} catch (Exception e) {
  			e.printStackTrace();
  		}
- 		
+
  		return currentQuotaLimit;
 	}
 
@@ -214,5 +212,31 @@ public class APIService {
 			throw e;
 		}
 	}
+
+
+	public static boolean inQuotaDateRange(String serviceProvider,String operatorName, String sqlDate) throws Exception{
+		try {
+			return APIDAO.inQuotaDateRange(serviceProvider, operatorName,sqlDate);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	public static boolean inQuotaDateRange(String serviceProvider,String application, String operatorName, String sqlDate) throws Exception{
+		try {
+			return APIDAO.inQuotaDateRange(serviceProvider,application, operatorName,sqlDate);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	public static boolean inQuotaDateRange(String serviceProvider,String application, String apiName, String operatorName,String sqlDate) throws Exception{
+		try {
+			return APIDAO.inQuotaDateRange(serviceProvider,application, apiName, operatorName,sqlDate);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
 
 }
