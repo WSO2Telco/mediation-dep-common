@@ -20,7 +20,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class APIDAO {
 
-	private final Log log = LogFactory.getLog(APIDAO.class);
+    private final static Log log = LogFactory.getLog(APIDAO.class);
 
 	public Integer insertServiceProviderNotifyURL(String apiName,
 			String notifyURL, String serviceProvider, String clientCorrelator,
@@ -772,4 +772,109 @@ public class APIDAO {
 		}
 		return currentQuotaLimit;
 	}
+
+	public static boolean inQuotaDateRange(String serviceProvider,String operatorName, String sqlDate) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		boolean inQuotaDateRange=false;
+			try {
+				connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
+				StringBuilder queryBuilder = new StringBuilder();
+				queryBuilder.append("SELECT quota_limit FROM "+ DatabaseTables.SP_QUOTA_LIMIT + "  WHERE serviceProvider = ? AND ((? <= toDate and ? >= fromDate))");
+				if (operatorName != null) {
+					queryBuilder.append(" AND  operatorName = ?");
+				} else {
+					queryBuilder.append(" AND  operatorName IS null");
+				}
+				preparedStatement = connection.prepareStatement(queryBuilder.toString());
+				preparedStatement.setString(1, serviceProvider.toLowerCase());
+				preparedStatement.setString(2, sqlDate);
+				preparedStatement.setString(3, sqlDate);
+				if (operatorName != null) {
+					preparedStatement.setString(4, operatorName.toLowerCase());
+				}
+				log.debug("SP wise inQuotaDateRange Query :: " + preparedStatement.toString());
+				resultSet = preparedStatement.executeQuery();
+				if (resultSet.next()) {
+					inQuotaDateRange=true;
+				}
+			} catch (Exception e) {
+				log.error("Error occurred while retrieving inQuotaDateRange for SP :", e);
+			} finally {
+				DbUtils.closeAllConnections(preparedStatement, connection,resultSet);
+			}
+		return inQuotaDateRange;
+	}
+
+	public static boolean inQuotaDateRange(String serviceProvider,String application, String operatorName, String sqlDate) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		boolean inQuotaDateRange=false;
+			try {
+				connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
+				StringBuilder queryBuilder = new StringBuilder();
+				queryBuilder.append("SELECT quota_limit FROM "+ DatabaseTables.SP_QUOTA_LIMIT + "  WHERE serviceProvider = ? AND application = ? and ((? <= toDate and ? >= fromDate))");
+				if (operatorName != null) {
+					queryBuilder.append(" AND  operatorName = ?");
+				} else {
+					queryBuilder.append(" AND  operatorName IS null");
+				}
+				preparedStatement = connection.prepareStatement(queryBuilder.toString());
+				preparedStatement.setString(1, serviceProvider.toLowerCase());
+				preparedStatement.setString(2, application.toLowerCase());
+				preparedStatement.setString(3, sqlDate);
+				preparedStatement.setString(4, sqlDate);
+				if (operatorName != null) {
+					preparedStatement.setString(5, operatorName.toLowerCase());
+				}
+				log.debug("APP wise inQuotaDateRange Query :: " + preparedStatement.toString());
+				resultSet = preparedStatement.executeQuery();
+				if (resultSet.next()) {
+					inQuotaDateRange=true;
+				}
+			} catch (Exception e) {
+				log.error("Error occurred while retrieving inQuotaDateRange for APP :", e);
+			} finally {
+				DbUtils.closeAllConnections(preparedStatement, connection,resultSet);
+			}
+		return inQuotaDateRange;
+	}
+	public static boolean inQuotaDateRange(String serviceProvider,String application, String apiName, String operatorName,String sqlDate) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		boolean inQuotaDateRange=false;
+			try {
+				connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
+				StringBuilder queryBuilder = new StringBuilder();
+				queryBuilder.append("SELECT quota_limit FROM "+ DatabaseTables.SP_QUOTA_LIMIT + "  WHERE serviceProvider = ? AND application = ? AND apiName = ?  and ((? <= toDate and ? >= fromDate))");
+				if (operatorName != null) {
+					queryBuilder.append(" AND  operatorName = ?");
+				} else {
+					queryBuilder.append(" AND  operatorName IS null");
+				}
+				preparedStatement = connection.prepareStatement(queryBuilder.toString());
+				preparedStatement.setString(1, serviceProvider.toLowerCase());
+				preparedStatement.setString(2, application.toLowerCase());
+				preparedStatement.setString(3, apiName.toLowerCase());
+				preparedStatement.setString(4, sqlDate);
+				preparedStatement.setString(5, sqlDate);
+				if (operatorName != null) {
+					preparedStatement.setString(6, operatorName.toLowerCase());
+				}
+				log.debug("API wise inQuotaDateRange Query :: " + preparedStatement.toString());
+				resultSet = preparedStatement.executeQuery();
+				if (resultSet.next()) {
+					inQuotaDateRange=true;
+				}
+			} catch (Exception e) {
+				log.error("Error occurred while retrieving inQuotaDateRange for API :", e);
+			} finally {
+				DbUtils.closeAllConnections(preparedStatement, connection,resultSet);
+			}
+		return inQuotaDateRange;
+	}
+
 }
