@@ -13,7 +13,7 @@
     <property expression="$func:paramValue" name="paramValue" scope="default" type="STRING"/>
     <property expression="$trp:APPLICATION_ID" name="api.ut.application.id" scope="default" type="STRING"/>
 
-    
+
     <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
       <property name="script" value="
             var isValidMsisdn = false;
@@ -24,7 +24,7 @@
 			mc.setProperty('isValidMsisdn', isValidMsisdn);
       "/>
     </class>
-	
+
     <filter regex="^false$" source="$ctx:isValidMsisdn">
       <then>
         <log category="ERROR" level="full">
@@ -48,14 +48,7 @@
       </then>
       <else>
 
-<!-- ######################################################################################################################################## -->
-        <filter regex="^true$" source="$trp:api.check.mandate">
-          <then>
-            <sequence key="com.wso2telco.dep.subscriptionapi.mandate.Sequence"/>
-          </then>
-          <else/>
-        </filter>
-<!-- ######################################################################################################################################## -->
+
 
         <filter regex="^true$" source="$trp:api.check.blacklist">
           <then>
