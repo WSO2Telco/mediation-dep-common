@@ -214,25 +214,25 @@ public class APIService {
 	}
 
 
-	public static boolean inQuotaDateRange(String serviceProvider,String operatorName, String sqlDate) throws Exception{
+	public static boolean inSPQuotaDateRange(String serviceProvider,String operatorName, String sqlDate) throws Exception{
 		try {
-			return APIDAO.inQuotaDateRange(serviceProvider, operatorName,sqlDate);
+			return APIDAO.inSPQuotaDateRange(serviceProvider, operatorName,sqlDate);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	public static boolean inQuotaDateRange(String serviceProvider,String application, String operatorName, String sqlDate) throws Exception{
+	public static boolean inAPPQuotaDateRange(String serviceProvider,String application, String operatorName, String sqlDate) throws Exception{
 		try {
-			return APIDAO.inQuotaDateRange(serviceProvider,application, operatorName,sqlDate);
+			return APIDAO.inAPPQuotaDateRange(serviceProvider,application, operatorName,sqlDate);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	public static boolean inQuotaDateRange(String serviceProvider,String application, String apiName, String operatorName,String sqlDate) throws Exception{
+	public static boolean inAPIQuotaDateRange(String serviceProvider,String application, String apiName, String operatorName,String sqlDate) throws Exception{
 		try {
-			return APIDAO.inQuotaDateRange(serviceProvider,application, apiName, operatorName,sqlDate);
+			return APIDAO.inAPIQuotaDateRange(serviceProvider,application, apiName, operatorName,sqlDate);
 		} catch (Exception e) {
 			throw e;
 		}
