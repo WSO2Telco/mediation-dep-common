@@ -61,44 +61,44 @@ public class QuotaLimitMediator extends AbstractMediator {
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String sqlDate = sdf.format(date);
-            InQuotaDateRange inQuotaDateRange=inQuotaDateRange(serviceProvider,application,apiName,operatorName,sqlDate);
-				if (!(inQuotaDateRange.getInApiQuotaDateRange() || inQuotaDateRange.getInAppQuotaDateRange() || inQuotaDateRange.getInSpQuotaDateRange())) {
-					return true;
-				}else {
+            //InQuotaDateRange inQuotaDateRange=inQuotaDateRange(serviceProvider,application,apiName,operatorName,sqlDate);
+				//if (!(inQuotaDateRange.getInApiQuotaDateRange() || inQuotaDateRange.getInAppQuotaDateRange() || inQuotaDateRange.getInSpQuotaDateRange())) {
+					//return true;
+				//}else {
 				try {
-		            QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName,year,month);
-		            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,year,month,quotaLimit);
-					Integer spLimit=currentQuotaLimit.getSpLimit();
-		            if (quotaLimit.getSpLimit()!=null && spLimit!=null) {
-					    if (quotaLimit.getSpLimit()<=spLimit) {
-					        setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
+		            QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName,year,month,sqlDate);
+		            if (quotaLimit.getApiLimit()!=null || quotaLimit.getSpLimit()!=null || quotaLimit.getAppLimit()!=null) {
+						return true;
+					}else{
+			            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,year,month,quotaLimit);
+						Integer spLimit=currentQuotaLimit.getSpLimit();
+			            if (quotaLimit.getSpLimit()!=null && spLimit!=null) {
+						    if (quotaLimit.getSpLimit()<=spLimit) {
+						        setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Service Provider has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
+							}
 						}
+
+			            Integer appLimit=currentQuotaLimit.getAppLimit();
+			            if (quotaLimit.getAppLimit()!=null && appLimit!=null){
+				            if (quotaLimit.getAppLimit()<=appLimit) {
+				                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Application has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
+							}
+			            }
+			            Integer apiLimit=currentQuotaLimit.getApiLimit();
+			            if (quotaLimit.getApiLimit()!=null && apiLimit!=null){
+				            if (quotaLimit.getApiLimit()<=apiLimit) {
+				                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this API has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
+							}
+			            }
 					}
-
-		            Integer appLimit=currentQuotaLimit.getAppLimit();
-		            if (quotaLimit.getAppLimit()!=null && appLimit!=null){
-			            if (quotaLimit.getAppLimit()<=appLimit) {
-			                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this Application has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
-						}
-		            }
-		            Integer apiLimit=currentQuotaLimit.getApiLimit();
-		            if (quotaLimit.getApiLimit()!=null && apiLimit!=null){
-			            if (quotaLimit.getApiLimit()<=apiLimit) {
-			                setErrorInContext(messageContext,"POL1001","The %1 quota limit for this API has been exceeded","QuotaLimit","400","POLICY_EXCEPTION");
-						}
-		            }
-
 		        } catch (Exception e) {
 		            log.error("Error occurred while calling QuotaLimitCheckMediator" ,e);
 		            setErrorInContext(messageContext,"SVC0001","A service error occurred. Error code is %1","An internal service error has occured. Please try again later.","500", "SERVICE_EXCEPTION");
 		        }
-
 				    return true;
-			}
-
         }else {
-        return true;
-    }
+        	return true;
+        }
     }
 
 
@@ -156,21 +156,21 @@ public class QuotaLimitMediator extends AbstractMediator {
 		return currentQuotaLimit;
 	}
 
-	public QuotaLimits checkQuotaLimit(String serviceProvider, String application, String apiName, String operatorName,Integer year,Integer month) throws Exception {
+	public QuotaLimits checkQuotaLimit(String serviceProvider, String application, String apiName, String operatorName,Integer year,Integer month, String sqlDate) throws Exception {
 
 		APIService apiService = new APIService();
 		QuotaLimits quotaLimits = new QuotaLimits();
 
 		if (serviceProvider != null) {
-			quotaLimits.setSpLimit(apiService.spLimit(serviceProvider, operatorName,year,month));
+			quotaLimits.setSpLimit(apiService.spLimit(serviceProvider, operatorName,year,month,sqlDate));
 		}
 
 		if (serviceProvider != null && application != null) {
-			quotaLimits.setAppLimit(apiService.applicationLimit(serviceProvider, application, operatorName,year,month));
+			quotaLimits.setAppLimit(apiService.applicationLimit(serviceProvider, application, operatorName,year,month,sqlDate));
 		}
 
 		if (serviceProvider != null && application != null && apiName != null) {
-			quotaLimits.setApiLimit(apiService.apiLimit(serviceProvider, application, apiName, operatorName,year,month));
+			quotaLimits.setApiLimit(apiService.apiLimit(serviceProvider, application, apiName, operatorName,year,month,sqlDate));
 		}
 
 		return quotaLimits;

@@ -513,7 +513,7 @@ public class APIDAO {
 
 
 
-	public Integer apiLimit(String serviceProvider, String application, String apiName, String operatorName, Integer year, Integer month) {
+	public Integer apiLimit(String serviceProvider, String application, String apiName, String operatorName, Integer year, Integer month, String sqlDate) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -523,7 +523,7 @@ public class APIDAO {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
 			StringBuilder queryBuilder = new StringBuilder();
 
-			queryBuilder.append("SELECT quota_limit FROM " + DatabaseTables.SP_QUOTA_LIMIT + "  WHERE serviceProvider = ? AND application = ? AND apiName = ?");
+			queryBuilder.append("SELECT quota_limit FROM " + DatabaseTables.SP_QUOTA_LIMIT + "  WHERE serviceProvider = ? AND application = ? AND apiName = ?  AND ((? <= toDate and ? >= fromDate)) ");
 
 			if (operatorName != null) {
 
@@ -538,10 +538,12 @@ public class APIDAO {
 			preparedStatement.setString(1, serviceProvider.toLowerCase());
 			preparedStatement.setString(2, application.toLowerCase());
 			preparedStatement.setString(3, apiName.toLowerCase());
+			preparedStatement.setString(4, sqlDate);
+			preparedStatement.setString(5, sqlDate);
 
 			if (operatorName != null) {
 
-				preparedStatement.setString(4, operatorName.toLowerCase());
+				preparedStatement.setString(6, operatorName.toLowerCase());
 			}
 			log.debug("apiLimit ==========================>"+preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
@@ -559,7 +561,7 @@ public class APIDAO {
 		return apiLimit;
 	}
 
-	public Integer applicationLimit(String serviceProvider, String application, String operatorName, Integer year, Integer month) {
+	public Integer applicationLimit(String serviceProvider, String application, String operatorName, Integer year, Integer month, String sqlDate) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -569,7 +571,7 @@ public class APIDAO {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
 			StringBuilder queryBuilder = new StringBuilder();
 
-			queryBuilder.append("SELECT quota_limit FROM " + DatabaseTables.SP_QUOTA_LIMIT + "  WHERE serviceProvider = ? AND application = ?");
+			queryBuilder.append("SELECT quota_limit FROM " + DatabaseTables.SP_QUOTA_LIMIT + "  WHERE serviceProvider = ? AND application = ? AND ((? <= toDate and ? >= fromDate)) ");
 
 			if (operatorName != null) {
 
@@ -585,10 +587,12 @@ public class APIDAO {
 			preparedStatement = connection.prepareStatement(queryBuilder.toString());
 			preparedStatement.setString(1, serviceProvider.toLowerCase());
 			preparedStatement.setString(2, application.toLowerCase());
+			preparedStatement.setString(3, sqlDate);
+			preparedStatement.setString(4, sqlDate);
 
 			if (operatorName != null) {
 
-				preparedStatement.setString(3, operatorName.toLowerCase());
+				preparedStatement.setString(5, operatorName.toLowerCase());
 			}
 			log.debug("applicationLimit ==========================>"+preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
@@ -606,7 +610,7 @@ public class APIDAO {
 		return applicationLimit;
 	}
 
-	public Integer spLimit(String serviceProvider, String operatorName, Integer year, Integer month) {
+	public Integer spLimit(String serviceProvider, String operatorName, Integer year, Integer month, String sqlDate) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -616,7 +620,7 @@ public class APIDAO {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
 			StringBuilder queryBuilder = new StringBuilder();
 
-			queryBuilder.append("SELECT quota_limit FROM " + DatabaseTables.SP_QUOTA_LIMIT + "  WHERE serviceProvider = ?");
+			queryBuilder.append("SELECT quota_limit FROM " + DatabaseTables.SP_QUOTA_LIMIT + "  WHERE serviceProvider = ?  AND ((? <= toDate and ? >= fromDate)) ");
 
 			if (operatorName != null) {
 
@@ -631,10 +635,11 @@ public class APIDAO {
 
 			preparedStatement = connection.prepareStatement(queryBuilder.toString());
 			preparedStatement.setString(1, serviceProvider.toLowerCase());
-
+			preparedStatement.setString(2, sqlDate);
+			preparedStatement.setString(3, sqlDate);
 			if (operatorName != null) {
 
-				preparedStatement.setString(2, operatorName.toLowerCase());
+				preparedStatement.setString(4, operatorName.toLowerCase());
 			}
 			log.debug("spLimit ==========================>"+preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
@@ -652,7 +657,7 @@ public class APIDAO {
 		return spLimit;
 	}
 
-	
+
 
 
 	public Integer groupByApi(String sp,String app, String api, String operatorName, int year, int month){
@@ -665,7 +670,7 @@ public class APIDAO {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_RATE_DB);
 			StringBuilder queryBuilder = new StringBuilder();
 			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE year='"+year+"' AND month='"+month+"' AND SERVICEPROVIDER = ? AND APPLICATIONID = ? AND API = ? ");
-			
+
 			if (operatorName != null) {
 				queryBuilder.append(" AND  DIRECTION = 'sb' ");
 			} else {
@@ -673,7 +678,7 @@ public class APIDAO {
 			}
 
 			queryBuilder.append(" group by API");
-			
+
 			preparedStatement = connection.prepareStatement(queryBuilder.toString());
 			preparedStatement.setString(1, sp.toLowerCase());
 			preparedStatement.setString(2, app);
@@ -694,8 +699,8 @@ public class APIDAO {
 			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
 		}
 		return currentQuotaLimit;
-	}	
-	
+	}
+
 	public Integer groupByApp(String sp,String app, String operatorName, int year, int month){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -706,7 +711,7 @@ public class APIDAO {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_RATE_DB);
 			StringBuilder queryBuilder = new StringBuilder();
 			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE year='"+year+"' AND month='"+month+"' AND SERVICEPROVIDER = ? AND APPLICATIONID = ? ");
-			
+
 			if (operatorName != null) {
 				queryBuilder.append(" AND  DIRECTION = 'sb' ");
 			} else {
@@ -745,7 +750,7 @@ public class APIDAO {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_RATE_DB);
 			StringBuilder queryBuilder = new StringBuilder();
 			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE year='"+year+"' AND month='"+month+"' AND SERVICEPROVIDER = ?");
-			
+
 			if (operatorName != null) {
 				queryBuilder.append(" AND  DIRECTION = 'sb' ");
 			} else {
