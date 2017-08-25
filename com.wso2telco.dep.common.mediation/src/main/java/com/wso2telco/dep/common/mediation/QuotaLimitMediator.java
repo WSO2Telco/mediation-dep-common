@@ -67,7 +67,7 @@ public class QuotaLimitMediator extends AbstractMediator {
 				//}else {
 				try {
 		            QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName,year,month,sqlDate);
-		            if (quotaLimit.getApiLimit()!=null || quotaLimit.getSpLimit()!=null || quotaLimit.getAppLimit()!=null) {
+		            if (!(quotaLimit.getApiLimit()!=null || quotaLimit.getSpLimit()!=null || quotaLimit.getAppLimit()!=null)) {
 						return true;
 					}else{
 			            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,year,month,quotaLimit);
