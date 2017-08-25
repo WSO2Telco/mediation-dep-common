@@ -189,25 +189,25 @@ public class APIService {
  		return currentQuotaLimit;
 	}
 
-	public Integer spLimit(String serviceProvider, String operatorName,Integer year,Integer month)  throws Exception{
+	public Integer spLimit(String serviceProvider, String operatorName,Integer year,Integer month, String sqlDate)  throws Exception{
 		try {
-			 return apiDAO.spLimit(serviceProvider, operatorName,year,month);
+			 return apiDAO.spLimit(serviceProvider, operatorName,year,month,sqlDate);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	public Integer applicationLimit(String serviceProvider, String application,String operatorName,Integer year,Integer month) throws Exception {
+	public Integer applicationLimit(String serviceProvider, String application,String operatorName,Integer year,Integer month, String sqlDate) throws Exception {
 		try {
-			 return apiDAO.applicationLimit(serviceProvider, application, operatorName,year,month);
+			 return apiDAO.applicationLimit(serviceProvider, application, operatorName,year,month,sqlDate);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	public Integer apiLimit(String serviceProvider, String application,String apiName, String operatorName,Integer year,Integer month)  throws Exception{
+	public Integer apiLimit(String serviceProvider, String application,String apiName, String operatorName,Integer year,Integer month, String sqlDate)  throws Exception{
 		try {
-			 return apiDAO.apiLimit(serviceProvider, application, apiName, operatorName,year,month);
+			 return apiDAO.apiLimit(serviceProvider, application, apiName, operatorName,year,month,sqlDate);
 		} catch (Exception e) {
 			throw e;
 		}
