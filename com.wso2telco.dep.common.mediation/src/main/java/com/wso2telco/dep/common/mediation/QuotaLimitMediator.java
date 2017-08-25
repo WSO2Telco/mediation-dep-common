@@ -1,6 +1,7 @@
 package com.wso2telco.dep.common.mediation;
 
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,6 +17,7 @@ import org.apache.synapse.mediators.AbstractMediator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.wso2telco.dep.common.mediation.quotalimit.InQuotaDateRange;
 import com.wso2telco.dep.common.mediation.quotalimit.QuotaLimits;
 import com.wso2telco.dep.common.mediation.service.APIService;
 import com.wso2telco.dep.common.mediation.util.AttributeName;
@@ -57,8 +59,12 @@ public class QuotaLimitMediator extends AbstractMediator {
 			int year = calendar.get(Calendar.YEAR);
 			int month = calendar.get(Calendar.MONTH) + 1;
 
-			APIService apiService = new APIService();
-
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String sqlDate = sdf.format(date);
+            InQuotaDateRange inQuotaDateRange=inQuotaDateRange(serviceProvider,application,apiName,operatorName,sqlDate);
+				if (!(inQuotaDateRange.getInApiQuotaDateRange() || inQuotaDateRange.getInAppQuotaDateRange() || inQuotaDateRange.getInSpQuotaDateRange())) {
+					return true;
+				}else {
 				try {
 		            QuotaLimits quotaLimit=checkQuotaLimit(serviceProvider,application,apiName,operatorName,year,month);
 		            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,year,month,quotaLimit);
@@ -86,9 +92,13 @@ public class QuotaLimitMediator extends AbstractMediator {
 		            log.error("Error occurred while calling QuotaLimitCheckMediator" ,e);
 		            setErrorInContext(messageContext,"SVC0001","A service error occurred. Error code is %1","An internal service error has occured. Please try again later.","500", "SERVICE_EXCEPTION");
 		        }
+
+				    return true;
 			}
 
+        }else {
         return true;
+    }
     }
 
 
@@ -129,7 +139,6 @@ public class QuotaLimitMediator extends AbstractMediator {
     	   return quotaEnabler;
     	}
 
-	@SuppressWarnings("null")
 	public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName, int year, int month, QuotaLimits quotaLimits) throws Exception {
 
 		QuotaLimits currentQuotaLimit=new QuotaLimits();
@@ -165,7 +174,35 @@ public class QuotaLimitMediator extends AbstractMediator {
 		}
 
 		return quotaLimits;
+    }
 
+
+    private InQuotaDateRange inQuotaDateRange(String serviceProvider,String application, String apiName, String operatorName,String sqlDate)  {
+    	InQuotaDateRange inQuotaDateRange=new InQuotaDateRange();
+        if (serviceProvider != null) {
+        	try {
+        		inQuotaDateRange.setInSpQuotaDateRange(APIService.inSPQuotaDateRange(serviceProvider,operatorName,sqlDate));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        }
+
+        if (serviceProvider != null && application != null) {
+        	try {
+        		inQuotaDateRange.setInAppQuotaDateRange(APIService.inAPPQuotaDateRange(serviceProvider,application, operatorName,sqlDate));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        }
+
+        if (serviceProvider != null && application != null && apiName != null) {
+        	try {
+        		inQuotaDateRange.setInApiQuotaDateRange(APIService.inAPIQuotaDateRange(serviceProvider,application, apiName, operatorName,sqlDate));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        }
+        return inQuotaDateRange;
 	}
 
     private void setErrorInContext(MessageContext synContext, String messageId,String errorText, String errorVariable, String httpStatusCode,String exceptionType) {
