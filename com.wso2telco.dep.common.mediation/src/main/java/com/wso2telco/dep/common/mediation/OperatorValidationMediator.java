@@ -76,7 +76,7 @@ public class OperatorValidationMediator extends AbstractMediator {
 		synContext.setProperty("OPERATOR_VALIDATED", "true");
 		
 		String validOperatorList = "";
-		for(OperatorApplicationDTO operatorObject : validoperators) {
+		for(OperatorApplicationDTO operatorObject : validoperatorsDup) {
 			if(!"".equals(validOperatorList)) {
 				validOperatorList += ",";
 			}
