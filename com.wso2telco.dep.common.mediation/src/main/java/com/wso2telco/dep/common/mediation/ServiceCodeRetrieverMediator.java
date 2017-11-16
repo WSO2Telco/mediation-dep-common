@@ -32,6 +32,7 @@ public class ServiceCodeRetrieverMediator extends AbstractMediator {
 		try {
 			String operatorName = (String) context.getProperty(ContextPropertyName.OPERATOR);
 			String serviceName = (String) context.getProperty(ContextPropertyName.SERVICE_NAME);
+			String serviceCodeRequest = (String) context.getProperty(ContextPropertyName.SERVICE_CODE);
 
 			APIService apiService = new APIService();
 
@@ -44,6 +45,14 @@ public class ServiceCodeRetrieverMediator extends AbstractMediator {
 						"No valid service code available for the service name provided.",
 						String.valueOf(HttpStatus.SC_BAD_REQUEST), ExceptionType.SERVICE_EXCEPTION.toString());
 			} else {
+				if (serviceCodeRequest != null) {
+					if (!serviceCodeRequest.equals(serviceCode)) {
+						context.setProperty(ContextPropertyName.ENDPOINT_ERROR, "true");
+						setErrorInContext(context, ServiceErrorCode.SVC0001, null,
+								"Requested service code doesn't match with the service code from service name.",
+								String.valueOf(HttpStatus.SC_BAD_REQUEST), ExceptionType.SERVICE_EXCEPTION.toString());
+					}
+				}
 				context.setProperty(ContextPropertyName.SERVICE_CODE, serviceCode);
 			}
 
