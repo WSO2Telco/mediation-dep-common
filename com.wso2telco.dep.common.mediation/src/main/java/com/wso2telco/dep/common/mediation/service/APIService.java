@@ -152,7 +152,6 @@ public class APIService {
 	}
 
 	public boolean isWhiteListed(String MSISDN, String applicationId,String subscriptionId, String apiId) throws Exception {
-		MSISDN = "tel3A+" + MSISDN;
 		return apiDAO.checkWhiteListed(MSISDN, applicationId, subscriptionId,apiId);
 	}
 
