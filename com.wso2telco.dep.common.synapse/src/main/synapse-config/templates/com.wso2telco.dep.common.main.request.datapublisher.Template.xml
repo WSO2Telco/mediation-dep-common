@@ -28,6 +28,11 @@
 				</class>
 				<property expression="synapse:get-property('SYSTEM_TIME')" name="REQUEST_TIME" scope="default" type="STRING"/>
 				<property expression="json-eval($.)" name="JSON_BODY" scope="default" type="STRING"/>
+
+				<filter regex="sb" source="$func:direction">
+					<property name="sbAction" value="true"/>
+				</filter>
+
 				<publishEvent>
 					<eventSink>GatewayAnalyticsEvent</eventSink>
 					<streamName>org.wso2telco.analytics.hub.stream.requestStatistics</streamName>

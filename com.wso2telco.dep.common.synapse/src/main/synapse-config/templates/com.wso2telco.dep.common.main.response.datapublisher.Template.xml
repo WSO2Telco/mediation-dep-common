@@ -36,6 +36,10 @@
 						mc.setProperty('SERVICE_TIME', diff);
 					"/>
 				</class>
+
+				<filter xpath="boolean($ctx:sbAction)">
+					<property name="sbAction" action="remove"/>
+				</filter>
 				
 				<publishEvent>
 					<eventSink>GatewayAnalyticsEvent</eventSink>
