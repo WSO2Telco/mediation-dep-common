@@ -16,7 +16,8 @@
 		<filter regex="^(?i)(true)$" source="$ctx:dataPublishingEnabled">
 			<then>
 				<log level="custom">
-					<property value="Publishing Request Data" name="STATUS"/>					
+					<property value="Publishing Request Data" name="STATUS"/>
+					<property name="DIRECTION" expression="fn:concat($func:direction,' request')"/>
 				</log>
 				<!-- Generate API_ID from context and version -->
 				<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
