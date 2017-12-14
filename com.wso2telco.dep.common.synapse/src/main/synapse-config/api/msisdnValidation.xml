@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/services" name="msisdnValidation" xmlns="http://ws.apache.org/ns/synapse">
+  <resource
+    faultSequence="com.wso2telco.dep.common.response.unexpectedError.Sequence"
+    inSequence="com.wso2telco.dep.common.msisdnValidation.service.Sequence"
+    methods="POST" protocol="http" url-mapping="/msisdnValidation">
+    <outSequence>
+      <respond/>
+    </outSequence>
+  </resource>
+</api>

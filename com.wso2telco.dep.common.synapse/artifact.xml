@@ -107,4 +107,10 @@
     <artifact name="com.wso2telco.dep.common.quota.limit.Template" groupId="com.wso2telco.dep.common.template" version="2.1.3-SNAPSHOT" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/templates/com.wso2telco.dep.common.quota.limit.Template.xml</file>
     </artifact>
+    <artifact name="msisdnValidation" groupId="com.wso2telco.dep.common.api" version="2.1.3-SNAPSHOT" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/msisdnValidation.xml</file>
+    </artifact>
+    <artifact name="com.wso2telco.dep.common.msisdnValidation.service.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.1.3-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.msisdnValidation.service.Sequence.xml</file>
+    </artifact>
 </artifacts>
