@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence
+  name="com.wso2telco.dep.common.msisdnValidation.service.Sequence"
+  trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <property
+    expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
+    name="mediationConfig" scope="default" type="OM"/>
+  <property expression="$ctx:mediationConfig//msisdn_regex"
+    name="msisdnRegex" scope="default" type="STRING"/>
+  <property expression="$ctx:mediationConfig//msisdn_regex_num_grp"
+    name="msisdnRegexGroup" scope="default" type="STRING"/>
+  <property expression="$ctx:mediationConfig//msisdn_regex_prefix_grp"
+    name="msisdnPrefixGroup" scope="default" type="STRING"/>
+  <property expression="json-eval($.msisdnList)" name="MSISDN"
+    scope="default" type="STRING"/>
+  <property expression="fn:normalize-space($ctx:MSISDN)" group="1"
+    name="MSISDN" pattern="((^(?!null).*$)|(^(null).+$))"
+    scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <filter xmlns:ns="http://org.apache.synapse/xsd" xpath="not(boolean($ctx:MSISDN))">
+    <then>
+      <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+      <property name="messageId" scope="default" type="STRING" value="SVC0001"/>
+      <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+      <property name="errorText" scope="default" type="STRING" value="Missing mandatory parameter: msisdnList"/>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+    </then>
+    <else/>
+  </filter>
+  <log level="custom">
+    <property expression="$ctx:MSISDN" name="msisdn" xmlns:ns="http://org.apache.synapse/xsd"/>
+  </log>
+  <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
+    <property name="script" value="      var payload = mc.getPayloadJSON();      var isArray = Array.isArray(payload.msisdnList);      mc.setProperty('isArray', isArray);    "/>
+  </class>
+  <filter regex="^false" source="$ctx:isArray">
+    <then>
+      <property name="httpStatusCode" scope="default" type="STRING" value="400"/>
+      <property name="messageId" scope="default" type="STRING" value="SVC0001"/>
+      <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+      <property name="errorText" scope="default" type="STRING" value="Input format must be Json Array!"/>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+    </then>
+    <else/>
+  </filter>
+  <filter regex="^true$" source="$ctx:INTERNAL_ERROR">
+    <then>
+      <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+    </then>
+    <else/>
+  </filter>
+  <class name="com.wso2telco.dep.common.mediation.MSISDValidationMediator"/>
+  <payloadFactory media-type="json">
+    <format>
+            {
+            "valid": $1,
+            "invalid": $2,
+            "validationRegex": "$3",
+            "prefixGroup": $4,
+            "digitsGroup": $5
+            }
+        </format>
+    <args>
+      <arg evaluator="xml" expression="$ctx:validMsisdns" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="$ctx:invalidMsisdns" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="$ctx:validationRegex" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="$ctx:validationPrefixGroup" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="$ctx:validationDigitsGroup" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </args>
+  </payloadFactory>
+  <respond/>
+</sequence>
