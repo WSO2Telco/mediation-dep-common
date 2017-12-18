@@ -3,6 +3,15 @@
     <log category="ERROR" level="full">
         <property name="ERROR" value="Unexpected error. Returning error response"/>
     </log>
+
+    <!--Publishing sb related error-->
+    <filter xpath="boolean($ctx:sbAction)">
+        <call-template target="com.wso2telco.dep.common.main.response.datapublisher.Template">
+            <with-param name="msisdn" value="{$ctx:MSISDN}"/>
+            <with-param name="direction" value="sb"/>
+        </call-template>
+    </filter>
+
     <property action="remove" name="TRANSPORT_HEADERS" scope="axis2"/>
     <property name="httpStatusCode" scope="default" type="STRING" value="500"/>
     <property name="exceptionType" scope="default" type="STRING" value="POLICY_EXCEPTION"/>
