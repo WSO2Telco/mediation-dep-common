@@ -16,7 +16,8 @@
 		<filter regex="^(?i)(true)$" source="$ctx:dataPublishingEnabled">
 			<then>
 				<log level="custom">
-					<property value="Publishing Request Data" name="STATUS"/>					
+					<property value="Publishing Request Data" name="STATUS"/>
+					<property name="DIRECTION" expression="fn:concat($func:direction,' request')"/>
 				</log>
 				<!-- Generate API_ID from context and version -->
 				<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
@@ -28,6 +29,11 @@
 				</class>
 				<property expression="synapse:get-property('SYSTEM_TIME')" name="REQUEST_TIME" scope="default" type="STRING"/>
 				<property expression="json-eval($.)" name="JSON_BODY" scope="default" type="STRING"/>
+
+				<filter regex="sb" source="$func:direction">
+					<property name="sbAction" value="true"/>
+				</filter>
+
 				<publishEvent>
 					<eventSink>GatewayAnalyticsEvent</eventSink>
 					<streamName>org.wso2telco.analytics.hub.stream.requestStatistics</streamName>
