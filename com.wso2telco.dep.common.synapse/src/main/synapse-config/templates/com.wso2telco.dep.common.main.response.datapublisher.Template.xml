@@ -16,7 +16,8 @@
 		<filter regex="^(?i)(true)$" source="$ctx:dataPublishingEnabled">
 			<then>
 				<log level="custom">
-					<property name="status" value="publishing response data"/>
+					<property name="STATUS" value="publishing response data"/>
+					<property name="DIRECTION" expression="fn:concat($func:direction,' response')"/>
 				</log>
 
 				<!-- Generate API_ID from context and version -->
@@ -36,6 +37,10 @@
 						mc.setProperty('SERVICE_TIME', diff);
 					"/>
 				</class>
+
+				<filter xpath="boolean($ctx:sbAction)">
+					<property name="sbAction" action="remove"/>
+				</filter>
 				
 				<publishEvent>
 					<eventSink>GatewayAnalyticsEvent</eventSink>
