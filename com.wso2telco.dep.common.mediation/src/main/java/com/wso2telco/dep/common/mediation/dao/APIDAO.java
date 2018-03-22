@@ -536,7 +536,7 @@ public class APIDAO {
 
 			preparedStatement = connection.prepareStatement(queryBuilder.toString());
 			preparedStatement.setString(1, serviceProvider.toLowerCase());
-			preparedStatement.setString(2, application.toLowerCase());
+			preparedStatement.setInt(2, Integer.parseInt(application));
 			preparedStatement.setString(3, apiName.toLowerCase());
 			preparedStatement.setString(4, sqlDate);
 			preparedStatement.setString(5, sqlDate);
@@ -586,7 +586,7 @@ public class APIDAO {
 
 			preparedStatement = connection.prepareStatement(queryBuilder.toString());
 			preparedStatement.setString(1, serviceProvider.toLowerCase());
-			preparedStatement.setString(2, application.toLowerCase());
+			preparedStatement.setInt(2, Integer.parseInt(application));
 			preparedStatement.setString(3, sqlDate);
 			preparedStatement.setString(4, sqlDate);
 
@@ -828,7 +828,7 @@ public class APIDAO {
 				}
 				preparedStatement = connection.prepareStatement(queryBuilder.toString());
 				preparedStatement.setString(1, serviceProvider.toLowerCase());
-				preparedStatement.setString(2, application.toLowerCase());
+				preparedStatement.setInt(2, Integer.parseInt(application));
 				preparedStatement.setString(3, sqlDate);
 				preparedStatement.setString(4, sqlDate);
 				if (operatorName != null) {
@@ -862,7 +862,7 @@ public class APIDAO {
 				}
 				preparedStatement = connection.prepareStatement(queryBuilder.toString());
 				preparedStatement.setString(1, serviceProvider.toLowerCase());
-				preparedStatement.setString(2, application.toLowerCase());
+				preparedStatement.setInt(2, Integer.parseInt(application));
 				preparedStatement.setString(3, apiName.toLowerCase());
 				preparedStatement.setString(4, sqlDate);
 				preparedStatement.setString(5, sqlDate);
