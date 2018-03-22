@@ -31,6 +31,7 @@ public class QuotaLimitMediator extends AbstractMediator {
     	String serviceProvider = null;
         String application = null;
         String apiName = null;
+        String apiVersion = null;
         String operatorName = null;
         String apiId = null; //payment:vv1
     	boolean isQuotaEnabled = false;
@@ -53,10 +54,9 @@ public class QuotaLimitMediator extends AbstractMediator {
 
 			serviceProvider=(String)messageContext.getProperty("USER_ID");
 			application=(String)messageContext.getProperty("APPLICATION_ID");
-			apiName=(String)messageContext.getProperty("API_NAME");
+			apiVersion=(String)messageContext.getProperty("VERSION");
+			apiName=(String)messageContext.getProperty("API_NAME") + ":" +apiVersion;
 			apiId=((String)messageContext.getProperty("API_VERSION")).replace(":","_");
-
-
 
 			Date date = new Date();
 			Calendar calendar = new GregorianCalendar();
