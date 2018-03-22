@@ -155,10 +155,10 @@ public class APIService {
 		return apiDAO.checkWhiteListed(MSISDN, applicationId, subscriptionId,apiId);
 	}
 
-	public Integer groupByApi(String sp, String app, String api, String operatorName, int year, int month) throws Exception {
+	public Integer groupByApi(String sp, String app, String apiId, String operatorName, int year, int month) throws Exception {
 		Integer currentQuotaLimit=null;
 		try {
-			currentQuotaLimit=apiDAO.groupByApi(sp, app, api, operatorName,year,month);
+			currentQuotaLimit=apiDAO.groupByApi(sp, app, apiId, operatorName,year,month);
  		} catch (Exception e) {
  			e.printStackTrace();
  		}

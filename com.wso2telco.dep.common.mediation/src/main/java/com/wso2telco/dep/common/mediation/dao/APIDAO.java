@@ -660,7 +660,7 @@ public class APIDAO {
 
 
 
-	public Integer groupByApi(String sp,String app, String api, String operatorName, int year, int month){
+	public Integer groupByApi(String sp,String app, String apiId, String operatorName, int year, int month){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -669,7 +669,7 @@ public class APIDAO {
 		try {
 			connection = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_RATE_DB);
 			StringBuilder queryBuilder = new StringBuilder();
-			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE year='"+year+"' AND month='"+month+"' AND SERVICEPROVIDER = ? AND APPLICATIONID = ? AND API = ? ");
+			queryBuilder.append("SELECT SUM(TOTALCOUNT) AS QUOTA_COUNT FROM " + DatabaseTables.CURRENT_QUOTA_LIMIT + "  WHERE year='"+year+"' AND month='"+month+"' AND SERVICEPROVIDER = ? AND APPLICATIONID = ? AND APIID = ? ");
 
 			if (operatorName != null) {
 				queryBuilder.append(" AND  DIRECTION = 'sb' ");
@@ -682,7 +682,7 @@ public class APIDAO {
 			preparedStatement = connection.prepareStatement(queryBuilder.toString());
 			preparedStatement.setString(1, sp.toLowerCase());
 			preparedStatement.setString(2, app);
-			preparedStatement.setString(3, api);
+			preparedStatement.setString(3, apiId);
 
 			/*if (operatorName != null) {
 				preparedStatement.setString(4, operatorName.toUpperCase());

@@ -32,6 +32,7 @@ public class QuotaLimitMediator extends AbstractMediator {
         String application = null;
         String apiName = null;
         String operatorName = null;
+        String apiId = null; //payment:vv1
     	boolean isQuotaEnabled = false;
 
     	String direction=null;
@@ -53,6 +54,10 @@ public class QuotaLimitMediator extends AbstractMediator {
 			serviceProvider=(String)messageContext.getProperty("USER_ID");
 			application=(String)messageContext.getProperty("APPLICATION_ID");
 			apiName=(String)messageContext.getProperty("API_NAME");
+			apiId=((String)messageContext.getProperty("API_VERSION")).replace(":","_");
+
+
+
 			Date date = new Date();
 			Calendar calendar = new GregorianCalendar();
 			calendar.setTime(date);
@@ -70,7 +75,7 @@ public class QuotaLimitMediator extends AbstractMediator {
 		            if (!(quotaLimit.getApiLimit()!=null || quotaLimit.getSpLimit()!=null || quotaLimit.getAppLimit()!=null)) {
 						return true;
 					}else{
-			            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiName,operatorName,year,month,quotaLimit);
+			            QuotaLimits currentQuotaLimit=currentQuotaLimit(serviceProvider,application,apiId,operatorName,year,month,quotaLimit);
 						Integer spLimit=currentQuotaLimit.getSpLimit();
 			            if (quotaLimit.getSpLimit()!=null && spLimit!=null) {
 						    if (quotaLimit.getSpLimit()<=spLimit) {
@@ -139,13 +144,13 @@ public class QuotaLimitMediator extends AbstractMediator {
     	   return quotaEnabler;
     	}
 
-	public QuotaLimits currentQuotaLimit(String sp,String app, String api, String operatorName, int year, int month, QuotaLimits quotaLimits) throws Exception {
+	public QuotaLimits currentQuotaLimit(String sp,String app, String apiId, String operatorName, int year, int month, QuotaLimits quotaLimits) throws Exception {
 
 		QuotaLimits currentQuotaLimit=new QuotaLimits();
 		APIService apiService = new APIService();
 
 		if (quotaLimits.getApiLimit() != null) {
-			currentQuotaLimit.setApiLimit(apiService.groupByApi(sp,app, api, operatorName,year,month));
+			currentQuotaLimit.setApiLimit(apiService.groupByApi(sp,app, apiId, operatorName,year,month));
 		}
 		if (quotaLimits.getAppLimit() !=null){
 			currentQuotaLimit.setAppLimit(apiService.groupByApplication(sp,app,operatorName,year,month));
