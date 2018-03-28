@@ -23,4 +23,8 @@
 	</validationConfig>
 	<data_publishing_enabled>false</data_publishing_enabled>
 	<quota_limit_enabled>false</quota_limit_enabled>
+
+	<appendTokenHeader>false</appendTokenHeader>
+	<!-- This must be set if above is true -->
+	<tokenHeaderName></tokenHeaderName>
 </mediationConfig>

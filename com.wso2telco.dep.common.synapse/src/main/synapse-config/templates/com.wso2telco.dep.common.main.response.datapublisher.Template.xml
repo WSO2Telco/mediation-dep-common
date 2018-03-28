@@ -29,6 +29,17 @@
 					"/>
 				</class>
 
+				<property expression="$func:msisdn" name="msisdn"/>
+				<property expression="$ctx:mediationConfig//appendTokenHeader" name="appendTokenHeader" scope="default" type="STRING"/>
+
+				<filter regex="^(?i)(true)$" source="$ctx:appendTokenHeader">
+					<then>
+						<property expression="$ctx:mediationConfig//tokenHeaderName" name="tokenHeaderName" scope="default" type="STRING"/>
+						<class name="com.wso2telco.dep.common.mediation.HeaderAppendMediator"/>
+					</then>
+					<else/>
+				</filter>
+
 				<property expression="synapse:get-property('SYSTEM_TIME')" name="RESPONSE_TIME" scope="default" type="STRING"/>
 				<property expression="json-eval($.)" name="JSON_BODY" scope="default" type="STRING"/>
 				<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
@@ -70,7 +81,7 @@
 							<attribute defaultValue="" expression="$ctx:REQUEST_ID" name="requestId" type="STRING"/>
 							<attribute defaultValue="" expression="$ctx:OPERATOR_ID" name="operatorId" type="STRING"/>
 							<attribute defaultValue="" expression="$axis2:HTTP_SC" name="apiPublisher" type="STRING"/>
-							<attribute defaultValue="" expression="fn:normalize-space($func:msisdn)" name="msisdn" type="STRING"/>
+							<attribute defaultValue="" expression="fn:normalize-space($ctx:msisdn)" name="msisdn" type="STRING"/>
 							<attribute defaultValue="" expression="fn:normalize-space($func:direction)" name="direction" type="STRING"/>
 							<attribute defaultValue="" expression="$ctx:JSON_BODY" name="jsonBody" type="STRING"/>
 							<attribute defaultValue="" expression="$ctx:USER_ID" name="serviceProviderId" type="STRING"/>
