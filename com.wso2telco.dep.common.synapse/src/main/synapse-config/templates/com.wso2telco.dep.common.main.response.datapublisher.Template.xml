@@ -53,7 +53,7 @@
 					<property name="sbAction" action="remove"/>
 				</filter>
 				
-				<publishEvent>
+				<notifyEvent>
 					<eventSink>GatewayAnalyticsEvent</eventSink>
 					<streamName>org.wso2telco.analytics.hub.stream.responseStatistics</streamName>
 					<streamVersion>1.0.0</streamVersion>
@@ -95,7 +95,7 @@
 						</payload>
 						<arbitrary/>
 					</attributes>
-				</publishEvent>
+				</notifyEvent>
 			</then>
 		</filter>
 	</sequence>

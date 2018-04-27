@@ -46,7 +46,7 @@
 					<property name="sbAction" value="true"/>
 				</filter>
 
-				<publishEvent>
+				<notifyEvent>
 					<eventSink>GatewayAnalyticsEvent</eventSink>
 					<streamName>org.wso2telco.analytics.hub.stream.requestStatistics</streamName>
 					<streamVersion>1.0.0</streamVersion>
@@ -87,7 +87,7 @@
 						</payload>
 						<arbitrary/>
 					</attributes>
-				</publishEvent>
+				</notifyEvent>
 			</then>
 			<else/>
 		</filter>
