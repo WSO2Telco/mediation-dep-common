@@ -1,4 +1,4 @@
-package com.wso2telco.dep.mediator;
+package com.wso2telco.dep.common.mediation;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -60,7 +60,15 @@ public class XmlAlterMediator extends AbstractMediator {
 	            firstChild.insertSiblingAfter(omXML);
 	            firstChild.detach();
 	        }
-		} catch (ParserConfigurationException|SAXException|IOException|XMLStreamException|TransformerException e) {
+		} catch (ParserConfigurationException e) {
+			log.error(e.getMessage());
+		} catch (SAXException e) {
+			log.error(e.getMessage());
+		} catch (IOException e) {
+			log.error(e.getMessage());
+		} catch (XMLStreamException e) {
+			log.error(e.getMessage());
+		} catch (TransformerException e) {
 			log.error(e.getMessage());
 		}
 		return true;
