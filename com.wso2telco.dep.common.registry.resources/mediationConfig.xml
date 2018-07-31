@@ -9,10 +9,10 @@
 		<enable>false</enable>
 		<url>http://localhost:8181/tokenservice</url>
 	</tokenPoolService>
-	<msisdn_regex>^((((tel:){1}(\+){0,1})|((tel:){0,1}(\+){1}))([a-zA-Z0-9]+))$</msisdn_regex>	
+	<msisdn_regex>^(((((tel:){1}(\+){0,1})|((tel:){0,1}(\+){0,1}))([a-zA-Z0-9]+)))$</msisdn_regex>	
 	<!-- This is to take the numeric value out by dropping the prefix. please change it to the regex group which identifies the number -->
-	<msisdn_regex_num_grp>9</msisdn_regex_num_grp>
-	<msisdn_regex_prefix_grp>2</msisdn_regex_prefix_grp>
+	<msisdn_regex_num_grp>10</msisdn_regex_num_grp>
+	<msisdn_regex_prefix_grp>3</msisdn_regex_prefix_grp>
 	<logging_extension_enabled>false</logging_extension_enabled>
 	<payload_logging_enabled>false</payload_logging_enabled>
 	<validationConfig>
