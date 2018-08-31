@@ -21,7 +21,7 @@
 		<mncLength>2</mncLength>
 		<imsiLength>15</imsiLength>
 	</validationConfig>
-	<data_publishing_enabled>false</data_publishing_enabled>
+	<data_publishing>log</data_publishing>
 	<quota_limit_enabled>false</quota_limit_enabled>
 
 	<appendTokenHeader>false</appendTokenHeader>
