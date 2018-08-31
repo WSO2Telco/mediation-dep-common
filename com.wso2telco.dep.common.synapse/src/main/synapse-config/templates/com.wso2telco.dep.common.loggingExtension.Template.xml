@@ -92,6 +92,23 @@
                             <else/>
                         </filter>
                     </case>
+                    <case regex="FAULTIN">
+                        <property
+                                expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] &lt;&lt;&lt;&lt;&lt; API Request id ', $ctx:requestIdForLogging)"
+                                name="requestDetails" scope="default" type="STRING"/>
+                        <log level="custom">
+                            <property
+                                    expression="get-property('requestDetails')" name="###EXECUTING FAULT scenario-commonFault ###"/>
+                        </log>
+                        <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
+                            <then>
+                                <log level="custom">
+                                    <property expression="json-eval($.)" name="###EXECUTING FAULT scenario-commonFault### &lt;&lt;&lt;&lt;&lt; respBody Out:"/>
+                                </log>
+                            </then>
+                            <else/>
+                        </filter>
+                    </case>
                     <default>
                         <log category="ERROR" description="" level="custom">
                             <property name="Log Extension Sequence" expression="fn:concat('Invalid Direction for request/response details logging. Direction: ', $ctx:direction)"/>
