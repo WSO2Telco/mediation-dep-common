@@ -21,7 +21,7 @@
 		<mncLength>2</mncLength>
 		<imsiLength>15</imsiLength>
 	</validationConfig>
-	<data_publishing>log</data_publishing>
+	<data_publishing>hybrid</data_publishing>
 	<quota_limit_enabled>false</quota_limit_enabled>
 
 	<appendTokenHeader>false</appendTokenHeader>

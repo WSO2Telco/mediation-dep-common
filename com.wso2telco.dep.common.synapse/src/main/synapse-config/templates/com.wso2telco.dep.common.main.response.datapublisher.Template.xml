@@ -13,7 +13,7 @@
         <property expression="$ctx:mediationConfig//data_publishing"
             name="dataPublishing" scope="default" type="STRING"
             xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns2="http://org.apache.synapse/xsd"/>
-        <filter regex="^(?i)(none|log|agent)$"
+        <filter regex="^(?i)(none|log|agent|hybrid)$"
             source="$ctx:dataPublishing"
             xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns2="http://org.apache.synapse/xsd">
             <then/>
@@ -22,7 +22,7 @@
                     type="STRING" value="none"/>
             </else>
         </filter>
-        <filter regex="^(?i)(log)$" source="$ctx:dataPublishing"
+        <filter regex="^(?i)(log|hybrid)$" source="$ctx:dataPublishing"
             xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns2="http://org.apache.synapse/xsd">
             <then>
                 <log level="custom">
@@ -34,7 +34,8 @@
                 <class name="com.wso2telco.logging.PropertyLogHandlerESB"/>
             </then>
         </filter>
-        <filter regex="^(?i)(agent)$" source="$ctx:dataPublishing"
+	 
+        <filter regex="^(?i)(agent|hybrid)$" source="$ctx:dataPublishing"
             xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns2="http://org.apache.synapse/xsd">
             <then>
                 <log level="custom">
