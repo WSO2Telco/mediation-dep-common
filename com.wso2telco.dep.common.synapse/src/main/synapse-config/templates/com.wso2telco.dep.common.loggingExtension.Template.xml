@@ -72,6 +72,9 @@
                         <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
                             <then>
                                 <log level="custom">
+                                    <property expression="get-property('axis2', 'HTTP_SC')" name="###RESPONSE_INFO### &lt;&lt;&lt;&lt;&lt; HTTP_STATUS_CODE" scope="default" type="STRING"/>
+                                </log>
+                                <log level="custom">
                                     <property expression="json-eval($.)" name="###RESPONSE_INFO### &lt;&lt;&lt;&lt;&lt; respBody In:"/>
                                 </log>
                             </then>
@@ -97,11 +100,13 @@
                                 expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] &lt;&lt;&lt;&lt;&lt; API Request id ', $ctx:requestIdForLogging)"
                                 name="requestDetails" scope="default" type="STRING"/>
                         <log level="custom">
-                            <property
-                                    expression="get-property('requestDetails')" name="###EXECUTING FAULT scenario-commonFault ###"/>
+                            <property expression="get-property('requestDetails')" name="###EXECUTING FAULT scenario-commonFault ###"/>
                         </log>
                         <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
                             <then>
+                                <log level="custom">
+                                    <property expression="get-property('axis2', 'HTTP_SC')" name="###EXECUTING FAULT scenario-commonFault### &lt;&lt;&lt;&lt;&lt; HTTP_STATUS_CODE" scope="default" type="STRING"/>
+                                </log>
                                 <log level="custom">
                                     <property expression="json-eval($.)" name="###EXECUTING FAULT scenario-commonFault### &lt;&lt;&lt;&lt;&lt; respBody Out:"/>
                                 </log>
