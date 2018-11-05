@@ -23,13 +23,17 @@
                 <property value="false" name="loggingExtensionEnabled" scope="default" type="STRING"/>
             </else>
         </filter>
-        
-        <filter xpath="boolean($ctx:REQUEST_ID)">
-        	<then>
-        		<property expression="$ctx:REQUEST_ID" name="requestIdForLogging" scope="default" type="STRING"/>
-        	</then>
+        <filter xpath="boolean($ctx:requestIdForLogging)">
+        	<then/>
         	<else>
-        		<property expression="$trp:REQUEST_ID" name="requestIdForLogging" scope="default" type="STRING"/>
+        		<filter xpath="boolean($ctx:REQUEST_ID)">
+		        	<then>
+		        		<property expression="$ctx:REQUEST_ID" name="requestIdForLogging" scope="default" type="STRING"/>
+		        	</then>
+		        	<else>
+		        		<property expression="$trp:REQUEST_ID" name="requestIdForLogging" scope="default" type="STRING"/>
+		        	</else>
+	        	</filter>
         	</else>
         </filter>
 
