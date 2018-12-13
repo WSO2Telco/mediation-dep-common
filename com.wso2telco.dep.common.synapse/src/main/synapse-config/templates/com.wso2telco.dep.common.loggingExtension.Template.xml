@@ -41,28 +41,30 @@
             <then>
                 <switch source="$ctx:direction">
                     <case regex="REQUESTIN">
-                        <property expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] >>>>> API Request id ', $ctx:requestIdForLogging)" name="requestDetails" scope="default" type="STRING"/>
+                        <property expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] >>>>> API Request id:', $ctx:requestIdForLogging)" name="requestDetails" scope="default" type="STRING"/>
                         <log level="custom">
                             <property expression="get-property('requestDetails')" name="###REQUESTIN_INFO###"/>
                         </log>
                         <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
                             <then>
+                            	<property expression="json-eval($.)" name="reqData" scope="default" type="STRING"/>
                                 <log level="custom">
-                                    <property expression="json-eval($.)" name="###REQUESTIN_INFO### >>>>> reqBody In:"/>
+                                    <property expression="fn:concat(get-property('requestDetails'), ' >>>>> API Request body:', get-property('reqData'))" name="###REQUESTIN_INFO### >>>>> Request In:"/>
                                 </log>
                             </then>
                             <else/>
                         </filter>
                     </case>
                     <case regex="REQUESTOUT">
-                        <property expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] >>>>> API Request id ', $ctx:requestIdForLogging)" name="requestDetails" scope="default" type="STRING"/>
+                        <property expression="fn:concat('[',get-property('SYSTEM_DATE','yyyy-MM-dd HH:mm:ss'),'] >>>>> API Request id:', $ctx:requestIdForLogging)" name="requestDetails" scope="default" type="STRING"/>
                         <log level="custom">
                             <property expression="get-property('requestDetails')" name="###REQUESTOUT_INFO###"/>
                         </log>
                         <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
                             <then>
+                            	<property expression="json-eval($.)" name="reqData" scope="default" type="STRING"/>
                                 <log level="custom">
-                                    <property expression="json-eval($.)" name="###REQUESTOUT_INFO### >>>>> reqBody Out:"/>
+                                    <property expression="fn:concat(get-property('requestDetails'), ' >>>>> API Request body:', get-property('reqData'))" name="###REQUESTOUT_INFO### >>>>> request Out:"/>
                                 </log>
                             </then>
                             <else/>
@@ -75,11 +77,12 @@
                         </log>
                         <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
                             <then>
+                            	<property expression="json-eval($.)" name="respData" scope="default" type="STRING"/>
                                 <log level="custom">
-                                    <property expression="get-property('axis2', 'HTTP_SC')" name="###RESPONSEIN_INFO### &lt;&lt;&lt;&lt;&lt; HTTP_STATUS_CODE" scope="default" type="STRING"/>
+                                    <property expression="fn:concat(get-property('requestDetails'), get-property('axis2', 'HTTP_SC'))" name="###RESPONSEIN_INFO### &lt;&lt;&lt;&lt;&lt; HTTP_STATUS_CODE" scope="default" type="STRING"/>
                                 </log>
                                 <log level="custom">
-                                    <property expression="json-eval($.)" name="###RESPONSEIN_INFO### &lt;&lt;&lt;&lt;&lt; respBody In:"/>
+                                    <property expression="fn:concat(get-property('requestDetails'), ' >>>>> API Response body:', get-property('respData'))" name="###RESPONSEIN_INFO### &lt;&lt;&lt;&lt;&lt; response In:"/>
                                 </log>
                             </then>
                             <else/>
@@ -92,8 +95,9 @@
                         </log>
                         <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
                             <then>
+                            	<property expression="json-eval($.)" name="respData" scope="default" type="STRING"/>
                                 <log level="custom">
-                                    <property expression="json-eval($.)" name="###RESPONSEOUT_INFO### &lt;&lt;&lt;&lt;&lt; respBody Out:"/>
+                                    <property expression="fn:concat(get-property('requestDetails'), ' >>>>> API Response body:', get-property('respData'))" name="###RESPONSEOUT_INFO### &lt;&lt;&lt;&lt;&lt; response Out:"/>
                                 </log>
                             </then>
                             <else/>
@@ -108,11 +112,12 @@
                         </log>
                         <filter regex="^(?i)(true)$" source="get-property('payloadLoggingEnabled')">
                             <then>
+                            	<property expression="json-eval($.)" name="faultData" scope="default" type="STRING"/>
                                 <log level="custom">
-                                    <property expression="get-property('axis2', 'HTTP_SC')" name="###EXECUTING FAULT scenario-commonFault### &lt;&lt;&lt;&lt;&lt; HTTP_STATUS_CODE" scope="default" type="STRING"/>
+                                    <property expression="fn:concat(get-property('requestDetails'), get-property('axis2', 'HTTP_SC'))" name="###EXECUTING FAULT scenario-commonFault### &lt;&lt;&lt;&lt;&lt; HTTP_STATUS_CODE" scope="default" type="STRING"/>
                                 </log>
                                 <log level="custom">
-                                    <property expression="json-eval($.)" name="###EXECUTING FAULT scenario-commonFault### &lt;&lt;&lt;&lt;&lt; respBody Out:"/>
+                                    <property expression="fn:concat(get-property('requestDetails'), ' >>>>> API Response body:', get-property('faultData'))" name="###EXECUTING FAULT scenario-commonFault### &lt;&lt;&lt;&lt;&lt; response Out:"/>
                                 </log>
                             </then>
                             <else/>
