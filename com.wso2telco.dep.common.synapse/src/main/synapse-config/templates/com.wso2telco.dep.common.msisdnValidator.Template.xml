@@ -36,10 +36,24 @@
 
         <filter xpath="boolean($func:paramArray)">
           <then>
-            <property expression="$func:paramArray" name="errorVariable" scope="default" type="STRING"/>
+            <filter regex="true" source="get-property('USER_ANONYMIZATION')">
+              <then>
+                <property expression="get-property('MASKED_MSISDN_LIST')" name="errorVariable" scope="default" type="STRING"/>
+              </then>
+              <else>
+                <property expression="$func:paramArray" name="errorVariable" scope="default" type="STRING"/>
+              </else>
+            </filter>
           </then>
           <else>
-            <property expression="$func:paramValue" name="errorVariable" scope="default" type="STRING"/>
+            <filter regex="true" source="get-property('USER_ANONYMIZATION')">
+              <then>
+                <property expression="get-property('MASKED_MSISDN')" name="errorVariable" scope="default" type="STRING"/>
+              </then>
+              <else>
+                <property expression="$func:paramValue" name="errorVariable" scope="default" type="STRING"/>
+              </else>
+            </filter>
           </else>
         </filter>
 

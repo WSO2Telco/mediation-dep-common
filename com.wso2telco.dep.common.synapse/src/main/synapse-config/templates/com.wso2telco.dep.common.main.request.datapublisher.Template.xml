@@ -27,8 +27,14 @@
 						mc.setProperty('GENERATED_API_ID', generated_api_version);
 					"/>
 				</class>
-
-				<property expression="$func:msisdn" name="msisdn"/>
+				<filter regex="true" source="get-property('USER_ANONYMIZATION')">
+					<then>
+						<property expression="get-property('MASKED_MSISDN')" name="msisdn" />
+					</then>
+					<else>
+						<property expression="$func:msisdn" name="msisdn"/>
+					</else>
+				</filter>
 				<property expression="$ctx:mediationConfig//appendTokenHeader" name="appendTokenHeader" scope="default" type="STRING"/>
 
 				<filter regex="^(?i)(true)$" source="$ctx:appendTokenHeader">
