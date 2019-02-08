@@ -3,7 +3,10 @@ package com.wso2telco.dep.common.mediation;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.commons.json.JsonUtil;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
@@ -25,13 +28,15 @@ public class UtilMediator extends AbstractMediator {
 			switch (propertyValue) {
 
 			case Constant.propertyValues.CORRELATORCHANGE:
+				
 				JSONObject objClientCorrelator = getSubPayloadObject(propertyPath, jsonPayload,
 						Constant.JsonObject.CLIENTCORRELATOR);
 				objClientCorrelator.remove(Constant.JsonObject.CLIENTCORRELATOR);
 				objClientCorrelator.put(Constant.JsonObject.CLIENTCORRELATOR, synCtx.getProperty(msgContextProperty));
+				
 				JsonUtil.getNewJsonPayload(axis2MessageContext, jsonPayload.toString(), true, true);
 				break;
-
+				
 			case Constant.propertyValues.RESOURCEURLCHANGE:
 
 				String smsRetrieveResourceUrlPrefix = (String) synCtx
@@ -58,7 +63,37 @@ public class UtilMediator extends AbstractMediator {
 				synCtx.setProperty(Constant.messageContext.SEND_SMS_OPERATOR_REQUEST_ID, operatorRequestId);
 				JsonUtil.getNewJsonPayload(axis2MessageContext, jsonPayload.toString(), true, true);
 				break;
-
+				
+			case Constant.propertyValues.APIVERSIONCHANGE:
+				
+				String apiVersion = (String) synCtx.getProperty(Constant.messageContext.API_VERSION);
+				String generatedApiVersion = apiVersion.replace(':', '_');
+				
+				synCtx.setProperty(Constant.messageContext.GENERATED_API_ID, generatedApiVersion);
+				break;
+				
+			case Constant.propertyValues.MSISDNCHANGE:
+				
+				String paramValue = (String) synCtx.getProperty(Constant.messageContext.PARAMVALUE);
+				String regexp = (String) synCtx.getProperty(Constant.messageContext.MSISDNREGEX);
+				boolean isValidMsisdn = isValidMsisdn(paramValue,regexp);
+				
+				synCtx.setProperty(Constant.messageContext.ISVALIDMSISDN, isValidMsisdn);
+				break;
+				
+			case Constant.propertyValues.PARTIALREQUESTIDCHANGE:
+				 
+				 String requestID = (String) synCtx.getProperty(Constant.messageContext.REQUEST_ID);
+				 String splittedParts [] = StringUtils.split(requestID,":");
+				 String modifiedId = "";
+				 if(splittedParts.length > 3) {
+					 
+					  modifiedId = splittedParts[0] + ':' + splittedParts[1] + ':' + splittedParts[3];
+				 }
+				 
+				 synCtx.setProperty(Constant.messageContext.PARTIALREQUESTID, modifiedId);
+				 break;
+				 
 			case Constant.propertyValues.NOTIFYURLCHANGE:
 				JSONObject objNotifyUrl = getSubPayloadObject(propertyPath, jsonPayload, Constant.JsonObject.NOTIFYURL);
 
@@ -96,6 +131,19 @@ public class UtilMediator extends AbstractMediator {
 			ex.printStackTrace();
 		}
 		return objClientCorrelator;
+	}
+	
+	public boolean isValidMsisdn(String paramValue, String regexp) {
+
+		Pattern pattern;
+		Matcher matcher;
+
+		pattern = Pattern.compile(regexp);
+		matcher = pattern.matcher(paramValue);
+
+		boolean isValidMsisdn = matcher.matches();
+
+		return isValidMsisdn;
 	}
 	
 	private String propertyPath;
