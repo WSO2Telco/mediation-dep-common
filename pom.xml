@@ -122,6 +122,11 @@
         <artifactId>axis2</artifactId>
         <version>${apache.axis2.wso2.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.wso2telco.dep</groupId>
+        <artifactId>user-masking</artifactId>
+        <version>${com.wso2telco.dep.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <build>

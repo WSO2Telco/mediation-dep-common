@@ -432,7 +432,7 @@ public class APIDAO {
 		return -1;
 	}
 
-	public boolean checkWhiteListed(String MSISDN, String applicationId,
+	public boolean checkWhiteListed(String msisdn, String applicationId,
 			String subscriptionId, String apiId) throws Exception {
 
 		Connection connection = null;
@@ -467,23 +467,23 @@ public class APIDAO {
 			// "(`subscriptionID` = ? AND `msisdn` = ? AND `api_id` = ? AND `application_id` =  >) OR \n"
 			// +
 			preparedStatement.setString(1, subscriptionId);
-			preparedStatement.setString(2, MSISDN);
+			preparedStatement.setString(2, msisdn);
 			preparedStatement.setString(3, apiId);
 			preparedStatement.setString(4, applicationId);
 
 			// "(`subscriptionID` = null AND `msisdn` = ? AND `api_id` = ? AND `application_id` =  ?) OR\n"
-			preparedStatement.setString(5, MSISDN);
+			preparedStatement.setString(5, msisdn);
 			preparedStatement.setString(6, apiId);
 			preparedStatement.setString(7, applicationId);
 
 			// "(`subscriptionID` = ? AND `msisdn` = ? AND `api_id` = null AND `application_id` =  null) OR \n"
 			// +
 			preparedStatement.setString(8, subscriptionId);
-			preparedStatement.setString(9, MSISDN);
+			preparedStatement.setString(9, msisdn);
 
 			// "(`subscriptionID` = null AND `msisdn` = ? AND `api_id` = null AND `application_id` =  ?) OR \n"
 			// +
-			preparedStatement.setString(10, MSISDN);
+			preparedStatement.setString(10, msisdn);
 			preparedStatement.setString(11, applicationId);
 
 			// "(`subscriptionID` = null AND `msisdn` = null AND `api_id` = null AND `application_id` =  ?) OR \n"
