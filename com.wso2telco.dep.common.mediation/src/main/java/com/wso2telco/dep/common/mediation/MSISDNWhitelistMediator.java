@@ -14,6 +14,9 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 
 		String msisdn = (String) messageContext.getProperty("paramValue");
 		String paramArray = (String) messageContext.getProperty("paramArray");
+		String maskedMsidsn = (String) messageContext.getProperty("MASKED_MSISDN");
+		String maskedMsisdnSuffix = (String) messageContext.getProperty("MASKED_MSISDN_SUFFIX");
+		String maskedMsidsnArray = (String) messageContext.getProperty("MASKED_MSISDN_LIST");
 		String apiName = (String) messageContext.getProperty("API_NAME");
 		String apiVersion = (String) messageContext.getProperty("VERSION");
 		String apiPublisher = (String) messageContext.getProperty("API_PUBLISHER");
@@ -21,12 +24,19 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 		String regexPattern = (String) messageContext.getProperty("msisdnRegex");
 		String regexGroupNumber = (String) messageContext.getProperty("msisdnRegexGroup");
 
+		String loggingMsisdn = msisdn;
+
 		Pattern pattern = Pattern.compile(regexPattern);
 		Matcher matcher = pattern.matcher(msisdn);
 
 		String formattedPhoneNumber = null;
 		if (matcher.matches()) {
 			formattedPhoneNumber = matcher.group(Integer.parseInt(regexGroupNumber));
+		}
+
+		if(Boolean.parseBoolean((String)messageContext.getProperty("USER_ANONYMIZATION"))) {
+			loggingMsisdn = maskedMsidsn;
+			formattedPhoneNumber = maskedMsisdnSuffix;
 		}
 
 		try {
@@ -46,16 +56,11 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 						" Number");
 				messageContext.setProperty("WHITELISTED_MSISDN", "false");
 
-				String errorVariable = msisdn;
-
-				if(paramArray != null){
-					errorVariable = paramArray;
-				}
 				setErrorInContext(
 						messageContext,
 						"SVC0004",
 						" Not a whitelisted number. %1",
-						errorVariable,
+						 msisdn,
 						"400", "POLICY_EXCEPTION");
 			}
 
@@ -64,10 +69,13 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 			log.error("error in MSISDNWhitelistMediator mediate : "
 					+ e.getMessage());
 
-			String errorVariable = msisdn;
+			String errorVariable = loggingMsisdn;
 
 			if(paramArray != null){
 				errorVariable = paramArray;
+				if(Boolean.valueOf((String)messageContext.getProperty("USER_ANONYMIZATION")).booleanValue()) {
+					errorVariable = maskedMsidsnArray;
+				}
 			}
 			setErrorInContext(
 					messageContext,
