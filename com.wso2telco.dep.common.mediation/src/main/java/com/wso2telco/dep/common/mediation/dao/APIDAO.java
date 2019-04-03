@@ -335,6 +335,54 @@ public class APIDAO {
 		return apiId;
 	}
 
+	public boolean checkMsisdnBlacklistStatus(String spName, String appId, String apiId, String msisdn) throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		boolean isBlacklisted = false;
+
+		try {
+			StringBuilder queryBuilder = new StringBuilder();
+			queryBuilder.append("select MSISDN FROM ");
+			queryBuilder.append(DatabaseTables.BLACKLIST_MSISDN);
+			queryBuilder.append(" where ");
+			queryBuilder.append(" (SP_NAME = ? OR SP_NAME = '_ALL_') AND ");
+			queryBuilder.append(" (APP_ID = ? OR APP_ID = '_ALL_') AND ");
+			queryBuilder.append(" (API_ID = ? OR API_ID = '_ALL_') AND ");
+			queryBuilder.append(" (MSISDN = ? OR MSISDN = concat('tel:+', ?))");
+
+			connection = DbUtils.getDbConnection(DataSourceNames.WSO2AM_STATS_DB);
+			preparedStatement = connection.prepareStatement(queryBuilder.toString());
+			preparedStatement.setString(1, spName);
+			preparedStatement.setString(2, appId);
+			preparedStatement.setString(3, apiId);
+			preparedStatement.setString(4, msisdn);
+			preparedStatement.setString(5, msisdn);
+
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				isBlacklisted = true;
+
+				if (log.isDebugEnabled()) {
+					log.debug("Blacklisted MSISDNs for [SP: " + spName + ", AppId: " + appId + ", ApiId: " + apiId + "]");
+					do {
+						log.debug(resultSet.getString("MSISDN"));
+					} while (resultSet.next());
+				}
+			}
+		} catch (SQLException e) {
+			log.error("SQL Exception occurred when checking MSISDN blacklist status.", e);
+			throw e;
+		} catch (Exception e) {
+			log.error("Error occurred when checking MSISDN blacklist status.", e);
+			throw e;
+		} finally {
+			DbUtils.closeAllConnections(preparedStatement, connection, resultSet);
+		}
+
+		return isBlacklisted;
+	}
+
 	/**
 	 * Read blacklist numbers.
 	 *

@@ -129,21 +129,9 @@ public class APIService {
 		return apiId;
 	}
 
-	public boolean isBlackListedNumber(String apiId, String msisdn)
+	public boolean isBlackListedNumber(String spName, String appId, String apiId, String msisdn)
 			throws Exception {
-		try {
-			List<String> msisdnArrayList = apiDAO.readBlacklistNumbers(apiId);
-			if (msisdnArrayList.contains(msisdn)
-					|| msisdnArrayList.contains("tel3A+" + msisdn)) {
-				return true;
-			}
-		} catch (Exception ex) {
-			log.error("Error while checking whether the msisdn :" + msisdn
-					+ " is blacklisted", ex);
-			throw ex;
-		}
-
-		return false;
+		return apiDAO.checkMsisdnBlacklistStatus(spName, appId, apiId, msisdn);
 	}
 
 	public String getSubscriptionID(String apiId, String applicationId)
