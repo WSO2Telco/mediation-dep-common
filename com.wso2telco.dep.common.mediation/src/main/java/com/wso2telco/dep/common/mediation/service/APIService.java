@@ -155,9 +155,9 @@ public class APIService {
 			return (msisdnArrayList.contains(msisdn)
 					|| msisdnArrayList.contains("tel3A+" + msisdn)
 					|| msisdnArrayList.contains(
-							UserMaskHandler.maskUserId(msisdn, true, secretKey))
+							UserMaskHandler.transcryptUserId(msisdn, true, secretKey))
 					|| msisdnArrayList.contains("tel3A+" +
-					UserMaskHandler.maskUserId(msisdn, true, secretKey)));
+					UserMaskHandler.transcryptUserId(msisdn, true, secretKey)));
 		} catch (Exception ex) {
 			log.error("Error while checking whether the msisdn :" + msisdn
 					+ " is blacklisted", ex);
