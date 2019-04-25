@@ -109,7 +109,6 @@ public class UtilMediator extends AbstractMediator {
 
 		} catch (AxisFault axisFault) {
 			log.error("Error occurred in UtilMediator mediate. " + axisFault.getMessage());
-			axisFault.printStackTrace();
 		}
 		return true;
 	}
