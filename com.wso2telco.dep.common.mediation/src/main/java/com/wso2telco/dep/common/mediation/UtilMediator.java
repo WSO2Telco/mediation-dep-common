@@ -1,11 +1,7 @@
 package com.wso2telco.dep.common.mediation;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import com.wso2telco.dep.common.mediation.constant.Constant;
+import org.apache.axis2.AxisFault;
 import org.apache.commons.lang.StringUtils;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.commons.json.JsonUtil;
@@ -13,7 +9,11 @@ import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 import org.json.JSONObject;
 
-import com.wso2telco.dep.common.mediation.constant.Constant;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UtilMediator extends AbstractMediator {
 
@@ -107,28 +107,25 @@ public class UtilMediator extends AbstractMediator {
 				JsonUtil.getNewJsonPayload(axis2MessageContext, jsonPayload.toString(), true, true);
 			}
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (AxisFault axisFault) {
+			log.error("Error occurred in UtilMediator mediate. " + axisFault.getMessage());
+			axisFault.printStackTrace();
 		}
 		return true;
 	}
 
 	private JSONObject getSubPayloadObject(String path, JSONObject jsonPayload, String subObjPath) {
 		JSONObject objClientCorrelator = jsonPayload;
-		try {
-			List<String> arrSubPath = Arrays.asList(path.split("\\."));
-			Iterator<String> iterator = arrSubPath.iterator();
-			iterator.next();
-			while (iterator.hasNext()) {
-				String subPath = iterator.next();
-				if (subPath.equals(subObjPath)) {
-					break;
-				} else {
-					objClientCorrelator = objClientCorrelator.getJSONObject(subPath);
-				}
+		List<String> arrSubPath = Arrays.asList(path.split("\\."));
+		Iterator<String> iterator = arrSubPath.iterator();
+		iterator.next();
+		while (iterator.hasNext()) {
+			String subPath = iterator.next();
+			if (subPath.equals(subObjPath)) {
+				break;
+			} else {
+				objClientCorrelator = objClientCorrelator.getJSONObject(subPath);
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
 		}
 		return objClientCorrelator;
 	}
