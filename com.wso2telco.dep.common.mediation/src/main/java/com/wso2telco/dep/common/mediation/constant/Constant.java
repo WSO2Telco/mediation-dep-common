@@ -60,12 +60,12 @@ public interface Constant {
 	    String SEND_SMS_OUT_SEQ = "sendSmsOutSeq";
 	    String SMS_QUERY_DELIVERY_STATUS_RESPONSE_SEQ = "smsQueryDeliveryStatusResponseSeq";
 	    String SMS_RETRIEVE_OUT_SEQ = "smsRetrieveOutSeq";
-	    String MODIFY_SMS_NOTIFICATION_SUB_RESP_PAYLOAD_SEQ = "modifySMSNotificationSubscriptionResponsePayloadSeq";
-        String SMS_RETRIEVE_NB_NOTIFICATION_SEQ = "smsRetrieveSMSNorthboundNotificationSeq";
+	    String MODIFY_SMS_NOTIFICATION_SUBSCRIPTION_RESPONSE_PAYLOAD_SEQ = "modifySMSNotificationSubscriptionResponsePayloadSeq";
+        String MODIFY_SMS_DELIVERY_SUBSCRIPTION_RESPONSE_PAYLOAD_SEQ = "modifySMSDeliverySubscriptionResponsePayloadSeq";
 
         //PAYMENT
         String REPLACE_RESOURCE_URL_SEQ = "replaceResourceURLSeq";
-        String REPLACE_RES_URL_FOR_LIST_SEQ = "replaceResourceURLForListSeq";
+        String REPLACE_RESOURCE_URL_FOR_LIST_SEQ = "replaceResourceURLForListSeq";
 	}
 
 	interface PaymentApi {
