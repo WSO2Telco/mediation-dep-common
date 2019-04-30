@@ -7,16 +7,9 @@
                 <property expression="get-property('REQUEST_ID')" name="uniqueClientCorrelator" scope="default" type="STRING"/>
             </then>
             <else>
-                <class name="org.wso2telco.dep.nashornmediator.NashornMediator">
-                    <property name="script" value="
-                        var requestId = mc.getProperty('REQUEST_ID');
-                        var splittedParts = requestId.split(':');
-                        if(splittedParts.length > 3) {
-                            var modifiedId = splittedParts[0] + ':' + splittedParts[1] + ':' + splittedParts[3];
-                            mc.setProperty('PARTIAL_REQUEST_ID', String(modifiedId));
-                        }
-                    "/>
-                </class>
+                <class name="com.wso2telco.dep.common.mediation.UtilMediator">
+					<property name="propertyValue" value="partialRequestId" />
+				</class>
                 <property expression="fn:concat($func:clientCorrelator , ':' , get-property('PARTIAL_REQUEST_ID'))" name="uniqueClientCorrelator" scope="default" type="STRING"/>
             </else>
         </filter>

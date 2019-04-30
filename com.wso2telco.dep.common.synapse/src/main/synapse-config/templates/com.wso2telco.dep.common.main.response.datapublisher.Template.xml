@@ -20,13 +20,8 @@
 					<property name="DIRECTION" expression="fn:concat($func:direction,' response')"/>
 				</log>
 
-				<!-- Generate API_ID from context and version -->
-				<class name="org.wso2telco.dep.nashornmediator.NashornMediator">
-					<property name="script" value="
-						var contextVersion = mc.getProperty('API_VERSION');
-						var generated_api_version = contextVersion.replace(':', '_');
-						mc.setProperty('GENERATED_API_ID', generated_api_version);
-					"/>
+				<class name="com.wso2telco.dep.common.mediation.UtilMediator">
+					<property name="propertyValue" value="generatedApiVersionChange" />
 				</class>
 
 				<property expression="$func:msisdn" name="msisdn"/>
