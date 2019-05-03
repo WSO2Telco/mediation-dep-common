@@ -88,7 +88,7 @@ public class UserMaskingMediator extends AbstractMediator {
                         jsonBody.put(MSISDNConstants.OUTBOUND_SMS_MESSAGE_REQUEST, outboundSMSMessageRequest);
                     }
 
-                } else if (handler.equals("AmountChargeHandler")) {
+                } else if (handler.equals("AmountChargeHandler") || handler.equals("AmountRefundHandler")) {
                     if (!jsonBody.isNull("amountTransaction")) {
                         JSONObject amountTransaction = jsonBody.getJSONObject("amountTransaction");
                         Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
