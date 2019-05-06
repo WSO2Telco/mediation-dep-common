@@ -2,6 +2,7 @@ package com.wso2telco.dep.common.mediation;
 
 import com.wso2telco.dep.common.mediation.service.APIService;
 import com.wso2telco.dep.common.mediation.util.MSISDNConstants;
+import com.wso2telco.dep.user.masking.configuration.UserMaskingConfiguration;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.SynapseConstants;
 import org.apache.synapse.mediators.AbstractMediator;
@@ -32,7 +33,6 @@ public class MSISDNBlacklistMediator extends AbstractMediator {
 		String apiName = (String) messageContext.getProperty("API_NAME");
 		String apiVersion = (String) messageContext.getProperty("VERSION");
 		String apiPublisher = (String) messageContext.getProperty("API_PUBLISHER");
-		String secretKey = (String)messageContext.getProperty(MSISDNConstants.USER_MASKING_SECRET_KEY);
 
 		String loggingMsisdn = msisdn;
 
@@ -50,14 +50,16 @@ public class MSISDNBlacklistMediator extends AbstractMediator {
 			formattedPhoneNumber = matcher.group(Integer.parseInt(regexGroupNumber));
 		}
 
+		String unmaskedFormattedPhoneNumber = null;
 		if(Boolean.parseBoolean((String)messageContext.getProperty("USER_ANONYMIZATION"))) {
+			unmaskedFormattedPhoneNumber = formattedPhoneNumber;
 			loggingMsisdn = maskedMsidsn;
 			formattedPhoneNumber = maskedMsisdnSuffix;
 		}
 
 		try {
 			apiID = apiService.getAPIId(apiPublisher, apiName, apiVersion);
-			if (apiService.isBlackListedNumber(apiID, formattedPhoneNumber, secretKey)) {
+			if (apiService.isBlackListedNumber(apiID, formattedPhoneNumber, unmaskedFormattedPhoneNumber)) {
 				log.info(loggingMsisdn + " is BlackListed number for " + apiName + " API" + apiVersion + " version");
 				messageContext.setProperty(SynapseConstants.ERROR_CODE, "POL0001:");
 				messageContext.setProperty(SynapseConstants.ERROR_MESSAGE, "Internal Server Error. Blacklisted " +

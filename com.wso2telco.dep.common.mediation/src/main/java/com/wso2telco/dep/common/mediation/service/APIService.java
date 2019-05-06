@@ -147,17 +147,22 @@ public class APIService {
 		return false;
 	}
 
-
-	public boolean isBlackListedNumber(String apiId, String msisdn, String secretKey)
+	/**
+	 * Check whether an MSISDN is blacklisted for a particular API
+	 * @param apiId API ID
+	 * @param msisdn Encrypted MSISDN If user anonymization is enabled. Plain-MSISDN otherwise.
+	 * @param unmaskedMsisdn Unencrypted MSISDN If user anonymization is enabled, null otherwise
+	 * @return True if the number is blacklisted, false otherwise.
+	 * @throws Exception
+	 */
+	public boolean isBlackListedNumber(String apiId, String msisdn, String unmaskedMsisdn)
 			throws Exception {
 		try {
 			List<String> msisdnArrayList = apiDAO.readBlacklistNumbers(apiId);
 			return (msisdnArrayList.contains(msisdn)
 					|| msisdnArrayList.contains("tel3A+" + msisdn)
-					|| msisdnArrayList.contains(
-							UserMaskHandler.transcryptUserId(msisdn, true, secretKey))
-					|| msisdnArrayList.contains("tel3A+" +
-					UserMaskHandler.transcryptUserId(msisdn, true, secretKey)));
+					|| msisdnArrayList.contains("tel3A+" + unmaskedMsisdn)
+					|| msisdnArrayList.contains(unmaskedMsisdn));
 		} catch (Exception ex) {
 			log.error("Error while checking whether the msisdn :" + msisdn
 					+ " is blacklisted", ex);
@@ -170,8 +175,10 @@ public class APIService {
 		return String.valueOf(apiDAO.getSubscriptionId(apiId, applicationId));
 	}
 
-	public boolean isWhiteListed(String MSISDN, String applicationId,String subscriptionId, String apiId) throws Exception {
-		return apiDAO.checkWhiteListed(MSISDN, applicationId, subscriptionId,apiId);
+	public boolean isWhiteListed(String MSISDN, String maskedMsisdn, String applicationId,String subscriptionId,
+								 String apiId) throws Exception {
+		return (apiDAO.checkWhiteListed(MSISDN, applicationId, subscriptionId, apiId)
+				|| apiDAO.checkWhiteListed(maskedMsisdn, applicationId, subscriptionId, apiId));
 	}
 
 	public Integer groupByApi(String sp, String app, String apiId, String operatorName, int year, int month) throws Exception {

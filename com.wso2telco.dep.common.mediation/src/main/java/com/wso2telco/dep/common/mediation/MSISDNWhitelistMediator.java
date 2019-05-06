@@ -34,9 +34,11 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 			formattedPhoneNumber = matcher.group(Integer.parseInt(regexGroupNumber));
 		}
 
+		String unmaskedFormattedPhoneNumber = null;
 		if(Boolean.parseBoolean((String)messageContext.getProperty("USER_ANONYMIZATION"))) {
-			loggingMsisdn = maskedMsidsn;
+			unmaskedFormattedPhoneNumber = formattedPhoneNumber;
 			formattedPhoneNumber = maskedMsisdnSuffix;
+			loggingMsisdn = maskedMsidsn;
 		}
 
 		try {
@@ -47,7 +49,7 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 				log.debug("WhiteListHandler subscription id:" + subscriptionID);
 			}
 
-			if(apiService.isWhiteListed(formattedPhoneNumber, appID, subscriptionID, apiID)){
+			if(apiService.isWhiteListed(formattedPhoneNumber, unmaskedFormattedPhoneNumber, appID, subscriptionID, apiID)){
 				messageContext.setProperty("WHITELISTED_MSISDN", "true");
 			} else {
 				log.info("Not a WhiteListed number:" + formattedPhoneNumber);
