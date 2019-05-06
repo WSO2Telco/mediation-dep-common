@@ -50,16 +50,14 @@ public class MSISDNBlacklistMediator extends AbstractMediator {
 			formattedPhoneNumber = matcher.group(Integer.parseInt(regexGroupNumber));
 		}
 
-		String unmaskedFormattedPhoneNumber = null;
 		if(Boolean.parseBoolean((String)messageContext.getProperty("USER_ANONYMIZATION"))) {
-			unmaskedFormattedPhoneNumber = formattedPhoneNumber;
 			loggingMsisdn = maskedMsidsn;
 			formattedPhoneNumber = maskedMsisdnSuffix;
 		}
 
 		try {
 			apiID = apiService.getAPIId(apiPublisher, apiName, apiVersion);
-			if (apiService.isBlackListedNumber(apiID, formattedPhoneNumber, unmaskedFormattedPhoneNumber)) {
+			if (apiService.isBlackListedNumber(apiID, formattedPhoneNumber, UserMaskingConfiguration.getInstance().getSecretKey())) {
 				log.info(loggingMsisdn + " is BlackListed number for " + apiName + " API" + apiVersion + " version");
 				messageContext.setProperty(SynapseConstants.ERROR_CODE, "POL0001:");
 				messageContext.setProperty(SynapseConstants.ERROR_MESSAGE, "Internal Server Error. Blacklisted " +
