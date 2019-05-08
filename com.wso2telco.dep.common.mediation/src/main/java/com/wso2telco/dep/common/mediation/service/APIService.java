@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.wso2telco.dep.user.masking.UserMaskHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -133,17 +134,11 @@ public class APIService {
 			throws Exception {
 		try {
 			List<String> msisdnArrayList = apiDAO.readBlacklistNumbers(apiId);
-			if (msisdnArrayList.contains(msisdn)
-					|| msisdnArrayList.contains("tel3A+" + msisdn)) {
-				return true;
-			}
+			return (msisdnArrayList.contains(msisdn) || msisdnArrayList.contains("tel3A+" + msisdn));
 		} catch (Exception ex) {
-			log.error("Error while checking whether the msisdn :" + msisdn
-					+ " is blacklisted", ex);
+			log.error("Error while checking whether the msisdn :" + msisdn + " is blacklisted", ex);
 			throw ex;
 		}
-
-		return false;
 	}
 
 	public String getSubscriptionID(String apiId, String applicationId)

@@ -1,0 +1,45 @@
+/*******************************************************************************
+ * Copyright  (c) 2015-2019, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
+ *
+ * WSO2.Telco Inc. licences this file to you under  the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
+package com.wso2telco.dep.common.mediation.util;
+
+public class MSISDNConstants {
+
+    public static final String USER_MASKING_SECRET_KEY = "USER_MASKING_SECRET_KEY";
+
+    /** The Constant TEL:+. */
+    public static final String TEL_1= "tel:+";
+
+    /** The Constant TEL:. */
+    public static final String TEL_2= "tel:";
+
+    /** The Constant TEL. */
+    public static final String TEL_3= "tel";
+
+    /** The Constant + */
+    public static final String PLUS = "+";
+
+
+    public static final String DELIVERY_INFO_LIST = "deliveryInfoList";
+
+    public static final String SVC0001 = "SVC0001";
+
+    public static final String OUTBOUND_SMS_MESSAGE_REQUEST = "outboundSMSMessageRequest";
+
+    public static final String ANONYMIZE = "anonymize";
+
+    public static final String ADDRESS = "address";
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template name="com.wso2telco.dep.common.anonymizeUserData.Template" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="anonymize"/>
+    <parameter name="handler"/>
+    <sequence>
+        <property expression="fn:normalize-space($func:anonymize)" name="anonymize" scope="default" type="STRING"/>
+        <property expression="fn:normalize-space($func:handler)" name="handler" scope="default" type="STRING"/>
+        <filter regex="true" source="get-property('USER_ANONYMIZATION')">
+            <then>
+                <class name="com.wso2telco.dep.common.mediation.UserMaskingMediator"/>
+                <header expression="get-property('USER_ANONYMIZATION')" name="USER_ANONYMIZATION" scope="transport"/>
+                <filter regex="true" source="get-property('INTERNAL_ERROR')">
+                    <then>
+                        <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+                    </then>
+                    <else/>
+                </filter>
+            </then>
+            <else/>
+        </filter>
+    </sequence>
+</template>
