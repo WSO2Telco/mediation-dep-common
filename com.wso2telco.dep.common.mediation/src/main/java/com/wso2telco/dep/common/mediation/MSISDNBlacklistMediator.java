@@ -57,7 +57,7 @@ public class MSISDNBlacklistMediator extends AbstractMediator {
 
 		try {
 			apiID = apiService.getAPIId(apiPublisher, apiName, apiVersion);
-			if (apiService.isBlackListedNumber(apiID, formattedPhoneNumber, UserMaskingConfiguration.getInstance().getSecretKey())) {
+			if (apiService.isBlackListedNumber(apiID, formattedPhoneNumber)) {
 				log.info(loggingMsisdn + " is BlackListed number for " + apiName + " API" + apiVersion + " version");
 				messageContext.setProperty(SynapseConstants.ERROR_CODE, "POL0001:");
 				messageContext.setProperty(SynapseConstants.ERROR_MESSAGE, "Internal Server Error. Blacklisted " +

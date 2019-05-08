@@ -134,28 +134,9 @@ public class APIService {
 			throws Exception {
 		try {
 			List<String> msisdnArrayList = apiDAO.readBlacklistNumbers(apiId);
-			if (msisdnArrayList.contains(msisdn)
-					|| msisdnArrayList.contains("tel3A+" + msisdn)) {
-				return true;
-			}
-		} catch (Exception ex) {
-			log.error("Error while checking whether the msisdn :" + msisdn
-					+ " is blacklisted", ex);
-			throw ex;
-		}
-
-		return false;
-	}
-
-
-	public boolean isBlackListedNumber(String apiId, String msisdn, String secretKey)
-			throws Exception {
-		try {
-			List<String> msisdnArrayList = apiDAO.readBlacklistNumbers(apiId);
 			return (msisdnArrayList.contains(msisdn) || msisdnArrayList.contains("tel3A+" + msisdn));
 		} catch (Exception ex) {
-			log.error("Error while checking whether the msisdn :" + msisdn
-					+ " is blacklisted", ex);
+			log.error("Error while checking whether the msisdn :" + msisdn + " is blacklisted", ex);
 			throw ex;
 		}
 	}
