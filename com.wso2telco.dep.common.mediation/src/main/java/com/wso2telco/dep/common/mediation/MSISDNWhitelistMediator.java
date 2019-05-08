@@ -16,7 +16,6 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 		String paramArray = (String) messageContext.getProperty("paramArray");
 		String maskedMsidsn = (String) messageContext.getProperty("MASKED_MSISDN");
 		String maskedMsisdnSuffix = (String) messageContext.getProperty("MASKED_MSISDN_SUFFIX");
-		String maskedMsidsnArray = (String) messageContext.getProperty("MASKED_MSISDN_LIST");
 		String apiName = (String) messageContext.getProperty("API_NAME");
 		String apiVersion = (String) messageContext.getProperty("VERSION");
 		String apiPublisher = (String) messageContext.getProperty("API_PUBLISHER");
@@ -49,6 +48,8 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 
 			if(apiService.isWhiteListed(formattedPhoneNumber, appID, subscriptionID, apiID)){
 				messageContext.setProperty("WHITELISTED_MSISDN", "true");
+				log.debug(loggingMsisdn + " is whitelisted for AppId: " + appID + ", SubscriptionId: "
+						+ subscriptionID + ", ApiId: " + apiID);
 			} else {
 				log.info("Not a WhiteListed number:" + formattedPhoneNumber);
 				messageContext.setProperty(SynapseConstants.ERROR_CODE, "POL0001:");
@@ -63,20 +64,14 @@ public class MSISDNWhitelistMediator extends AbstractMediator {
 						 msisdn,
 						"400", "POLICY_EXCEPTION");
 			}
-
 		} catch(Exception e) {
+			log.error("error in MSISDNWhitelistMediator mediate : " + e.getMessage());
 
-			log.error("error in MSISDNWhitelistMediator mediate : "
-					+ e.getMessage());
-
-			String errorVariable = loggingMsisdn;
-
+			String errorVariable = msisdn;
 			if(paramArray != null){
 				errorVariable = paramArray;
-				if(Boolean.valueOf((String)messageContext.getProperty("USER_ANONYMIZATION")).booleanValue()) {
-					errorVariable = maskedMsidsnArray;
-				}
 			}
+
 			setErrorInContext(
 					messageContext,
 					"SVC0001",
