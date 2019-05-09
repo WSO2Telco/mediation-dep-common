@@ -47,13 +47,11 @@ public class MSISDNBlacklistMediator extends AbstractMediator {
 		Matcher matcher = pattern.matcher(msisdn);
 
 		String formattedPhoneNumber = null;
-		if (matcher.matches()) {
-			formattedPhoneNumber = matcher.group(Integer.parseInt(regexGroupNumber));
-		}
-
 		if(Boolean.parseBoolean((String)messageContext.getProperty("USER_ANONYMIZATION"))) {
 			loggingMsisdn = maskedMsidsn;
 			formattedPhoneNumber = maskedMsisdnSuffix;
+		} else if (matcher.matches()) {
+			formattedPhoneNumber = matcher.group(Integer.parseInt(regexGroupNumber));
 		}
 
 		try {
@@ -81,12 +79,6 @@ public class MSISDNBlacklistMediator extends AbstractMediator {
 			String errorVariable = msisdn;
 			if(paramArray != null){
 				errorVariable = paramArray;
-<<<<<<< HEAD
-				if(Boolean.valueOf((String)messageContext.getProperty("USER_ANONYMIZATION"))) {
-					errorVariable = maskedMsidsnArray;
-				}
-=======
->>>>>>> Fixed: Sending masked msisdn in error responses
 			}
 
 			setErrorInContext(
