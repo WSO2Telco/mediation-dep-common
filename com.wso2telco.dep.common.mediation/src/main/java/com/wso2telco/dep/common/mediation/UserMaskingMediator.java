@@ -16,12 +16,14 @@
 
 package com.wso2telco.dep.common.mediation;
 
-import com.wso2telco.dep.common.mediation.util.MSISDNConstants;
-import com.wso2telco.dep.common.mediation.util.MSISDNUtils;
+import com.wso2telco.dep.common.mediation.util.*;
+import org.apache.http.HttpStatus;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.commons.json.JsonUtil;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
+import org.apache.woden.wsdl20.extensions.http.HTTPErrorStatusCode;
+import org.json.HTTP;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -39,15 +41,15 @@ public class UserMaskingMediator extends AbstractMediator {
             JSONObject jsonBody = new JSONObject(jsonString);
             // Getting API handler
             String handler = (String) messageContext.getProperty("handler");
-            if (handler != null) {
-                if (handler.equals("SendSMSHandler")) {
+            Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext().
+                    getProperty(org.apache.axis2.context.MessageContext.TRANSPORT_HEADERS);
+            Map headersMap = null;
+            if (headers != null && headers instanceof Map) {
+                headersMap = (Map) headers;
+            }
 
-                    Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
-                            .getProperty(org.apache.axis2.context.MessageContext.TRANSPORT_HEADERS);
-                    Map headersMap = null;
-                    if (headers != null && headers instanceof Map) {
-                        headersMap = (Map) headers;
-                    }
+            if (handler != null) {
+                if (handler.equals(Handler.SendSMSHandler.toString())) {
 
                     if (!jsonBody.isNull(MSISDNConstants.OUTBOUND_SMS_MESSAGE_REQUEST)) {
                         JSONObject outboundSMSMessageRequest = jsonBody.getJSONObject(MSISDNConstants.OUTBOUND_SMS_MESSAGE_REQUEST);
@@ -104,20 +106,13 @@ public class UserMaskingMediator extends AbstractMediator {
                         jsonBody.put(MSISDNConstants.OUTBOUND_SMS_MESSAGE_REQUEST, outboundSMSMessageRequest);
                     }
 
-                } else if (handler.equals("AmountChargeHandler") || handler.equals("AmountRefundHandler")) {
+                } else if (handler.equals(Handler.AmountChargeHandler.toString()) || handler.equals(Handler.AmountRefundHandler.toString())) {
                     if (!jsonBody.isNull("amountTransaction")) {
                         JSONObject amountTransaction = jsonBody.getJSONObject("amountTransaction");
-                        Object headers = ((Axis2MessageContext) messageContext).getAxis2MessageContext()
-                                .getProperty(org.apache.axis2.context.MessageContext.TRANSPORT_HEADERS);
-
-                        Map headersMap = null;
-                        if (headers != null && headers instanceof Map) {
-                            headersMap = (Map) headers;
-                        }
 
                         String userId = null;
                         String maskedMSISDNSuffix = (String)messageContext.getProperty("MASKED_MSISDN_SUFFIX");
-                        String msisdnSuffix = (String)messageContext.getProperty("MSISDN_SUFFIX");
+                        String msisdnSuffix = (String)messageContext.getProperty("UserMSISDN");
                         String payloadMSISDN =  amountTransaction.getString("endUserId");
 
                         if (Boolean.valueOf((String)messageContext.getProperty(MSISDNConstants.ANONYMIZE))) {
@@ -125,9 +120,9 @@ public class UserMaskingMediator extends AbstractMediator {
                                 log.error("Operator returned incorrect msisdn.");
                                 setErrorInContext(
                                         messageContext,
-                                        MSISDNConstants.SVC0001,
+                                        ServiceErrorCode.SVC0001,
                                         "A service error occurred. Error code is %1",
-                                        "operator_msisdn_mismatched", "500", "SERVICE_EXCEPTION");
+                                        "operator_msisdn_mismatched", Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR), ExceptionType.SERVICE_EXCEPTION.toString());
                                 messageContext.setProperty("INTERNAL_ERROR", "true");
                                 return true;
                             }
@@ -145,19 +140,18 @@ public class UserMaskingMediator extends AbstractMediator {
                     }
                 }
 
-                JsonUtil.newJsonPayload(((Axis2MessageContext) messageContext).getAxis2MessageContext(), jsonBody.toString(),
+                JsonUtil.getNewJsonPayload(((Axis2MessageContext) messageContext).getAxis2MessageContext(), jsonBody.toString(),
                         true, true);
             }
         } catch (Exception e) {
 
-            log.error("error in UserMaskingMediator mediate : "
-                    + e.getMessage());
+            log.error("error in UserMaskingMediator mediate : " + e.getMessage());
             setErrorInContext(
                     messageContext,
-                    "SVC0001",
+                    ServiceErrorCode.SVC0001,
                     "A service error occurred. Error code is %1",
-                    null, "500", "SERVICE_EXCEPTION");
-            messageContext.setProperty("INTERNAL_ERROR", "true");
+                    null, Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR), ExceptionType.SERVICE_EXCEPTION.toString());
+            messageContext.setProperty(ContextPropertyName.INTERNAL_ERROR, "true");
         }
         return true;
     }
@@ -166,11 +160,11 @@ public class UserMaskingMediator extends AbstractMediator {
                                    String errorText, String errorVariable, String httpStatusCode,
                                    String exceptionType) {
 
-        synContext.setProperty("messageId", messageId);
-        synContext.setProperty("errorText", errorText);
-        synContext.setProperty("errorVariable", errorVariable);
-        synContext.setProperty("httpStatusCode", httpStatusCode);
-        synContext.setProperty("exceptionType", exceptionType);
+        synContext.setProperty(ContextPropertyName.MESSAGE_ID, messageId);
+        synContext.setProperty(ContextPropertyName.ERROR_TEXT, errorText);
+        synContext.setProperty(ContextPropertyName.ERROR_VARIABLE, errorVariable);
+        synContext.setProperty(ContextPropertyName.HTTP_STATUS_CODE, httpStatusCode);
+        synContext.setProperty(ContextPropertyName.EXCEPTION_TYPE, exceptionType);
     }
 
     public static Object getKeyFromValue(Map maskedMsisdnMap, String value) {
@@ -187,20 +181,20 @@ public class UserMaskingMediator extends AbstractMediator {
             log.error("Operator returned incorrect Addresses.");
             setErrorInContext(
                     messageContext,
-                    MSISDNConstants.SVC0001,
+                    ServiceErrorCode.SVC0001,
                     "A service error occurred. Error code is %1",
-                    "operator_addresses_mismatched", "500", "SERVICE_EXCEPTION");
-            messageContext.setProperty("INTERNAL_ERROR", "true");
+                    "operator_addresses_mismatched", Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR), ExceptionType.SERVICE_EXCEPTION.toString());
+            messageContext.setProperty(ContextPropertyName.INTERNAL_ERROR, "true");
             return false;
         }
         if (!validateOperatorDeliveryInfosWithRequestAddresses(requestAddressesSuffixes, payload)) {
             log.error("Operator returned incorrect deliveryInfos.");
             setErrorInContext(
                     messageContext,
-                    MSISDNConstants.SVC0001,
+                    ServiceErrorCode.SVC0001,
                     "A service error occurred. Error code is %1",
-                    "operator_deliveryinfo_mismatched", "500", "SERVICE_EXCEPTION");
-            messageContext.setProperty("INTERNAL_ERROR", "true");
+                    "operator_deliveryinfo_mismatched", Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR), ExceptionType.SERVICE_EXCEPTION.toString());
+            messageContext.setProperty(ContextPropertyName.INTERNAL_ERROR, "true");
             return false;
         }
         return true;
