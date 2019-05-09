@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.wso2telco.dep.common.mediation.util;
+package com.wso2telco.dep.common.mediation.constant;
 
 public class MSISDNConstants {
 

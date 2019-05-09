@@ -16,7 +16,7 @@
 
 package com.wso2telco.dep.common.mediation;
 
-import com.wso2telco.dep.common.mediation.util.MSISDNConstants;
+import com.wso2telco.dep.common.mediation.constant.MSISDNConstants;
 import com.wso2telco.dep.common.mediation.util.MSISDNUtils;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.commons.json.JsonUtil;
@@ -117,7 +117,7 @@ public class UserMaskingMediator extends AbstractMediator {
 
                         String userId = null;
                         String maskedMSISDNSuffix = (String)messageContext.getProperty("MASKED_MSISDN_SUFFIX");
-                        String msisdnSuffix = (String)messageContext.getProperty("MSISDN_SUFFIX");
+                        String msisdnSuffix = (String)messageContext.getProperty("UserMSISDN");
                         String payloadMSISDN =  amountTransaction.getString("endUserId");
 
                         if (Boolean.valueOf((String)messageContext.getProperty(MSISDNConstants.ANONYMIZE))) {

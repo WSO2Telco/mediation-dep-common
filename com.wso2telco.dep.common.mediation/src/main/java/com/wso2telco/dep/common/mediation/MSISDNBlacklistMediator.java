@@ -1,8 +1,6 @@
 package com.wso2telco.dep.common.mediation;
 
 import com.wso2telco.dep.common.mediation.service.APIService;
-import com.wso2telco.dep.common.mediation.util.MSISDNConstants;
-import com.wso2telco.dep.user.masking.configuration.UserMaskingConfiguration;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.SynapseConstants;
 import org.apache.synapse.mediators.AbstractMediator;
@@ -45,13 +43,11 @@ public class MSISDNBlacklistMediator extends AbstractMediator {
 		Matcher matcher = pattern.matcher(msisdn);
 
 		String formattedPhoneNumber = null;
-		if (matcher.matches()) {
-			formattedPhoneNumber = matcher.group(Integer.parseInt(regexGroupNumber));
-		}
-
 		if(Boolean.parseBoolean((String)messageContext.getProperty("USER_ANONYMIZATION"))) {
 			loggingMsisdn = maskedMsidsn;
 			formattedPhoneNumber = maskedMsisdnSuffix;
+		} else if (matcher.matches()) {
+			formattedPhoneNumber = matcher.group(Integer.parseInt(regexGroupNumber));
 		}
 
 		try {

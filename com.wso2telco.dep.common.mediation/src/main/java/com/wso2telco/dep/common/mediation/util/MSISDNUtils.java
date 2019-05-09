@@ -16,6 +16,8 @@
 
 package com.wso2telco.dep.common.mediation.util;
 
+import com.wso2telco.dep.common.mediation.constant.MSISDNConstants;
+
 public class MSISDNUtils {
 
 
