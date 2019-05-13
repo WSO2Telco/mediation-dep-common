@@ -19,4 +19,7 @@ public class AttributeName {
 	public static final String SERVICE_NAME = "SERVICENAME";
     public static final String AGGRIGATOR_ROLE = "aggregator";
     public static final String QUOTA_ENABLER = "quotaEnabler";
+    public static final String DELIVERY_INFO = "deliveryInfo";
+    public static final String AMOUNT_TRANSACTION = "amountTransaction";
+    public static final String RESOURCE = "RESOURCE";
 }

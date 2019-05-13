@@ -16,6 +16,10 @@
 package com.wso2telco.dep.common.mediation.util;
 
 
-public class ServiceErrorCode {
+public class ErrorConstants {
 	public static final String SVC0001 = "SVC0001";
+	public static final String SVC0001_TEXT = "A service error occurred. Error code is %1";
+
+    public static final String POL0001 = "POL0001";
+    public static final String POL0001_TEXT = "A policy error occurred. Error code is %1";
 }
