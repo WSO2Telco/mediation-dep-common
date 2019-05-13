@@ -26,8 +26,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
 public class UserMaskingMediator extends AbstractMediator {
@@ -55,18 +53,11 @@ public class UserMaskingMediator extends AbstractMediator {
                             String[] addressList = null;
                             if (Boolean.valueOf((String)messageContext.getProperty(MSISDNConstants.ANONYMIZE))) {
                                 addressList = ((String)messageContext.getProperty("MASKED_MSISDN_LIST")).split(",");
-                                JSONObject deliveryInfoList = outboundSMSMessageRequest.getJSONObject(MSISDNConstants.DELIVERY_INFO_LIST);
-                                if ((!deliveryInfoList.isNull(AttributeName.DELIVERY_INFO)) && (!validateSMSOperatorResponse(messageContext,
-                                            (new ArrayList<String>(Arrays.asList(((String)messageContext.
-                                                    getProperty("MSISDN_SUFFIX_LIST")).split(",")))), outboundSMSMessageRequest))) {
-                                        return true;
-
-                                }
-                                headersMap.put(AttributeName.RESOURCE, (String)messageContext.getProperty("SMS_RESOURCE"));
+                                headersMap.put(AttributeName.RESOURCE, messageContext.getProperty("SMS_RESOURCE"));
 
                             } else {
                                 addressList = ((String)messageContext.getProperty("MSISDN_LIST")).split(",");
-                                messageContext.setProperty("SMS_RESOURCE", (String)headersMap.get(AttributeName.RESOURCE));
+                                messageContext.setProperty("SMS_RESOURCE", headersMap.get(AttributeName.RESOURCE));
                             }
                             JSONArray addresses = new JSONArray();
 
@@ -84,7 +75,7 @@ public class UserMaskingMediator extends AbstractMediator {
                                 for (int i = 0; i < deliveryInfoArray.length(); i++) {
                                     JSONObject deliveryInfo = (JSONObject) deliveryInfoArray.get(i);
                                     JSONObject newDeliveryInfo = new JSONObject();
-                                    newDeliveryInfo.put("deliveryStatus", (String)deliveryInfo.get("deliveryStatus"));
+                                    newDeliveryInfo.put("deliveryStatus", deliveryInfo.get("deliveryStatus"));
                                     if (Boolean.valueOf((String)messageContext.getProperty(MSISDNConstants.ANONYMIZE))) {
                                         // Replace with masked user ID
                                         newDeliveryInfo.put(MSISDNConstants.ADDRESS, getKeyFromValue(
@@ -110,23 +101,11 @@ public class UserMaskingMediator extends AbstractMediator {
                         String userId = null;
                         String maskedMSISDNSuffix = (String)messageContext.getProperty("MASKED_MSISDN_SUFFIX");
                         String msisdnSuffix = (String)messageContext.getProperty("UserMSISDN");
-                        String payloadMSISDN =  amountTransaction.getString("endUserId");
 
                         if (Boolean.valueOf((String)messageContext.getProperty(MSISDNConstants.ANONYMIZE))) {
-                            if (!msisdnSuffix.equals(MSISDNUtils.getMSISDNSuffix(payloadMSISDN))) {
-                                log.error("Operator returned incorrect msisdn.");
-                                setErrorInContext(
-                                        messageContext,
-                                        ErrorConstants.SVC0001,
-                                        ErrorConstants.SVC0001_TEXT,
-                                        "operator_msisdn_mismatched", Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR), ExceptionType.SERVICE_EXCEPTION.toString());
-                                messageContext.setProperty("INTERNAL_ERROR", "true");
-                                return true;
-                            }
                             userId = (String) messageContext.getProperty("MASKED_MSISDN");
                             headersMap.put(AttributeName.RESOURCE, (String)messageContext.getProperty("MASKED_RESOURCE"));
-                            String resourceURL = (String) amountTransaction.get("resourceURL");
-                            resourceURL = resourceURL.replace(msisdnSuffix, maskedMSISDNSuffix);
+                            String resourceURL = ((String) amountTransaction.get("resourceURL")).replace(msisdnSuffix, maskedMSISDNSuffix);
                             amountTransaction.put("resourceURL", resourceURL);
                         } else {
                             userId = (String) messageContext.getProperty("MSISDN");
@@ -172,58 +151,4 @@ public class UserMaskingMediator extends AbstractMediator {
         return null;
     }
 
-    private boolean validateSMSOperatorResponse(MessageContext messageContext, ArrayList<String> requestAddressesSuffixes, JSONObject payload) {
-        if (!validateOperatorAddressesWithRequestAddresses(requestAddressesSuffixes, payload)) {
-            log.error("Operator returned incorrect Addresses.");
-            setErrorInContext(
-                    messageContext,
-                    ErrorConstants.SVC0001,
-                    ErrorConstants.SVC0001_TEXT,
-                    "operator_addresses_mismatched", Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR), ExceptionType.SERVICE_EXCEPTION.toString());
-            messageContext.setProperty(ContextPropertyName.INTERNAL_ERROR, "true");
-            return false;
-        }
-        if (!validateOperatorDeliveryInfosWithRequestAddresses(requestAddressesSuffixes, payload)) {
-            log.error("Operator returned incorrect deliveryInfos.");
-            setErrorInContext(
-                    messageContext,
-                    ErrorConstants.SVC0001,
-                    ErrorConstants.SVC0001_TEXT,
-                    "operator_deliveryinfo_mismatched", Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR), ExceptionType.SERVICE_EXCEPTION.toString());
-            messageContext.setProperty(ContextPropertyName.INTERNAL_ERROR, "true");
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validateOperatorAddressesWithRequestAddresses(ArrayList<String> requestAddressesSuffixes, JSONObject payload) {
-        JSONArray addresses = payload.getJSONArray(MSISDNConstants.ADDRESS);
-        ArrayList<String> payloadAddressSuffixes = new ArrayList<>();
-        if (addresses != null) {
-            for (int i = 0; i < addresses.length(); i++) {
-                payloadAddressSuffixes.add(MSISDNUtils.getMSISDNSuffix(addresses.get(i).toString()));
-            }
-        }
-        return requestAddressesSuffixes.containsAll(payloadAddressSuffixes) && payloadAddressSuffixes.containsAll(requestAddressesSuffixes);
-    }
-
-    private boolean validateOperatorDeliveryInfosWithRequestAddresses(ArrayList<String> requestAddressesSuffixes, JSONObject payload) {
-        if (!payload.isNull(MSISDNConstants.DELIVERY_INFO_LIST)) {
-            JSONObject deliveryInfoList = payload.getJSONObject(MSISDNConstants.DELIVERY_INFO_LIST);
-            if (!deliveryInfoList.isNull(AttributeName.DELIVERY_INFO)) {
-                JSONArray deliveryInfoArray = deliveryInfoList.getJSONArray(AttributeName.DELIVERY_INFO);
-                ArrayList<String> payloadAddressSuffixes = new ArrayList<>();
-                if (deliveryInfoArray.length() > 0) {
-                    for (int i = 0; i < deliveryInfoArray.length(); i++) {
-                        payloadAddressSuffixes.add(MSISDNUtils.getMSISDNSuffix(deliveryInfoArray.getJSONObject(i).getString(
-                                MSISDNConstants.ADDRESS)));
-                    }
-                }else {
-                    return true;
-                }
-                return requestAddressesSuffixes.containsAll(payloadAddressSuffixes) && payloadAddressSuffixes.containsAll(requestAddressesSuffixes);
-            }
-        }
-        return true;
-    }
 }
