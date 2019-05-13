@@ -15,11 +15,11 @@
  ******************************************************************************/
 package com.wso2telco.dep.common.mediation.util;
 
-public class AttributeName {
-	public static final String SERVICE_NAME = "SERVICENAME";
-    public static final String AGGRIGATOR_ROLE = "aggregator";
-    public static final String QUOTA_ENABLER = "quotaEnabler";
-    public static final String DELIVERY_INFO = "deliveryInfo";
-    public static final String AMOUNT_TRANSACTION = "amountTransaction";
-    public static final String RESOURCE = "RESOURCE";
+
+public class ErrorConstants {
+	public static final String SVC0001 = "SVC0001";
+	public static final String SVC0001_TEXT = "A service error occurred. Error code is %1";
+
+    public static final String POL0001 = "POL0001";
+    public static final String POL0001_TEXT = "A policy error occurred. Error code is %1";
 }

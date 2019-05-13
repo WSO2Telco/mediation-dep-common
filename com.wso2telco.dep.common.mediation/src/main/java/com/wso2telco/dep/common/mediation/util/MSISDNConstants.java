@@ -35,8 +35,6 @@ public class MSISDNConstants {
 
     public static final String DELIVERY_INFO_LIST = "deliveryInfoList";
 
-    public static final String SVC0001 = "SVC0001";
-
     public static final String OUTBOUND_SMS_MESSAGE_REQUEST = "outboundSMSMessageRequest";
 
     public static final String ANONYMIZE = "anonymize";

@@ -82,7 +82,7 @@ public class UtilMediator extends AbstractMediator {
 
 				case Constant.PropertyValues.PARTIALREQUESTIDCHANGE:
 					 String requestID = (String) synCtx.getProperty(Constant.MessageContext.REQUEST_ID);
-					 String splittedParts [] = StringUtils.split(requestID,":");
+					 String[] splittedParts = StringUtils.split(requestID,":");
 					 String modifiedId = "";
 					 if(splittedParts.length > 3) {
 						modifiedId = splittedParts[0] + ':' + splittedParts[1] + ':' + splittedParts[3];
@@ -219,7 +219,7 @@ public class UtilMediator extends AbstractMediator {
 						.getJSONArray(Constant.JsonObject.AMOUNT_TRANSACTION);
 				for (int i=0; i<transactions.length(); i++) {
 					String originalResourceURL = transactions.getJSONObject(i).getString(Constant.JsonObject.RESOURCE_URL);
-					String originalResourceUrlSplits[] = originalResourceURL.split("amount/");
+					String[] originalResourceUrlSplits = originalResourceURL.split("amount/");
 					String resourceId = originalResourceUrlSplits[1];
 					transactions.getJSONObject(i).put(Constant.JsonObject.RESOURCEURL, resourceUrl + resourceId);
 				}

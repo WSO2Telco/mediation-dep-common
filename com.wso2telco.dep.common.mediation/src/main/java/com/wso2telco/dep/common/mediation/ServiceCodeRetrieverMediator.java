@@ -24,7 +24,7 @@ import com.wso2telco.dep.common.mediation.util.AttributeName;
 import com.wso2telco.dep.common.mediation.util.ContextPropertyName;
 import com.wso2telco.dep.common.mediation.util.DatabaseTables;
 import com.wso2telco.dep.common.mediation.util.ExceptionType;
-import com.wso2telco.dep.common.mediation.util.ServiceErrorCode;
+import com.wso2telco.dep.common.mediation.util.ErrorConstants;
 
 public class ServiceCodeRetrieverMediator extends AbstractMediator {
 
@@ -41,14 +41,14 @@ public class ServiceCodeRetrieverMediator extends AbstractMediator {
 
 			if (serviceCode == null) {
 				context.setProperty(ContextPropertyName.ENDPOINT_ERROR, "true");
-				setErrorInContext(context, ServiceErrorCode.SVC0001, null,
+				setErrorInContext(context, ErrorConstants.SVC0001, null,
 						"No valid service code available for the service name provided.",
 						String.valueOf(HttpStatus.SC_BAD_REQUEST), ExceptionType.SERVICE_EXCEPTION.toString());
 			} else {
 				if (serviceCodeRequest != null) {
 					if (!serviceCodeRequest.equals(serviceCode)) {
 						context.setProperty(ContextPropertyName.ENDPOINT_ERROR, "true");
-						setErrorInContext(context, ServiceErrorCode.SVC0001, null,
+						setErrorInContext(context, ErrorConstants.SVC0001, null,
 								"Requested service code doesn't match with the service code from service name.",
 								String.valueOf(HttpStatus.SC_BAD_REQUEST), ExceptionType.SERVICE_EXCEPTION.toString());
 					}
@@ -58,7 +58,7 @@ public class ServiceCodeRetrieverMediator extends AbstractMediator {
 
 		} catch (Exception ex) {
 			log.error("error in EndpointRetrieverMediator mediate : " + ex.getMessage());
-			setErrorInContext(context, ServiceErrorCode.SVC0001, "A service error occurred. Error code is %1",
+			setErrorInContext(context, ErrorConstants.SVC0001, "A service error occurred. Error code is %1",
 					"An internal service error has occured. Please try again later.",
 					String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR), ExceptionType.SERVICE_EXCEPTION.toString());
 			context.setProperty(ContextPropertyName.INTERNAL_ERROR, "true");
