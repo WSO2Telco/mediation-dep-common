@@ -123,6 +123,11 @@ public class UtilMediator extends AbstractMediator {
 						.getString(Constant.JsonObject.RESOURCEURL);
                 String operatorRequestId = responseResourceUrl.substring(responseResourceUrl.lastIndexOf('/') + 1);
 
+                if (Boolean.TRUE.toString().equalsIgnoreCase((String)context.getProperty(Constant.MessageContext.OPERATOR_DELIVERY_INFO_RESOURCE_URL))) {
+					responseDeliveryInfoResourceUrl = jsonPayload.getJSONObject(Constant.JsonObject.OUTBOUNDSMSMESSAGEREQUEST)
+							.getJSONObject(Constant.JsonObject.DELIVERYINFOLIST).getString(Constant.JsonObject.RESOURCEURL);
+				}
+
                 jsonPayload.getJSONObject(Constant.JsonObject.OUTBOUNDSMSMESSAGEREQUEST)
 						.put(Constant.JsonObject.RESOURCEURL, smsRetrieveResourceUrl);
                 jsonPayload.getJSONObject(Constant.JsonObject.OUTBOUNDSMSMESSAGEREQUEST)
