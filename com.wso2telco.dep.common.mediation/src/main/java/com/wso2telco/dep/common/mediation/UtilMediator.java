@@ -29,6 +29,7 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,6 +98,14 @@ public class UtilMediator extends AbstractMediator {
 					objNotifyUrl.put(Constant.JsonObject.NOTIFYURL, synCtx.getProperty(msgContextProperty));
 					JsonUtil.getNewJsonPayload(axis2MessageContext, jsonPayload.toString(), true, true);
 					break;
+
+				case Constant.PropertyValues.UNMASK_MSISDN:
+						String maskedMsisdn = (String) synCtx.getProperty(msgContextProperty);
+						Map<String, String> maskedMsisdnMap = (Map) synCtx.getProperty(Constant.MessageContext.MASKED_MSISDN_MAP);
+						String unmaskedMsisdn = maskedMsisdnMap.get(maskedMsisdn);
+						synCtx.setProperty(msgContextProperty, unmaskedMsisdn);
+					break;
+
 				default:
 					JsonUtil.getNewJsonPayload(axis2MessageContext, jsonPayload.toString(), true, true);
 				}
