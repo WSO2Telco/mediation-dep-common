@@ -51,6 +51,8 @@ public class UserMaskingMediator extends AbstractMediator {
                         JSONObject outboundSMSMessageRequest = jsonBody.getJSONObject(MSISDNConstants.OUTBOUND_SMS_MESSAGE_REQUEST);
                         if (!outboundSMSMessageRequest.isNull(MSISDNConstants.ADDRESS)) {
                             String[] addressList = null;
+                            JSONArray addresses = new JSONArray();
+
                             if (Boolean.valueOf((String)messageContext.getProperty(MSISDNConstants.ANONYMIZE))) {
                                 addressList = ((String)messageContext.getProperty("MASKED_MSISDN_LIST")).split(",");
                                 headersMap.put(AttributeName.RESOURCE, messageContext.getProperty("SMS_RESOURCE"));
@@ -59,7 +61,6 @@ public class UserMaskingMediator extends AbstractMediator {
                                 addressList = ((String)messageContext.getProperty("MSISDN_LIST")).split(",");
                                 messageContext.setProperty("SMS_RESOURCE", headersMap.get(AttributeName.RESOURCE));
                             }
-                            JSONArray addresses = new JSONArray();
 
                             for (String address : addressList) {
                                 addresses.put(address);
