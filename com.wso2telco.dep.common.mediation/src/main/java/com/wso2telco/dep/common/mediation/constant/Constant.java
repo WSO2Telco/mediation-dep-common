@@ -57,6 +57,8 @@ public interface Constant {
 		String REST_FULL_REQUEST_PATH = "REST_FULL_REQUEST_PATH";
 		String SUBSCRIPTION_ID = "subscriptionID";
 		String REST_SUB_REQUEST_PATH = "REST_SUB_REQUEST_PATH";
+		String OPERATOR_DELIVERY_INFO_RESOURCE_URL = "OPERATOR_DELIVERY_INFO_RESOURCE_URL";
+		String MASKED_MSISDN_MAP = "MASKED_MSISDN_MAP";
 	}
 	
 	interface PropertyValues {
@@ -68,6 +70,7 @@ public interface Constant {
 		String PARTIALREQUESTIDCHANGE = "partialRequestId";
 		String SMS_MESSAGAING = "smsmessaging";
 		String PAYMENT_API = "payment";
+		String UNMASK_MSISDN = "unmaskMsisdn";
 	}
 
 	interface SequenceNames {
