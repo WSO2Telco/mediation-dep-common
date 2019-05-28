@@ -20,9 +20,8 @@
 					<property name="DIRECTION" expression="fn:concat($func:direction,' request')"/>
 				</log>
 
-				<class name="com.wso2telco.dep.common.mediation.UtilMediator">
-					<property name="propertyValue" value="generatedApiVersionChange" />
-				</class>
+				<property name="GENERATED_API_ID" expression="fn:replace(syn:get-property('API_VERSION'), ':', '_')" scope="default" xmlns:fn="http://www.w3.org/2005/xpath-functions"/>
+
 				<filter regex="true" source="get-property('USER_ANONYMIZATION')">
 					<then>
 						<property expression="get-property('MASKED_MSISDN')" name="msisdn" />

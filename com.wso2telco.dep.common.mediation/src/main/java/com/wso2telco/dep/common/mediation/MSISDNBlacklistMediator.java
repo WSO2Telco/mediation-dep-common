@@ -31,7 +31,6 @@ public class MSISDNBlacklistMediator extends AbstractMediator {
 		String paramArray = (String) messageContext.getProperty("paramArray");
 		String maskedMsidsn = (String) messageContext.getProperty("MASKED_MSISDN");
 		String maskedMsisdnSuffix = (String) messageContext.getProperty("MASKED_MSISDN_SUFFIX");
-		String maskedMsidsnArray = (String) messageContext.getProperty("MASKED_MSISDN_LIST");
 		String apiName = (String) messageContext.getProperty("API_NAME");
 		String apiVersion = (String) messageContext.getProperty("VERSION");
 		String apiPublisher = (String) messageContext.getProperty("API_PUBLISHER");
@@ -48,19 +47,18 @@ public class MSISDNBlacklistMediator extends AbstractMediator {
 		Matcher matcher = pattern.matcher(msisdn);
 
 		String formattedPhoneNumber = null;
-		if (matcher.matches()) {
-			formattedPhoneNumber = matcher.group(Integer.parseInt(regexGroupNumber));
-		}
-
 		if(Boolean.parseBoolean((String)messageContext.getProperty("USER_ANONYMIZATION"))) {
 			loggingMsisdn = maskedMsidsn;
 			formattedPhoneNumber = maskedMsisdnSuffix;
+		} else if (matcher.matches()) {
+			formattedPhoneNumber = matcher.group(Integer.parseInt(regexGroupNumber));
 		}
 
 		try {
 			apiID = apiService.getAPIId(apiPublisher, apiName, apiVersion);
 			if (apiService.isBlackListedNumber(apiID, formattedPhoneNumber)) {
 				log.info(loggingMsisdn + " is BlackListed number for " + apiName + " API" + apiVersion + " version");
+
 				messageContext.setProperty(SynapseConstants.ERROR_CODE, "POL0001:");
 				messageContext.setProperty(SynapseConstants.ERROR_MESSAGE, "Internal Server Error. Blacklisted " +
 						"Number");
@@ -76,18 +74,13 @@ public class MSISDNBlacklistMediator extends AbstractMediator {
 				messageContext.setProperty("BLACKLISTED_MSISDN", "false");
 			}
 		} catch (Exception e) {
+			log.error("error in MSISDNBlacklistMediator mediate : " + e.getMessage());
 
-			log.error("error in MSISDNBlacklistMediator mediate : "
-					+ e.getMessage());
-
-			String errorVariable = loggingMsisdn;
-
+			String errorVariable = msisdn;
 			if(paramArray != null){
 				errorVariable = paramArray;
-				if(Boolean.valueOf((String)messageContext.getProperty("USER_ANONYMIZATION"))) {
-					errorVariable = maskedMsidsnArray;
-				}
 			}
+
 			setErrorInContext(
 					messageContext,
 					ErrorConstants.SVC0001,
