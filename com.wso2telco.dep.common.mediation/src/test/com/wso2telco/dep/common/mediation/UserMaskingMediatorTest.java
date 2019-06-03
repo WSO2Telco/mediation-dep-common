@@ -1,15 +1,3 @@
-package com.wso2telco.dep.common.mediation;
-
-import org.apache.axis2.context.MessageContext;
-import org.apache.synapse.core.axis2.Axis2MessageContext;
-import org.mockito.Mockito;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.HashMap;
-
 /**
  * Copyright (c) 2019, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
  * <p>
@@ -25,6 +13,18 @@ import java.util.HashMap;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.wso2telco.dep.common.mediation;
+
+import org.apache.axis2.context.MessageContext;
+import org.apache.synapse.core.axis2.Axis2MessageContext;
+import org.mockito.Mockito;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.HashMap;
+
 public class UserMaskingMediatorTest {
 
     @Test
