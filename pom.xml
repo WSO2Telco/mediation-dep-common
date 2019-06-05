@@ -17,7 +17,7 @@
   </modules>
   <properties>
     <!-- WSO2.Telco dependencies -->
-    <com.wso2telco.core.version>2.4.3-SNAPSHOT</com.wso2telco.core.version>
+    <com.wso2telco.core.version>2.4.3</com.wso2telco.core.version>
     <com.wso2telco.dep.version>2.5.0-SNAPSHOT</com.wso2telco.dep.version>
 
     <!-- other dependencies -->
