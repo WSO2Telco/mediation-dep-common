@@ -17,7 +17,7 @@
   </modules>
   <properties>
     <!-- WSO2.Telco dependencies -->
-    <com.wso2telco.core.version>2.4.5-SNAPSHOT</com.wso2telco.core.version>
+    <com.wso2telco.core.version>2.4.3</com.wso2telco.core.version>
     <com.wso2telco.dep.version>2.5.0-SNAPSHOT</com.wso2telco.dep.version>
 
     <!-- other dependencies -->
@@ -127,6 +127,25 @@
         <artifactId>user-masking</artifactId>
         <version>${com.wso2telco.dep.version}</version>
       </dependency>
+        <!--Unit test dependencies -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.14.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.11.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
   </dependencyManagement>
   <build>
