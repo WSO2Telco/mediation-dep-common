@@ -5,12 +5,12 @@
   <parent>
     <groupId>com.wso2telco.dep.common</groupId>
     <artifactId>mediation-dep-common</artifactId>
-    <version>2.1.5-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <groupId>com.wso2telco.dep.common</groupId>
   <artifactId>com.wso2telco.dep.common.registry.resources</artifactId>
-  <version>2.1.5-SNAPSHOT</version>
+  <version>2.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>com.wso2telco.dep.common.registry.resources</name>
   <description>com.wso2telco.dep.common.registry.resources</description>
