@@ -233,4 +233,13 @@ public class APIService {
 	}
 
 
+	public boolean isBlackListedorWhiteListedNumber(String msisdn, String apiId,
+													String applicationId, String subscriptionId,
+													String action) throws Exception {
+		try {
+			return apiDAO.isBlacklistedorWhitelistedNumber(msisdn,apiId,applicationId,subscriptionId,action);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 }

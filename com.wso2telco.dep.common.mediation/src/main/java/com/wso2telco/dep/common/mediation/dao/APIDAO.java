@@ -882,4 +882,52 @@ public class APIDAO {
 		return inQuotaDateRange;
 	}
 
+	public boolean isBlacklistedorWhitelistedNumber(String msisdn, String apiId,
+													String appId, String subscriberId,
+													String action) throws Exception {
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		boolean isListed = false;
+
+		try {
+			StringBuilder queryBuilder = new StringBuilder();
+
+			queryBuilder.append("select * FROM ");
+			queryBuilder.append(DatabaseTables.BLACKLIST_WHITELIST_MSISDN + "  ");
+			queryBuilder.append(" where ");
+			queryBuilder.append(" (API_ID = '%' OR API_ID = ? )");
+			queryBuilder.append(" AND MSISDN = ? ");
+			queryBuilder.append(" AND (APP_ID = '%' OR APP_ID = ? )");
+			queryBuilder.append(" AND SERVICE_PROVIDER = ? ");
+			queryBuilder.append(" AND ACTION = ? ");
+
+			connection = DbUtils
+					.getDbConnection(DataSourceNames.WSO2AM_STATS_DB);
+
+			preparedStatement = connection.prepareStatement(queryBuilder
+					.toString());
+			preparedStatement.setString(1, apiId);
+			preparedStatement.setString(2, msisdn);
+			preparedStatement.setString(3, appId);
+			preparedStatement.setString(4, subscriberId);
+			preparedStatement.setString(5, action);
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				isListed = true;
+			}
+
+		} catch (Exception ex) {
+			log.error("database operation error in API_ID :", ex);
+			throw ex;
+		} finally {
+			DbUtils.closeAllConnections(preparedStatement, connection,
+					resultSet);
+		}
+		return isListed;
+	}
+
 }
