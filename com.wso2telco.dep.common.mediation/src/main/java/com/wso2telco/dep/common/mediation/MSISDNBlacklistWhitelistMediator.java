@@ -1,5 +1,6 @@
 package com.wso2telco.dep.common.mediation;
 
+import com.wso2telco.dep.common.mediation.constant.MSISDNConstants;
 import com.wso2telco.dep.common.mediation.service.APIService;
 import com.wso2telco.dep.common.mediation.util.ContextPropertyName;
 import com.wso2telco.dep.common.mediation.util.ErrorConstants;
@@ -60,19 +61,37 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
             if (apiService.isBlackListedorWhiteListedNumber(formattedPhoneNumber,apiID,appID,spName,action)) {
                 log.info(loggingMsisdn + " is action:" + action +" number for " + apiName + " API " + apiVersion + " version");
 
-                messageContext.setProperty(SynapseConstants.ERROR_CODE, "POL0001:");
-                messageContext.setProperty(SynapseConstants.ERROR_MESSAGE, "Internal Server Error. action: " +action+
-                        "Number");
-                messageContext.setProperty(action, "true");
+                if(action.equalsIgnoreCase(MSISDNConstants.BLACKLIST)){
+                    messageContext.setProperty(SynapseConstants.ERROR_CODE, "POL0001:");
+                    messageContext.setProperty(SynapseConstants.ERROR_MESSAGE, "Internal Server Error. action: " +action+
+                            "Number");
+                    messageContext.setProperty(MSISDNConstants.BLACKLIST, "true");
 
-                setErrorInContext(
-                        messageContext,
-                        ErrorConstants.POL0001,
-                        ErrorConstants.POL0001_TEXT,
-                        "Action: "+ action + " Number: " + msisdn,
-                        Integer.toString(HttpStatus.SC_BAD_REQUEST), ExceptionType.POLICY_EXCEPTION.toString());
+                    setErrorInContext(
+                            messageContext,
+                            ErrorConstants.POL0001,
+                            ErrorConstants.POL0001_TEXT,
+                            "Blacklisted Number: " + msisdn,
+                            Integer.toString(HttpStatus.SC_BAD_REQUEST), ExceptionType.POLICY_EXCEPTION.toString());
+                }
+                else
+                    messageContext.setProperty(MSISDNConstants.WHITELIST,"true");
             } else {
-                messageContext.setProperty(action, "false");
+                if(action.equalsIgnoreCase(MSISDNConstants.WHITELIST)){
+                    messageContext.setProperty(SynapseConstants.ERROR_CODE, "POL0001:");
+                    messageContext.setProperty(SynapseConstants.ERROR_MESSAGE, "Internal Server Error. action: " +action+
+                            "Number");
+                    messageContext.setProperty(MSISDNConstants.WHITELIST, "false");
+
+                    setErrorInContext(
+                            messageContext,
+                            ErrorConstants.POL0001,
+                            ErrorConstants.POL0001_TEXT,
+                            "Not Whitelisted Number: " + msisdn,
+                            Integer.toString(HttpStatus.SC_BAD_REQUEST), ExceptionType.POLICY_EXCEPTION.toString());
+                }
+                else
+                    messageContext.setProperty(MSISDNConstants.BLACKLIST,"false");
             }
         } catch (Exception e) {
             log.error("error in MSISDNBlacklistWhitelistMediator mediate : " + e.getMessage());
