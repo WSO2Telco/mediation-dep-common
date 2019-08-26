@@ -29,7 +29,6 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
     public boolean mediate(MessageContext messageContext) {
 
         String msisdn = (String) messageContext.getProperty("paramValue");
-        String paramArray = (String) messageContext.getProperty("paramArray");
         String maskedMsidsn = (String) messageContext.getProperty("MASKED_MSISDN");
         String maskedMsisdnSuffix = (String) messageContext.getProperty("MASKED_MSISDN_SUFFIX");
         String apiName = (String) messageContext.getProperty("API_NAME");
@@ -62,10 +61,7 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
                 log.info(loggingMsisdn + " is action:" + action +" number for " + apiName + " API " + apiVersion + " version");
 
                 if(action.equalsIgnoreCase(MSISDNConstants.BLACKLIST)){
-                    messageContext.setProperty(SynapseConstants.ERROR_CODE, "POL0001:");
-                    messageContext.setProperty(SynapseConstants.ERROR_MESSAGE, "Internal Server Error. action: " +action+
-                            "Number");
-                    messageContext.setProperty(MSISDNConstants.BLACKLIST, "true");
+                    this.setErrorResponseMessageContext(messageContext,action,MSISDNConstants.BLACKLIST,true);
 
                     setErrorInContext(
                             messageContext,
@@ -78,10 +74,7 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
                     messageContext.setProperty(MSISDNConstants.WHITELIST,"true");
             } else {
                 if(action.equalsIgnoreCase(MSISDNConstants.WHITELIST)){
-                    messageContext.setProperty(SynapseConstants.ERROR_CODE, "POL0001:");
-                    messageContext.setProperty(SynapseConstants.ERROR_MESSAGE, "Internal Server Error. action: " +action+
-                            "Number");
-                    messageContext.setProperty(MSISDNConstants.WHITELIST, "false");
+                    this.setErrorResponseMessageContext(messageContext,action,MSISDNConstants.WHITELIST,false);
 
                     setErrorInContext(
                             messageContext,
@@ -97,6 +90,7 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
             log.error("error in MSISDNBlacklistWhitelistMediator mediate : " + e.getMessage());
 
             String errorVariable = msisdn;
+            String paramArray = (String) messageContext.getProperty("paramArray");
             if(paramArray != null){
                 errorVariable = paramArray;
             }
@@ -111,5 +105,15 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
         }
 
         return true;
+    }
+
+    private MessageContext setErrorResponseMessageContext(MessageContext messageContext, String action,
+                                             String type, boolean result){
+        messageContext.setProperty(SynapseConstants.ERROR_CODE, "POL0001:");
+        messageContext.setProperty(SynapseConstants.ERROR_MESSAGE, "Internal Server Error. action: " +action+
+                "Number");
+        messageContext.setProperty(type, result);
+
+        return messageContext;
     }
 }

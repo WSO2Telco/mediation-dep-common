@@ -894,7 +894,9 @@ public class APIDAO {
 		try {
 			StringBuilder queryBuilder = new StringBuilder();
 
-			queryBuilder.append("select * FROM ");
+			queryBuilder.append("select exists ");
+			queryBuilder.append(" ( ");
+			queryBuilder.append("select 1 FROM ");
 			queryBuilder.append(DatabaseTables.BLACKLIST_WHITELIST_MSISDN + "  ");
 			queryBuilder.append(" where ");
 			queryBuilder.append(" (API_ID = '%' OR API_ID = ? )");
@@ -902,6 +904,8 @@ public class APIDAO {
 			queryBuilder.append(" AND (APP_ID = '%' OR APP_ID = ? )");
 			queryBuilder.append(" AND SERVICE_PROVIDER = ? ");
 			queryBuilder.append(" AND ACTION = ? ");
+			queryBuilder.append(" ) ");
+			queryBuilder.append(" AS result ");
 
 			connection = DbUtils
 					.getDbConnection(DataSourceNames.WSO2AM_STATS_DB);
@@ -916,8 +920,8 @@ public class APIDAO {
 
 			resultSet = preparedStatement.executeQuery();
 
-			if (resultSet.next()) {
-				isListed = true;
+			while (resultSet.next()) {
+				isListed = resultSet.getBoolean("result");
 			}
 
 		} catch (Exception ex) {

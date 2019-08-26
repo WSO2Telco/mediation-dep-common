@@ -27,7 +27,7 @@
 
                 <filter regex="^true$" source="$ctx:INTERNAL_ERROR">
                     <then>
-                        <property expression="fn:concat($func:paramName, $ctx:mediationErrorText)" name="errorText"
+                        <property expression="$ctx:mediationErrorText" name="errorText"
                                   scope="default" type="STRING"/>
                         <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
                         <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
@@ -36,7 +36,7 @@
 
                         <filter regex="^true$" source="$ctx:BLACKLIST">
                             <then>
-                                <property expression="fn:concat($func:paramName, $ctx:mediationErrorText)"
+                                <property expression="$ctx:mediationErrorText"
                                           name="errorText" scope="default" type="STRING"/>
                                 <property name="exceptionType" scope="default" type="STRING" value="POLICY_EXCEPTION"/>
                                 <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
@@ -59,7 +59,7 @@
                 <filter regex="^true$" source="$ctx:INTERNAL_ERROR">
                     <then>
                         <property expression="$ctx:messageId" name="messageId" scope="default" type="STRING"/>
-                        <property expression="fn:concat($func:paramName, $ctx:mediationErrorText)" name="errorText"
+                        <property expression="$ctx:mediationErrorText" name="errorText"
                                   scope="default" type="STRING"/>
                         <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
                         <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
@@ -69,7 +69,7 @@
                         <filter regex="^false$" source="$ctx:WHITELIST">
                             <then>
                                 <property expression="$ctx:messageId" name="messageId" scope="default" type="STRING"/>
-                                <property expression="fn:concat($func:paramName, $ctx:mediationErrorText)"
+                                <property expression="$ctx:mediationErrorText"
                                           name="errorText" scope="default" type="STRING"/>
                                 <property name="exceptionType" scope="default" type="STRING" value="POLICY_EXCEPTION"/>
                                 <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
