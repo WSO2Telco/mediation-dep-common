@@ -58,6 +58,7 @@
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.main.response.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.main.response.Sequence>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.msisdnValidator.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.msisdnValidator.Template>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.doubleValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.doubleValidation.Template>
+    <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.blacklistWhitelistValidator.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.blacklistWhitelistValidator.Template>
   </properties>
   <dependencies>
     <dependency>
@@ -303,6 +304,12 @@
     <dependency>
       <groupId>com.wso2telco.dep.common.api</groupId>
       <artifactId>msisdnValidation</artifactId>
+      <version>2.1.5-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.template</groupId>
+      <artifactId>com.wso2telco.dep.common.blacklistWhitelistValidator.Template</artifactId>
       <version>2.1.5-SNAPSHOT</version>
       <type>xml</type>
     </dependency>

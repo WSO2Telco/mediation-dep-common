@@ -20,6 +20,9 @@ public class MSISDNConstants {
 
     public static final String USER_MASKING_SECRET_KEY = "USER_MASKING_SECRET_KEY";
 
+    public static final String BLACKLIST = "BLACKLIST";
+    public static final String WHITELIST = "WHITELIST";
+
     /** The Constant TEL:+. */
     public static final String TEL_1= "tel:+";
 

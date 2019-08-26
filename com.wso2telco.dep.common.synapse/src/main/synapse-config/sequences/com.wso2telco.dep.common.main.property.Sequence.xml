@@ -10,6 +10,8 @@
     scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
   <property expression="$trp:API_NAME" name="API_NAME" scope="default"
     type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <property expression="$trp:API_ID" name="API_ID" scope="default"
+    type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
   <property expression="$trp:VERSION" name="VERSION" scope="default"
     type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
   <property expression="$trp:RESOURCE" name="RESOURCE" scope="default"

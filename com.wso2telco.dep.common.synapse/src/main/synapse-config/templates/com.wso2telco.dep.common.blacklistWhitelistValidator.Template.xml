@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template name="com.wso2telco.dep.common.blacklistWhitelistValidator.Template" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="paramName"/>
+    <parameter name="paramValue"/>
+    <parameter name="paramArray"/>
+
+    <!-- In case of validating an array use a for each mediator in your sequence and call this template with each of the msisdn array element.
+      Specify paramArray just to create the message body of the error response -->
+    <sequence>
+        <property expression="get-property('registry', 'conf:/repository/wso2telco/configurations/mediationConfig.xml')"
+                  name="mediationConfig" scope="default" type="OM"/>
+        <property expression="$ctx:mediationConfig//msisdn_regex" name="msisdnRegex" scope="default" type="STRING"/>
+        <property expression="$ctx:mediationConfig//msisdn_regex_num_grp" name="msisdnRegexGroup" scope="default"
+                  type="STRING"/>
+        <property expression="$func:paramValue" name="paramValue" scope="default" type="STRING"/>
+        <property expression="$trp:APPLICATION_ID" name="api.ut.application.id" scope="default" type="STRING"/>
+
+        <class name="com.wso2telco.dep.common.mediation.UtilMediator">
+            <property name="propertyValue" value="isValidMsisdn"/>
+        </class>
+
+
+        <filter regex="^true$" source="$trp:api.check.blacklist">
+            <then>
+                <property name="ACTION" value="blacklist"/>
+                <class name="com.wso2telco.dep.common.mediation.MSISDNBlacklistWhitelistMediator"/>
+
+                <filter regex="^true$" source="$ctx:INTERNAL_ERROR">
+                    <then>
+                        <property expression="$ctx:mediationErrorText" name="errorText"
+                                  scope="default" type="STRING"/>
+                        <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+                        <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+                    </then>
+                    <else>
+
+                        <filter regex="^true$" source="$ctx:BLACKLIST">
+                            <then>
+                                <property expression="$ctx:mediationErrorText"
+                                          name="errorText" scope="default" type="STRING"/>
+                                <property name="exceptionType" scope="default" type="STRING" value="POLICY_EXCEPTION"/>
+                                <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+                            </then>
+                            <else/>
+                        </filter>
+
+                    </else>
+                </filter>
+
+            </then>
+            <else/>
+        </filter>
+
+        <filter regex="^true$" source="$trp:api.check.whitelist">
+            <then>
+                <property name="ACTION" value="whitelist"/>
+                <class name="com.wso2telco.dep.common.mediation.MSISDNBlacklistWhitelistMediator"/>
+
+                <filter regex="^true$" source="$ctx:INTERNAL_ERROR">
+                    <then>
+                        <property expression="$ctx:messageId" name="messageId" scope="default" type="STRING"/>
+                        <property expression="$ctx:mediationErrorText" name="errorText"
+                                  scope="default" type="STRING"/>
+                        <property name="exceptionType" scope="default" type="STRING" value="SERVICE_EXCEPTION"/>
+                        <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+                    </then>
+                    <else>
+
+                        <filter regex="^false$" source="$ctx:WHITELIST">
+                            <then>
+                                <property expression="$ctx:messageId" name="messageId" scope="default" type="STRING"/>
+                                <property expression="$ctx:mediationErrorText"
+                                          name="errorText" scope="default" type="STRING"/>
+                                <property name="exceptionType" scope="default" type="STRING" value="POLICY_EXCEPTION"/>
+                                <sequence key="com.wso2telco.dep.common.response.exceptions.Sequence"/>
+                            </then>
+                            <else/>
+                        </filter>
+
+                    </else>
+                </filter>
+
+            </then>
+            <else/>
+        </filter>
+
+    </sequence>
+</template>
