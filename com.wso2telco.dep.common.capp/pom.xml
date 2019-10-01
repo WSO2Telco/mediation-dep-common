@@ -26,6 +26,7 @@
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.requestIdentifier.generator.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.requestIdentifier.generator.Template>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.operator.endpoint.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.operator.endpoint.retriever.Sequence>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.default.token.refresh.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.default.token.refresh.Sequence>
+    <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.response.fault.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.response.fault.Sequence>
     <com.wso2telco.dep.common.template_._mediation.common.doubleGTZeroValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._mediation.common.doubleGTZeroValidation.Template>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.integerValidation.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.integerValidation.Template>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.loggingExtension.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.loggingExtension.Template>
@@ -298,6 +299,12 @@
     <dependency>
       <groupId>com.wso2telco.dep.common.sequence</groupId>
       <artifactId>com.wso2telco.dep.common.msisdnValidation.service.Sequence</artifactId>
+      <version>2.1.5-SNAPSHOT</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.sequence</groupId>
+      <artifactId>com.wso2telco.dep.common.response.fault.Sequence</artifactId>
       <version>2.1.5-SNAPSHOT</version>
       <type>xml</type>
     </dependency>

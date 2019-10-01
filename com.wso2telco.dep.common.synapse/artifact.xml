@@ -8,6 +8,9 @@
     <artifact name="com.wso2telco.dep.common.response.exceptions.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.1.5-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.response.exceptions.Sequence.xml</file>
     </artifact>
+    <artifact name="com.wso2telco.dep.common.response.fault.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.1.5-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.response.fault.Sequence.xml</file>
+    </artifact>
     <artifact name="com.wso2telco.dep.common.response.unexpectedError.Sequence" groupId="com.wso2telco.dep.common.sequence" version="2.1.5-SNAPSHOT" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.response.unexpectedError.Sequence.xml</file>
     </artifact>
