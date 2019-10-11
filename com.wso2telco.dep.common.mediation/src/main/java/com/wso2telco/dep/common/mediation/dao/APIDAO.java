@@ -12,7 +12,6 @@ import java.util.Map;
 
 import com.wso2telco.core.dbutils.DbUtils;
 import com.wso2telco.core.dbutils.util.DataSourceNames;
-import com.wso2telco.dep.common.mediation.quotalimit.QuotaLimits;
 import com.wso2telco.dep.common.mediation.util.DatabaseTables;
 
 import org.apache.commons.logging.Log;
@@ -886,52 +885,34 @@ public class APIDAO {
 													String appId, String subscriberId,
 													String action) throws Exception {
 
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 		boolean isListed = false;
+		String query = "select exists ( select 1 from "
+				+ DatabaseTables.BLACKLIST_WHITELIST_MSISDN +
+				" where (API_ID = '%' OR API_ID = ? ) " +
+				"AND MSISDN = ? " +
+				"AND (APP_ID = '%' OR APP_ID = ? ) " +
+				"AND SERVICE_PROVIDER = ? " +
+				"AND ACTION = ? ) as result";
 
-		try {
-			StringBuilder queryBuilder = new StringBuilder();
+		try (Connection connection = DbUtils.getDbConnection(DataSourceNames.WSO2AM_STATS_DB);
+			 PreparedStatement preparedStatement = connection.prepareStatement(query);) {
 
-			queryBuilder.append("select exists ");
-			queryBuilder.append(" ( ");
-			queryBuilder.append("select 1 FROM ");
-			queryBuilder.append(DatabaseTables.BLACKLIST_WHITELIST_MSISDN + "  ");
-			queryBuilder.append(" where ");
-			queryBuilder.append(" (API_ID = '%' OR API_ID = ? )");
-			queryBuilder.append(" AND MSISDN = ? ");
-			queryBuilder.append(" AND (APP_ID = '%' OR APP_ID = ? )");
-			queryBuilder.append(" AND SERVICE_PROVIDER = ? ");
-			queryBuilder.append(" AND ACTION = ? ");
-			queryBuilder.append(" ) ");
-			queryBuilder.append(" AS result ");
-
-			connection = DbUtils
-					.getDbConnection(DataSourceNames.WSO2AM_STATS_DB);
-
-			preparedStatement = connection.prepareStatement(queryBuilder
-					.toString());
 			preparedStatement.setString(1, apiId);
 			preparedStatement.setString(2, msisdn);
 			preparedStatement.setString(3, appId);
 			preparedStatement.setString(4, subscriberId);
 			preparedStatement.setString(5, action);
 
-			resultSet = preparedStatement.executeQuery();
-
-			while (resultSet.next()) {
-				isListed = resultSet.getBoolean("result");
+			try (ResultSet resultset = preparedStatement.executeQuery();) {
+				while (resultset.next()) {
+					isListed = resultset.getBoolean("result");
+				}
 			}
-
-		} catch (Exception ex) {
-			log.error("database operation error in API_ID :", ex);
-			throw ex;
-		} finally {
-			DbUtils.closeAllConnections(preparedStatement, connection,
-					resultSet);
+		} catch (SQLException e) {
+			log.error("Database operation error while checking Blacklist or Whitelist number:", e);
+			throw e;
 		}
+
 		return isListed;
 	}
-
 }
