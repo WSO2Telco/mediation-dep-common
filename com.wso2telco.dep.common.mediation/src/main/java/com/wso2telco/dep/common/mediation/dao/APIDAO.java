@@ -14,6 +14,7 @@ import com.wso2telco.core.dbutils.DbUtils;
 import com.wso2telco.core.dbutils.util.DataSourceNames;
 import com.wso2telco.dep.common.mediation.util.DatabaseTables;
 
+import com.wso2telco.dep.common.mediation.util.exceptions.BlacklistWhitelistMediatorException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -881,9 +882,8 @@ public class APIDAO {
 		return inQuotaDateRange;
 	}
 
-	public boolean isBlacklistedorWhitelistedNumber(String msisdn, String apiId,
-													String appId, String subscriberId,
-													String action) throws Exception {
+	public boolean isBlacklistedorWhitelistedNumber(String msisdn, String apiId, String appId, String subscriberId,
+													String action) throws BlacklistWhitelistMediatorException {
 
 		boolean isListed = false;
 		String query = "select exists ( select 1 from "
@@ -910,9 +910,12 @@ public class APIDAO {
 			}
 		} catch (SQLException e) {
 			log.error("Database operation error while checking Blacklist or Whitelist number:", e);
-			throw e;
-		}
+			throw new BlacklistWhitelistMediatorException(e);
+		} catch (Exception e) {
+            log.error("Exception occurred :", e);
+            throw new BlacklistWhitelistMediatorException(e);
+        }
 
-		return isListed;
+        return isListed;
 	}
 }

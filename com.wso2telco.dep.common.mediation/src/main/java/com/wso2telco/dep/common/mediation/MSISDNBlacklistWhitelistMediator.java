@@ -31,7 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- Common mediator class for both blacklist and whitelist features
+ * Common mediator class for both blacklist and whitelist features
  */
 public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
 
@@ -40,7 +40,8 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
                                    String exceptionType) {
 
         synContext.setProperty(ContextPropertyName.MESSAGE_ID, messageId);
-        synContext.setProperty("mediationErrorText", errorText);    // mediationErrorText  ContextPropertyName.ERROR_TEXT
+        synContext.setProperty("mediationErrorText", errorText);    // mediationErrorText  ContextPropertyName
+        // .ERROR_TEXT
         synContext.setProperty(ContextPropertyName.ERROR_VARIABLE, errorVariable);
         synContext.setProperty(ContextPropertyName.HTTP_STATUS_CODE, httpStatusCode);
         synContext.setProperty(ContextPropertyName.EXCEPTION_TYPE, exceptionType);
@@ -78,7 +79,8 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
 
         try {
             if (apiService.isBlackListedorWhiteListedNumber(formattedPhoneNumber, apiID, appID, spName, action)) {
-                log.info(loggingMsisdn + " is action:" + action + " number for " + apiName + " API " + apiVersion + " version");
+                log.info(loggingMsisdn + " is action:" + action + " number for " + apiName + " API " + apiVersion +
+                        " version");
 
                 if (action.equalsIgnoreCase(MSISDNConstants.BLACKLIST)) {
                     this.setErrorResponseMessageContext(messageContext, action, MSISDNConstants.BLACKLIST, true);
