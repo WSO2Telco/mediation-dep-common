@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
+ *
+ * WSO2.Telco Inc. licences this file to you under  the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
+
 package com.wso2telco.dep.common.mediation;
 
 import com.wso2telco.dep.common.mediation.constant.MSISDNConstants;
@@ -13,6 +30,9 @@ import org.apache.synapse.mediators.AbstractMediator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Common mediator class for both blacklist and whitelist features
+ */
 public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
 
     private void setErrorInContext(MessageContext synContext, String messageId,
@@ -20,7 +40,8 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
                                    String exceptionType) {
 
         synContext.setProperty(ContextPropertyName.MESSAGE_ID, messageId);
-        synContext.setProperty("mediationErrorText", errorText);    // mediationErrorText  ContextPropertyName.ERROR_TEXT
+        synContext.setProperty("mediationErrorText", errorText);    // mediationErrorText  ContextPropertyName
+        // .ERROR_TEXT
         synContext.setProperty(ContextPropertyName.ERROR_VARIABLE, errorVariable);
         synContext.setProperty(ContextPropertyName.HTTP_STATUS_CODE, httpStatusCode);
         synContext.setProperty(ContextPropertyName.EXCEPTION_TYPE, exceptionType);
@@ -47,7 +68,7 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
         Matcher matcher = pattern.matcher(msisdn);
 
         String formattedPhoneNumber = null;
-        if(Boolean.parseBoolean((String)messageContext.getProperty("USER_ANONYMIZATION"))) {
+        if (Boolean.parseBoolean((String) messageContext.getProperty("USER_ANONYMIZATION"))) {
             loggingMsisdn = maskedMsidsn;
             formattedPhoneNumber = maskedMsisdnSuffix;
         } else if (matcher.matches()) {
@@ -57,11 +78,12 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
         APIService apiService = new APIService();
 
         try {
-            if (apiService.isBlackListedorWhiteListedNumber(formattedPhoneNumber,apiID,appID,spName,action)) {
-                log.info(loggingMsisdn + " is action:" + action +" number for " + apiName + " API " + apiVersion + " version");
+            if (apiService.isBlackListedorWhiteListedNumber(formattedPhoneNumber, apiID, appID, spName, action)) {
+                log.info(loggingMsisdn + " is action:" + action + " number for " + apiName + " API " + apiVersion +
+                        " version");
 
-                if(action.equalsIgnoreCase(MSISDNConstants.BLACKLIST)){
-                    this.setErrorResponseMessageContext(messageContext,action,MSISDNConstants.BLACKLIST,true);
+                if (action.equalsIgnoreCase(MSISDNConstants.BLACKLIST)) {
+                    this.setErrorResponseMessageContext(messageContext, action, MSISDNConstants.BLACKLIST, true);
 
                     setErrorInContext(
                             messageContext,
@@ -69,12 +91,11 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
                             ErrorConstants.POL0001_TEXT,
                             "Blacklisted Number: " + msisdn,
                             Integer.toString(HttpStatus.SC_BAD_REQUEST), ExceptionType.POLICY_EXCEPTION.toString());
-                }
-                else
-                    messageContext.setProperty(MSISDNConstants.WHITELIST,"true");
+                } else
+                    messageContext.setProperty(MSISDNConstants.WHITELIST, "true");
             } else {
-                if(action.equalsIgnoreCase(MSISDNConstants.WHITELIST)){
-                    this.setErrorResponseMessageContext(messageContext,action,MSISDNConstants.WHITELIST,false);
+                if (action.equalsIgnoreCase(MSISDNConstants.WHITELIST)) {
+                    this.setErrorResponseMessageContext(messageContext, action, MSISDNConstants.WHITELIST, false);
 
                     setErrorInContext(
                             messageContext,
@@ -82,16 +103,15 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
                             ErrorConstants.POL0001_TEXT,
                             "Not Whitelisted Number: " + msisdn,
                             Integer.toString(HttpStatus.SC_BAD_REQUEST), ExceptionType.POLICY_EXCEPTION.toString());
-                }
-                else
-                    messageContext.setProperty(MSISDNConstants.BLACKLIST,"false");
+                } else
+                    messageContext.setProperty(MSISDNConstants.BLACKLIST, "false");
             }
         } catch (Exception e) {
             log.error("error in MSISDNBlacklistWhitelistMediator mediate : " + e.getMessage());
 
             String errorVariable = msisdn;
             String paramArray = (String) messageContext.getProperty("paramArray");
-            if(paramArray != null){
+            if (paramArray != null) {
                 errorVariable = paramArray;
             }
 
@@ -102,16 +122,20 @@ public class MSISDNBlacklistWhitelistMediator extends AbstractMediator {
                     errorVariable,
                     Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR), ExceptionType.SERVICE_EXCEPTION.toString());
             messageContext.setProperty(ContextPropertyName.INTERNAL_ERROR, "true");
+
+            return false;
         }
 
         return true;
     }
 
-    private MessageContext setErrorResponseMessageContext(MessageContext messageContext, String action,
-                                             String type, boolean result){
+    private MessageContext setErrorResponseMessageContext(MessageContext messageContext,
+                                                          String action,
+                                                          String type,
+                                                          boolean result) {
         messageContext.setProperty(SynapseConstants.ERROR_CODE, "POL0001:");
-        messageContext.setProperty(SynapseConstants.ERROR_MESSAGE, "Internal Server Error. action: " +action+
-                "Number");
+        messageContext.setProperty(SynapseConstants.ERROR_MESSAGE,
+                "Internal Server Error. action: " + action + "Number");
         messageContext.setProperty(type, result);
 
         return messageContext;
