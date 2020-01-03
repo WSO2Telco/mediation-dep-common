@@ -884,6 +884,9 @@ public class APIDAO {
 
 	public boolean isBlacklistedorWhitelistedNumber(String msisdn, String apiId, String appId, String subscriberId,
 													String action) throws BlacklistWhitelistMediatorException {
+		
+		
+		log.debug("msisdn -"+msisdn+" apiId -"+apiId+" appId-"+appId+" subscriberId -"+subscriberId+" action- "+action);
 
 		boolean isListed = false;
 		String query = "select exists ( select 1 from "
@@ -891,7 +894,6 @@ public class APIDAO {
 				" where (API_ID = '%' OR API_ID = ? ) " +
 				"AND MSISDN = ? " +
 				"AND (APP_ID = '%' OR APP_ID = ? ) " +
-				"AND SERVICE_PROVIDER = ? " +
 				"AND ACTION = ? ) as result";
 
 		try (Connection connection = DbUtils.getDbConnection(DataSourceNames.WSO2AM_STATS_DB);
@@ -900,8 +902,7 @@ public class APIDAO {
 			preparedStatement.setString(1, apiId);
 			preparedStatement.setString(2, msisdn);
 			preparedStatement.setString(3, appId);
-			preparedStatement.setString(4, subscriberId);
-			preparedStatement.setString(5, action);
+			preparedStatement.setString(4, action);
 
 			try (ResultSet resultset = preparedStatement.executeQuery();) {
 				while (resultset.next()) {
