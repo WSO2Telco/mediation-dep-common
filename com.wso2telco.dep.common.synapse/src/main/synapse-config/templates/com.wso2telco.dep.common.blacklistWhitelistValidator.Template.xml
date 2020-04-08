@@ -2,6 +2,7 @@
 <template name="com.wso2telco.dep.common.blacklistWhitelistValidator.Template" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="paramName"/>
     <parameter name="paramValue"/>
+    <parameter name="paramValueList"/>
     <parameter name="paramArray"/>
 
     <!-- In case of validating an array use a for each mediator in your sequence and call this template with each of the msisdn array element.
@@ -13,17 +14,29 @@
         <property expression="$ctx:mediationConfig//msisdn_regex_num_grp" name="msisdnRegexGroup" scope="default"
                   type="STRING"/>
         <property expression="$func:paramValue" name="paramValue" scope="default" type="STRING"/>
+        <property expression="$func:paramValueList" name="paramValueList" scope="default" type="STRING"/>
         <property expression="$trp:APPLICATION_ID" name="api.ut.application.id" scope="default" type="STRING"/>
 
-        <class name="com.wso2telco.dep.common.mediation.UtilMediator">
-            <property name="propertyValue" value="isValidMsisdn"/>
-        </class>
-
+		<filter xpath="boolean($func:paramValue)">
+	        <then>
+		        <class name="com.wso2telco.dep.common.mediation.UtilMediator">
+		            <property name="propertyValue" value="isValidMsisdn"/>
+		        </class>
+	        </then>
+	        <else/>
+        </filter>
 
         <filter regex="^true$" source="$trp:api.check.blacklist">
             <then>
                 <property name="ACTION" value="blacklist"/>
-                <class name="com.wso2telco.dep.common.mediation.MSISDNBlacklistWhitelistMediator"/>
+                <filter xpath="boolean($func:paramValueList)">
+                    <then>
+                        <class name="com.wso2telco.dep.common.mediation.MSISDNListBlacklistWhitelistMediator"/>
+                    </then>
+                    <else>
+                        <class name="com.wso2telco.dep.common.mediation.MSISDNBlacklistWhitelistMediator"/>
+                    </else>
+                </filter>
 
                 <filter regex="^true$" source="$ctx:INTERNAL_ERROR">
                     <then>
