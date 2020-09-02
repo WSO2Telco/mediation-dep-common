@@ -4,7 +4,7 @@
     <class name="com.wso2telco.dep.common.mediation.OperatorEndpointRetrieverMediator"/>
     <filter regex="true" source="get-property('ENDPOINT_ERROR')">
         <then>
-            <log level="debug">
+            <log category="DEBUG" level="custom">
                 <property name="state" value="ENDPOINT_ERROR with OperatorEndpointRetrieverMediator"/>
             </log>
         </then>
@@ -12,7 +12,7 @@
     </filter>
     <filter regex="true" source="get-property('INTERNAL_ERROR')">
         <then>
-            <log level="debug">
+            <log category="DEBUG" level="custom">
                 <property name="state" value="INTERNAL_ERROR with OperatorEndpointRetrieverMediator"/>
             </log>
         </then>
