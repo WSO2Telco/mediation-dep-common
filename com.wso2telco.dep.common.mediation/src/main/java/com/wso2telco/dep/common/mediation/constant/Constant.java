@@ -34,5 +34,6 @@ public interface Constant {
 		String UNMASK_MSISDN = "unmaskMsisdn";
 		String SINGLE_PROPERTY_REPLACEMENT = "singlePropertyReplacement";
 		String PROPERTY_REPLACEMENT_IN_ARRAY = "propertyReplacementInArray";
+		String REPLACE_NEW_LINE_CHAR = "replaceNewLineCharacters";
 	}
 }

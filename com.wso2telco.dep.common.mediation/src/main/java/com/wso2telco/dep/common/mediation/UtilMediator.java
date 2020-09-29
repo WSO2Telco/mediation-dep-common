@@ -87,6 +87,16 @@ public class UtilMediator extends AbstractMediator {
                     synCtx.setProperty(msgContextProperty, unmaskedMsisdn);
                     break;
 
+                case Constant.PropertyValues.REPLACE_NEW_LINE_CHAR:
+                    JSONObject jsonObject = getSubPayloadObject(propertyPath, jsonPayload, propertyName);
+                    jsonObject.put(propertyName, jsonObject
+                        .getString("outboundUSSDMessage")
+                        .replaceAll("\n", "\\\\n")
+                        .replaceAll("\r", "\\\\r")
+                    );
+                    JsonUtil.getNewJsonPayload(axis2MessageContext, jsonPayload.toString(), true, true);
+                    break;
+
                 default:
                     JsonUtil.getNewJsonPayload(axis2MessageContext, jsonPayload.toString(), true, true);
             }
