@@ -126,7 +126,11 @@ public class QuotaLimitMediator extends AbstractMediator {
     	         byte[] valueDecoded= Base64.getDecoder().decode(jwttoken[1]);
     	         String jwtbody = new String(valueDecoded, StandardCharsets.UTF_8);
     	         JSONObject jwtobj = new JSONObject(jwtbody);
-    	         JSONArray roleClaims = (JSONArray) jwtobj.get("http://wso2.org/claims/role");
+				 String roleClaimsKey = "http://wso2.org/claims/role";
+				 if (jwtobj.has("roles")) { //custom JWT enabled
+				 	roleClaimsKey = "roles";
+				 }
+				 JSONArray roleClaims = (JSONArray) jwtobj.get(roleClaimsKey);
     	         if(roleClaims != null) {
     	            for (int i = 0; i < roleClaims.length(); i++) {
     	            	String roleClaim = (String) roleClaims.get(i);
