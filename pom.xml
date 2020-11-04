@@ -27,7 +27,7 @@
     <wsdl4j.wso2.version>1.6.2.wso2v4</wsdl4j.wso2.version>
     <commons-logging.version>1.1.1</commons-logging.version>
     <commons-io.wso2.version>2.4.0.wso2v1</commons-io.wso2.version>
-    <apache.synapse.wso2.version>2.1.7-wso2v7</apache.synapse.wso2.version>
+    <apache.synapse.wso2.version>3.0.1</apache.synapse.wso2.version>
     <apache.ws.commons.schema.wso2.version>1.4.7.wso2v3</apache.ws.commons.schema.wso2.version>
     <apache.geronimo.specs.wso2.version>1.0.1.wso2v2</apache.geronimo.specs.wso2.version>
     <apache.neethi.wso2.version>2.0.4.wso2v5</apache.neethi.wso2.version>
