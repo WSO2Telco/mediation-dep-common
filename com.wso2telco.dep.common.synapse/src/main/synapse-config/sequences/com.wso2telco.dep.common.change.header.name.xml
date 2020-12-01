@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="com.wso2telco.dep.common.change.header.name" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <filter regex="true" source="boolean(get-property('AuthorizationHeader'))" xmlns:ns="http://org.apache.synapse/xsd">
+        <then>
+            <property expression="$trp:X-JWT-Assertion"
+                      name="Authorization" scope="transport" type="STRING"/>
+            <property action="remove" name="X-JWT-Assertion" scope="transport"/>
+        </then>
+        <else/>
+    </filter>
+
+</sequence>

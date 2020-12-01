@@ -16,6 +16,7 @@
   <properties>
     <com.wso2telco.dep.common.api_._msisdnValidation>capp/EnterpriseServiceBus</com.wso2telco.dep.common.api_._msisdnValidation>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.main.property.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.main.property.Sequence>
+    <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.change.header.name>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.change.header.name>
     <com.wso2telco.dep.common.template_._com.wso2telco.dep.common.lengthValidator.Template>capp/EnterpriseServiceBus</com.wso2telco.dep.common.template_._com.wso2telco.dep.common.lengthValidator.Template>
     <artifact.types>jaggery/app=zip,synapse/priority-executor=xml,synapse/inbound-endpoint=xml,lib/registry/handlers=jar,service/rule=aar,lib/registry/filter=jar,synapse/message-store=xml,event/stream=json,service/meta=xml,synapse/proxy-service=xml,bpel/workflow=zip,synapse/sequence=xml,synapse/endpointTemplate=xml,carbon/application=car,synapse/api=xml,wso2/gadget=dar,synapse/event-source=xml,synapse/message-processors=xml,event/receiver=xml,lib/dataservice/validator=jar,synapse/template=xml,synapse/endpoint=xml,lib/carbon/ui=jar,lib/synapse/mediator=jar,event/publisher=xml,synapse/local-entry=xml,synapse/task=xml,webapp/jaxws=war,registry/resource=zip,synapse/configuration=xml,service/axis2=aar,synapse/lib=zip,synapse/sequenceTemplate=xml,event/execution-plan=siddhiql,service/dataservice=dbs,web/application=war,lib/library/bundle=jar</artifact.types>
     <com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.token.pool.retriever.Sequence>capp/EnterpriseServiceBus</com.wso2telco.dep.common.sequence_._com.wso2telco.dep.common.token.pool.retriever.Sequence>
@@ -71,6 +72,12 @@
     <dependency>
       <groupId>com.wso2telco.dep.common.sequence</groupId>
       <artifactId>com.wso2telco.dep.common.main.property.Sequence</artifactId>
+      <version>3.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.wso2telco.dep.common.sequence</groupId>
+      <artifactId>com.wso2telco.dep.common.change.header.name</artifactId>
       <version>3.0.0</version>
       <type>xml</type>
     </dependency>

@@ -30,4 +30,19 @@
     type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
   <property expression="$trp:REQUEST_ID" name="REQUEST_ID"
     scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+  <filter xmlns:ns="http://org.apache.synapse/xsd" xpath="boolean($trp:X-JWT-Assertion)">
+    <then/>
+    <else>
+      <filter xpath="boolean($trp:Authorization)">
+        <then>
+          <header expression="$trp:Authorization"
+                  name="X-JWT-Assertion" scope="transport"/>
+          <property name="AuthorizationHeader" scope="default" value="true"/>
+        </then>
+        <else>
+          <property name="AuthorizationHeader" scope="default" value="false"/>
+        </else>
+      </filter>
+    </else>
+  </filter>
 </sequence>
