@@ -2,6 +2,9 @@
     <artifact name="com.wso2telco.dep.common.main.property.Sequence" groupId="com.wso2telco.dep.common.sequence" version="3.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.main.property.Sequence.xml</file>
     </artifact>
+    <artifact name="com.wso2telco.dep.common.change.header.name" groupId="com.wso2telco.dep.common.sequence" version="3.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.change.header.name.xml</file>
+    </artifact>
     <artifact name="com.wso2telco.dep.common.main.request.Sequence" groupId="com.wso2telco.dep.common.sequence" version="3.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/com.wso2telco.dep.common.main.request.Sequence.xml</file>
     </artifact>
